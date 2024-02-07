@@ -15,20 +15,20 @@
         </video>
         <div class="overlay"></div>
         <div class="center-container-register">
-            <div class="registerpanel">
+            <div class="registerPanel">
                 <img id="logo-register" src="multimedia/logo_scrum_01.png" alt="Logo" height="150">
                 <div class="inputs-register">
                     <div class="right-inputs">
-                        <input type="text" id="login-register" placeholder="username" required>
-                        <input type="password" id="password-register" placeholder="password" required>
-                        <input type="password" id="passwordConfirm-register" placeholder="confirm password" required>
-                        <input type="email" id="email-register" placeholder="email" required>
+                        <input type="text" id="login-register" placeholder="username" onmousedown="removePlaceholder(this)" required>
+                        <input type="password" id="password-register" placeholder="password" onmousedown="removePlaceholder(this)" required>
+                        <input type="password" id="passwordConfirm-register" placeholder="confirm password" onmousedown="removePlaceholder(this)" required>
+                        <input type="email" id="email-register" placeholder="email" onmousedown="removePlaceholder(this)" required>
                     </div>
                     <div class="left-inputs">                    
-                        <input type="text" id="firstName-register" placeholder="first name" required>
-                        <input type="text" id="lastName-register" placeholder="last name" required>
-                        <input type="text" id="phone-register" placeholder="phone" required>
-                        <input type="text" id="photoURL-register" placeholder="photo url" required>
+                        <input type="text" id="firstName-register" placeholder="first name" onmousedown="removePlaceholder(this)" required>
+                        <input type="text" id="lastName-register" placeholder="last name" onmousedown="removePlaceholder(this)" required>
+                        <input type="text" id="phone-register" placeholder="phone" onmousedown="removePlaceholder(this)" required>
+                        <input type="text" id="photoURL-register" placeholder="photo url" onmousedown="removePlaceholder(this)" required>
                     </div>
                 </div>
                 <button id="registerButton-register">Register</button>
