@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="project2:war exploded" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="73ec64a1-9baf-44c1-8bea-1dac688c0899" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/bean/RetrospectiveBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/bean/TaskBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/bean/UserBean.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/dto/Retrospective.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/dto/Task.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/dto/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/service/ApplicationConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/service/TaskService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../home.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../homescript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multimedia/background_main_task.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multimedia/dark-cross-01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multimedia/favicon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multimedia/logo_scrum_01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multimedia/logo_scrum_02.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multimedia/logo_scrum_03.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multimedia/logo_scrum_04.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multimedia/logout.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multimedia/logout_hover.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../multimedia/loop_video_final.mp4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../task.js" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2c2qSdinsUm0HpLENxzQenLWKqN" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;JBoss/WildFly Server.JBoss/WildFly 30.0.1.Final.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="aor.paj.project2.dto" />
+      <recent name="aor.paj.project2.bean" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="JBoss/WildFly 30.0.1.Final" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="JBoss/WildFly 30.0.1.Final" ALTERNATIVE_JRE_ENABLED="false">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/project2-1.0-SNAPSHOT" />
+      <deployment>
+        <artifact name="project2:war exploded">
+          <settings />
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="SERVER" value="" />
+        <option name="BINDING_SET_NAME" value="" />
+        <option name="DOMAIN" value="false" />
+        <option name="SERVER_GROUP" value="" />
+        <option name="USERNAME" value="" />
+        <option name="CREDENTIAL_ALIAS" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="JBoss" />
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="project2:war exploded" />
+        </option>
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.2-openjdk-21.0.2-f644763e9732-c0c073db" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="73ec64a1-9baf-44c1-8bea-1dac688c0899" name="Changes" comment="" />
+      <created>1707320025563</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1707320025563</updated>
+      <workItem from="1707320026677" duration="6286000" />
+      <workItem from="1707328975213" duration="1149000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
