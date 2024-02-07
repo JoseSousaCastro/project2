@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link  type="text/css" rel="stylesheet" href="main.css">
+    <link rel="icon" href="multimedia/favicon.png" type="image/x-icon">
+</head>
+<body>    
+    <div class="video-container">
+        <video autoplay muted loop id="background-video">
+            <source src="multimedia/loop_video_final.mp4" type="video/mp4">
+            Your browser does not support video tag.
+        </video>
+        <div class="overlay"></div>
+        <div class="center-container-register">
+            <div class="registerpanel">
+                <img id="logo-register" src="multimedia/logo_scrum_01.png" alt="Logo" height="150">
+                <div class="inputs-register">
+                    <div class="right-inputs">
+                        <input type="text" id="login-register" placeholder="username" required>
+                        <input type="password" id="password-register" placeholder="password" required>
+                        <input type="password" id="passwordConfirm-register" placeholder="confirm password" required>
+                        <input type="email" id="email-register" placeholder="email" required>
+                    </div>
+                    <div class="left-inputs">                    
+                        <input type="text" id="firstName-register" placeholder="first name" required>
+                        <input type="text" id="lastName-register" placeholder="last name" required>
+                        <input type="text" id="phone-register" placeholder="phone" required>
+                        <input type="text" id="photoURL-register" placeholder="photo url" required>
+                    </div>
+                </div>
+                <button id="registerButton-register">Register</button>
+                <a id="backToLoginLink" href="index.html">Login</a>
+                <p id="warningMessage4"></p>
+            </div>            
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
