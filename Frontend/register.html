@@ -19,17 +19,19 @@
                 <img id="logo-register" src="multimedia/logo_scrum_01.png" alt="Logo" height="150">
                 <div class="inputs-register">
                     <div class="right-inputs">
-                        <input type="text" id="login-register" placeholder="username" onmousedown="removePlaceholder(this)" required>
-                        <input type="password" id="password-register" placeholder="password" onmousedown="removePlaceholder(this)" required>
-                        <input type="password" id="passwordConfirm-register" placeholder="confirm password" onmousedown="removePlaceholder(this)" required>
-                        <input type="email" id="email-register" placeholder="email" onmousedown="removePlaceholder(this)" required>
+                        <input type="text" id="login-register" placeholder="username" onfocus="removePlaceholder(this)" required>
+                        <input type="password" id="password-register" placeholder="password" onclick="removePlaceholder(this)" required>
+                        <input type="password" id="passwordConfirm-register" placeholder="confirm password" onclick="removePlaceholder(this)" required>
+                        <input type="email" id="email-register" placeholder="email" onclick="removePlaceholder(this)" required>
                     </div>
                     <div class="left-inputs">                    
-                        <input type="text" id="firstName-register" placeholder="first name" onmousedown="removePlaceholder(this)" required>
-                        <input type="text" id="lastName-register" placeholder="last name" onmousedown="removePlaceholder(this)" required>
-                        <input type="text" id="phone-register" placeholder="phone" onmousedown="removePlaceholder(this)" required>
-                        <input type="text" id="photoURL-register" placeholder="photo url" onmousedown="removePlaceholder(this)" required>
+                        <input type="text" id="firstName-register" placeholder="first name" onclick="removePlaceholder(this)" required>
+                        <input type="text" id="lastName-register" placeholder="last name" onclick="removePlaceholder(this)" required>
+                        <input type="text" id="phone-register" placeholder="phone" onclick="removePlaceholder(this)" required>
+                        <input type="text" id="photoURL-register" placeholder="photo url" onclick="removePlaceholder(this)" required>
                     </div>
+                    
+                    
                 </div>
                 <button id="registerButton-register">Register</button>
                 <a id="backToLoginLink" href="index.html">Login</a>
@@ -37,6 +39,6 @@
             </div>            
         </div>
     </div>
-    <script src="app.js"></script>
+    <script src="register.js"></script>
 </body>
 </html>
