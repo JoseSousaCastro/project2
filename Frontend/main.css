@@ -72,7 +72,7 @@ body {
   height: 400px;
   width: 330px;
 }
-#login,
+#username,
 #password {
   margin-bottom: 15px;
   padding-left: 5px;
@@ -82,7 +82,7 @@ body {
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
 }
-#login {
+#username {
   margin-top: 20px;
 }
 #password {
@@ -90,6 +90,9 @@ body {
 }
 .loginpanel ::placeholder {
   color: var(--green2);
+}
+.loginpanel :focus::placeholder {
+  opacity: 0.5;
 }
 .loginpanel input[type="text"] {
   color: var(--green3);
@@ -166,7 +169,7 @@ body {
     margin-right: 60px;
     margin-left: 32px;
 }
-#login-register,
+#username-register,
 #password-register,
 #passwordConfirm-register,
 #email-register,
@@ -201,6 +204,12 @@ body {
 }
 .registerPanel ::placeholder {
   color: var(--green2);
+}
+.registerPanel :focus::placeholder {
+  opacity: 0.5;
+}
+.registerPanel input[type="text"] {
+  color: var(--green3);
 }
 #backToLoginLink {
   margin-top: 20px;
