@@ -12,12 +12,12 @@ public class User {
     private String firstName;
     private String lastName;
     private int phoneNumber;
-    private URL photo;
+    private String photo;
 
     public User() {
     }
 
-    public User(String username, String password, String email, String firstName, String lastName, int phoneNumber, URL photo) {
+    public User(String username, String password, String email, String firstName, String lastName, int phoneNumber, String photo) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -78,11 +78,11 @@ public class User {
     }
 
     @XmlElement
-    public URL getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(URL photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 }
