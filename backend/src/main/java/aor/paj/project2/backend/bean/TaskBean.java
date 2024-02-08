@@ -30,15 +30,16 @@ public class TaskBean {
             tasks = new ArrayList<Task>();
     }
 
-    public void addTask(Task a) {
-        tasks.add(a);
+    public void addTask(Task task) {
+        tasks.add(task);
         writeIntoJsonFile();
     }
 
-    public Task getTask(int i) {
+    public Task getTask(long id) {
         for (Task a : tasks) {
-            if (a.getId() == i)
+            if (a.getId() == id) {
                 return a;
+            }
         }
         return null;
     }
@@ -47,17 +48,18 @@ public class TaskBean {
         return tasks;
     }
 
-    public boolean removeTask(int id) {
+    public boolean removeTask(long id) {
         for (Task a : tasks) {
             if (a.getId() == id) {
                 tasks.remove(a);
+                writeIntoJsonFile();
                 return true;
             }
         }
         return false;
     }
 
-    public boolean updateTask(int id, Task task) {
+    public boolean updateTask(long id, Task task) {
         for (Task a : tasks) {
             if (a.getId() == id) {
                 a.setTitle(task.getTitle());
