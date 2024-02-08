@@ -66,6 +66,6 @@ public class TaskService {
         if (!updated)
             return Response.status(200).entity("Task with this id is not found").build();
 
-        return Response.status(200).entity("updated").build();
+        return Response.status(200).entity("Task updated").build();
     }
 }

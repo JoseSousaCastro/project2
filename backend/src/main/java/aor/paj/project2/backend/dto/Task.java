@@ -5,7 +5,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Task {
-    private int id;
+    private long id;
     private String title;
     private String description;
     private int STATE_ID; // perceber se tem de ser static e final
@@ -13,14 +13,14 @@ public class Task {
     public Task() {
     }
     public Task(int id, String title, String description, int priority) {
-        this.id=id; // atualizar isto para ser gerado automaticamente
+        this.id = System.currentTimeMillis(); 
         this.title = title;
         this.description= description;
         this.STATE_ID = 100;
         this.priority = priority;
     }
     @XmlElement
-    public int getId() {
+    public long getId() {
         return id;
     }
     public void setId(int id) {
@@ -54,5 +54,6 @@ public class Task {
     public void setPriority(int priority) {
         this.priority = priority;
     }
+
 }
 
