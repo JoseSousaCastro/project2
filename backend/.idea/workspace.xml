@@ -10,12 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2d6edc91-b28b-4e33-ab2b-2e083bb35001" name="Changes" comment="">
+
       <change beforePath="$PROJECT_DIR$/../Frontend/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/register.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Frontend/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/register.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/UserBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/UserBean.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/User.java" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +58,7 @@
     &quot;JBoss/WildFly Server.JBoss/WildFly 30.0.1.Final.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+
     &quot;git-widget-placeholder&quot;: &quot;experiment__FE__BE&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/AoR/39. Projeto 2_Pedro_Joao_Castro/project2/backend&quot;,
@@ -97,6 +100,7 @@
       </server-settings>
       <predefined_log_file enabled="true" id="JBoss" />
       <RunnerSettings RunnerId="Debug">
+
         <option name="DEBUG_PORT" value="61921" />
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
@@ -169,6 +173,7 @@
       <updated>1707355480154</updated>
       <workItem from="1707355481224" duration="2690000" />
       <workItem from="1707386504552" duration="1990000" />
+
       <workItem from="1707393754739" duration="3283000" />
       <workItem from="1707408522089" duration="3306000" />
       <workItem from="1707413281685" duration="281000" />

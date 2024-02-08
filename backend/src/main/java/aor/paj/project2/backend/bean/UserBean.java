@@ -30,15 +30,15 @@ public class UserBean {
             users = new ArrayList<User>();
     }
 
-    public void addUser(User a) {
-        users.add(a);
+    public void addUser(User user) {
+        users.add(user);
         writeIntoJsonFile();
     }
 
     public User getUser(String username) {
-        for (User a : users) {
-            if (a.getUsername().equals(username))
-                return a;
+        for (User user : users) {
+            if (user.getUsername().equals(username))
+                return user;
         }
         return null;
     }

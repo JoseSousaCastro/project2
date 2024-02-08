@@ -11,11 +11,13 @@ public class User {
     private String email;
     private String firstName;
     private String lastName;
+
     private String phone;
     private String photoURL;
 
     public User() {
     }
+
 
     public User(String username, String password, String email, String firstName, String lastName, String phone, String photoURL) {
         this.username = username;
@@ -78,6 +80,7 @@ public class User {
     }
 
     @XmlElement
+
     public String getPhotoURL() {
         return photoURL;
     }
