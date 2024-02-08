@@ -82,43 +82,54 @@ document.getElementById('registerButton-register').addEventListener("click", fun
         document.getElementById('photoURL-register').setCustomValidity('');
     }
 
-    // Retorna true se o formulário for válido, false caso contrário
-    var isFormValid = document.getElementById('registrationForm').checkValidity();
+      // Retorna true se o formulário for válido, false caso contrário
+document.getElementById('registrationForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    let newUser = createUserData();
+// Send userData to the backend
+fetch('http://localhost:8080/backend_war_exploded/rest/users/add', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newUser)
+})
+    .then(response => {
+        if (response.ok) {
+            // Redirect to index.html after successful registration
+            window.location.href = 'index.html';
+        } else {
+            throw new Error('Failed to register');
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        // Handle error
+    });
+});
 
-// Lógica de registro com localStorage
-if (isFormValid) {
-    // Cria um objeto com os dados do usuário
-    var userData = {
-        username: username,
-        password: password,
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        phone: phone,
-        photoURL: photoURL
-    };
+    function createUserData() {
+        let isFormValid = document.getElementById('registrationForm').checkValidity();
+        console.log('Form is valid');
 
-    // Verifica se já existem dados no localStorage
-    var existingData = localStorage.getItem('userData');
+        let userData =null;
 
-    if (existingData) {
-        // Se houver dados existentes, converte-os de volta para um objeto JavaScript
-        var existingDataObj = JSON.parse(existingData);
+        if (isFormValid) {
+            userData = {
+                username: username,
+                password: password,
+                email: email,
+                firstName: firstName,
+                lastName: lastName,
+                phone: phone,
+                photoURL: photoURL
+            };
 
-        // Adiciona os novos dados ao objeto existente
-        existingDataObj.push(userData);
-
-        // Armazena o objeto atualizado no localStorage
-        localStorage.setItem('userData', JSON.stringify(existingDataObj));
-    } else {
-        // Se não houver dados existentes, cria um novo array com os dados do usuário
-        var newDataArray = [userData];
-
-        // Armazena o novo array no localStorage
-        localStorage.setItem('userData', JSON.stringify(newDataArray));
+        } else {
+            document.getElementById('registrationForm').reportValidity();
+            console.error('Form is not valid');
+        }
+        return userData;
     }
 
-    // Redireciona para index.html após o registro bem-sucedido
-    window.location.href = 'index.html';
-}
 });

@@ -11,20 +11,20 @@ public class User {
     private String email;
     private String firstName;
     private String lastName;
-    private int phoneNumber;
-    private URL photo;
+    private String phone;
+    private String photoURL;
 
     public User() {
     }
 
-    public User(String username, String password, String email, String firstName, String lastName, int phoneNumber, URL photo) {
+    public User(String username, String password, String email, String firstName, String lastName, String phone, String photoURL) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.photo = photo;
+        this.phone = phone;
+        this.photoURL = photoURL;
     }
 
     @XmlElement
@@ -69,21 +69,21 @@ public class User {
     }
 
     @XmlElement
-    public int getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @XmlElement
-    public URL getPhoto() {
-        return photo;
+    public String getPhotoURL() {
+        return photoURL;
     }
 
-    public void setPhoto(URL photo) {
-        this.photo = photo;
+    public void setPhotoURL(String photoURL) {
+        this.photoURL = photoURL;
     }
 }
 
