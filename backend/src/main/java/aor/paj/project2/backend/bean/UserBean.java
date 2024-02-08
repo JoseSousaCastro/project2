@@ -54,8 +54,8 @@ public class UserBean {
                 a.setEmail(user.getEmail());
                 a.setFirstName(user.getFirstName());
                 a.setLastName(user.getLastName());
-                a.setPhoneNumber(user.getPhoneNumber());
-                a.setPhoto(user.getPhoto());
+                a.setPhone(user.getPhone());
+                a.setPhotoURL(user.getPhotoURL());
                 writeIntoJsonFile();
                 return true;
             }
