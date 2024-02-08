@@ -16,6 +16,8 @@ body {
   --doing: #9cfaffd5;
   --done: #2cccd4d7;
 
+  --warningMessages: #9C3B21;
+
   margin: 0;
   padding: 0;
   background-color: var(--black);
@@ -118,7 +120,7 @@ body {
   color: var(--green1);
 }
 #warningMessage {
-  color: var(--green3);
+  color: var(--warningMessages);
   font-size: 14px;
   margin-top: 20px;
 }
@@ -151,8 +153,10 @@ body {
   color: var(--green3);
   background-color: color-mix(in srgb, var(--light-grey), transparent 10%);
   border-radius: 10px;
-  height: 480px;
-  width: 700px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 500px;
+  height: 100%;
 }
 #logo-register {
   margin-bottom: 20px;
@@ -161,32 +165,31 @@ body {
 }
 .inputs-register {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .left-inputs,
 .right-inputs {
     width: 200px;
-    margin-right: 60px;
-    margin-left: 32px;
+    margin: 0 10px;
 }
-#username-register,
-#password-register,
-#passwordConfirm-register,
-#email-register,
-#firstName-register,
-#lastName-register,
-#phone-register,
-#photoURL-register {
+
+.inputRegister-fields {
   margin-bottom: 15px;
-  padding-left: 5px;
-  width: 220px;
+  padding: 5px;
+  width: 100%;
   height: 25px;
   border: var(--green3) 1px solid;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
 }
+.submitButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
 #registerButton-register {
-  margin-top: 30px;
   width: 150px;
   height: 32px;
   text-transform: uppercase;
@@ -218,7 +221,7 @@ body {
   cursor: pointer;
 }
 #warningMessage4 {
-  color: var(--green3);
+  color: var(--warningMessages);
   font-size: 14px;
   margin-top: 20px;
 }
@@ -270,7 +273,7 @@ h1 {
   padding: 5px;
   width: 150px;
 }
-.username #login {
+.username #username {
   color: var(--light-grey);
   font-weight: bold;
 }
@@ -438,7 +441,7 @@ aside h3 {
 }
 /* Mensagem de erro por não preenchimento de 1 dos 2 campos, ou do botão de priority */
 #warningMessage2 {
-  color: var(--green3);
+  color: var(--warningMessages);
   font-size: 14px;
   margin-top: 17px;
   text-align: center;
@@ -644,6 +647,7 @@ match ao arredondamento do painel (home.html) */
 .modal-content {
   padding: 2rem 3rem;
   background-color: white;
+  border: var(--warningMessages) 2px solid;
   max-width: 25%;
   border-radius: 5px;
   display: grid;
@@ -672,6 +676,8 @@ match ao arredondamento do painel (home.html) */
   color: var(--green1);
 }
 .modal p {
+  color: var(--warningMessages);
+  font-weight: bold;
   text-align: center;
   grid-column: 1 / 3;
 }
@@ -824,7 +830,7 @@ match ao arredondamento do painel (home.html) */
   border-color: var(--black);
 }
 #warningMessage3 {
-  color: #FF3232;
+  color: var(--warningMessages);
   font-size: 16px;
   font-weight: bold;
   margin-top: 25px;

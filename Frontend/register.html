@@ -17,24 +17,25 @@
         <div class="center-container-register">
             <div class="registerPanel">
                 <img id="logo-register" src="multimedia/logo_scrum_01.png" alt="Logo" height="150">
-                <div class="inputs-register">
+                <form id="registrationForm" class="inputs-register" onsubmit="return validateForm()">
                     <div class="right-inputs">
-                        <input type="text" id="username-register" placeholder="username" required>
-                        <input type="password" id="password-register" placeholder="password" required>
-                        <input type="password" id="passwordConfirm-register" placeholder="confirm password">
-                        <input type="email" id="email-register" placeholder="email" required>
+                        <input type="text" class="inputRegister-fields" id="username-register" name="username" placeholder="Username" required>
+                        <input type="password" class="inputRegister-fields" id="password-register" name="password" placeholder="Password" required>
+                        <input type="password" class="inputRegister-fields" id="passwordConfirm-register" name="passwordConfirm" placeholder="Confirm Password" required>
+                        <input type="email" class="inputRegister-fields" id="email-register" name="email" placeholder="Email" required>
                     </div>
-                    <div class="left-inputs">                    
-                        <input type="text" id="firstName-register" placeholder="first name" required>
-                        <input type="text" id="lastName-register" placeholder="last name" required>
-                        <input type="text" id="phone-register" placeholder="phone" required>
-                        <input type="url" id="photoURL-register" placeholder="photo url" required>
+                    <div class="left-inputs">
+                        <input type="text" class="inputRegister-fields" id="firstName-register" name="firstName" placeholder="First Name" required>
+                        <input type="text" class="inputRegister-fields" id="lastName-register" name="lastName" placeholder="Last Name" required>
+                        <input type="text" class="inputRegister-fields" id="phone-register" name="phone" placeholder="Phone" required>
+                        <input type="url" class="inputRegister-fields" id="photoURL-register" name="photoURL" placeholder="Photo URL" required>
                     </div>
-                    
-                </div>
-                <button id="registerButton-register">Register</button>
+                    <div class="submitButton">
+                        <button type="submit" id="registerButton-register">Register</button>
+                    </div>
+                </form>                
                 <a id="backToLoginLink" href="index.html">Login</a>
-                <p id="warningMessage4"></p>
+                <p id="warningMessage4"></p>                
             </div>            
         </div>
     </div>
