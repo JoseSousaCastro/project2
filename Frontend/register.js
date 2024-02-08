@@ -97,7 +97,7 @@ fetch('http://localhost:8080/backend_war_exploded/rest/users/add', {
     .then(response => {
         if (response.ok) {
             // Redirect to index.html after successful registration
-            window.location.href = 'index.html';
+            //window.location.href = 'index.html';
         } else {
             throw new Error('Failed to register');
         }
