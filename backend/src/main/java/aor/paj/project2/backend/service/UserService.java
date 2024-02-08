@@ -27,10 +27,9 @@ public class UserService {
     @POST
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addUser(User a) {
-        userBean.addUser(a);
+    public Response addUser(User user) {
+        userBean.addUser(user);
         return Response.status(200).entity("A new user is created").build();
-
     }
 
     @GET
@@ -42,7 +41,6 @@ public class UserService {
             return Response.status(200).entity("User with this username is not found").build();
 
         return Response.status(200).entity(user).build();
-
     }
 
     @PUT
