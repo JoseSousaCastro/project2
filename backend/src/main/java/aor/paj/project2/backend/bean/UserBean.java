@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 @ApplicationScoped
 public class UserBean {
-    final String filename = "tasks.json";
+    private final String filename = "users.json";
     private ArrayList<User> users;
 
     public UserBean() {
@@ -36,17 +36,11 @@ public class UserBean {
     }
 
     public User getUser(String username) {
-        User user = null;
-        boolean found = false;
-        for (User a : users) {
-            while (!found) {
-                if (a.getUsername().equals(username)) {
-                    user = a;
-                    found = true;
-                }
-            }
+        for (User user : users) {
+            if (user.getUsername().equals(username))
+                return user;
         }
-        return user;
+        return null;
     }
 
     public ArrayList<User> getUsers() {
@@ -69,6 +63,28 @@ public class UserBean {
         return false;
     }
 
+    public boolean isAuthenticated(String username, String password) {
+        boolean status = false;
+
+        for (User user : users) {
+            if(user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                status = true;
+            }
+        }
+        return status;
+    }
+
+    public boolean isUsernameAvailable(String username) {
+        boolean status = true;
+
+        for (User user : users) {
+            if(user.getUsername().equals(username)) {
+                status = false;
+            }
+        }
+        return status;
+    }
+
     private void writeIntoJsonFile() {
         Jsonb jsonb = JsonbBuilder.create(new
                 JsonbConfig().withFormatting(true));
@@ -76,6 +92,7 @@ public class UserBean {
             jsonb.toJson(users, new FileOutputStream(filename));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
+
         }
     }
 }

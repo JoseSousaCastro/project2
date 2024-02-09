@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="jl-jc-pd-project2:war exploded" />
+      <artifact name="backend:war exploded" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -10,8 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2d6edc91-b28b-4e33-ab2b-2e083bb35001" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Frontend/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Frontend/task.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/task.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/bean/TaskBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/bean/TaskBean.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/dto/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/dto/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,29 +31,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;petersundays&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="6b3ee2ff-a691-4305-8622-ebfbf90ebe72" />
-        <option name="url" value="https://github.com/JoseSousaCastro/project2.git" />
-      </UrlAndAccount>
-    </option>
-  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
         <option name="mavenHome" value="Use Maven wrapper" />
       </MavenGeneralSettings>
     </option>
-  </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -69,7 +55,8 @@
     "JBoss/WildFly Server.JBoss/WildFly 30.0.1.Final.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "retrospectives",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/AoR/39. Projeto 2_Pedro_Joao_Castro/project2/backend",
     "node.js.detected.package.eslint": "true",
@@ -80,18 +67,9 @@
     "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.keymap",
     "vue.rearranger.settings.migration": "true"
-
   }
-}</component>
-  <component name="QodanaCIConfigService">
-    <option name="ciType" value="GITHUB" />
-    <option name="path" value="$PROJECT_DIR$/.github/workflows/qodana_code_quality.yml" />
-  </component>
-  <component name="QodanaIsSelectedPersistenceService">
-    <option name="selectedOrLoading" value="true" />
-  </component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="aor.paj.project2.backend.service" />
@@ -102,10 +80,10 @@
   <component name="RunManager">
     <configuration name="JBoss/WildFly 30.0.1.Final" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="JBoss/WildFly 30.0.1.Final" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/frontend" />
-      <option name="BROWSER_ID" value="98ca6316-2f89-46d9-a9e5-fa9e2b0625b3" />
+      <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
-        <artifact name="jl-jc-pd-project2:war exploded">
+        <artifact name="backend:war exploded">
           <settings />
         </artifact>
       </deployment>
@@ -170,6 +148,7 @@
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
           <artifact name="jl-jc-pd-project2:war exploded" />
+          <artifact name="backend:war exploded" />
         </option>
       </method>
     </configuration>
@@ -177,7 +156,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
+        <option value="jdk-21.0.2-openjdk-21.0.2-f644763e9732-c0c073db" />
       </set>
     </attachedChunks>
   </component>
@@ -195,11 +174,7 @@
       <workItem from="1707408522089" duration="3306000" />
       <workItem from="1707413281685" duration="281000" />
       <workItem from="1707414639910" duration="938000" />
-      <workItem from="1707435324882" duration="933000" />
-      <workItem from="1707482629667" duration="448000" />
-      <workItem from="1707483101114" duration="71000" />
-      <workItem from="1707489310068" duration="1588000" />
-      <workItem from="1707491393102" duration="2165000" />
+      <workItem from="1707498952863" duration="691000" />
     </task>
     <servers />
   </component>
@@ -208,9 +183,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
   </component>
 </project>

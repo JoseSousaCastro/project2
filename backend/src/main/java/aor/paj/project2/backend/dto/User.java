@@ -1,4 +1,5 @@
 package aor.paj.project2.backend.dto;
+import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -6,12 +7,19 @@ import java.net.URL;
 
 @XmlRootElement
 public class User {
+    @XmlElement
     private String username;
+    @XmlElement
     private String password;
+    @XmlElement
     private String email;
+    @XmlElement
     private String firstName;
+    @XmlElement
     private String lastName;
+    @XmlElement
     private String phone;
+    @XmlElement
     private String photoURL;
 
     public User() {
@@ -19,9 +27,7 @@ public class User {
 
 
     public User(String username, String password, String email, String firstName, String lastName, String phone, String photoURL) {
-        System.out.println("Entered user constructor");
         this.username = username;
-        System.out.println("Username: " + username);
         this.password = password;
         this.email = email;
         this.firstName = firstName;
@@ -30,25 +36,27 @@ public class User {
         this.photoURL = photoURL;
     }
 
-    @XmlElement
+
     public String getUsername() {
         return username;
     }
-    @XmlElement
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
-    @XmlElement
+
     public String getPassword() {
         return password;
     }
 
+    public void setUsername(String username) {
+        System.out.println(username);
+        this.username = username;
+    }
+
     public void setPassword(String password) {
+        System.out.println(password);
         this.password = password;
     }
 
-    @XmlElement
+
     public String getEmail() {
         return email;
     }
@@ -57,7 +65,7 @@ public class User {
         this.email = email;
     }
 
-    @XmlElement
+
     public String getFirstName() {
         return firstName;
     }
@@ -66,7 +74,7 @@ public class User {
         this.firstName = firstName;
     }
 
-    @XmlElement
+
     public String getLastName() {
         return lastName;
     }
@@ -75,7 +83,7 @@ public class User {
         this.lastName = lastName;
     }
 
-    @XmlElement
+
     public String getPhone() {
         return phone;
     }
@@ -84,7 +92,6 @@ public class User {
         this.phone = phone;
     }
 
-    @XmlElement
 
     public String getPhotoURL() {
         return photoURL;
@@ -94,5 +101,3 @@ public class User {
         this.photoURL = photoURL;
     }
 }
-
-
