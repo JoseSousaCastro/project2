@@ -10,15 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2d6edc91-b28b-4e33-ab2b-2e083bb35001" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Frontend/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Frontend/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/home.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Frontend/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Frontend/task.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/task.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/backend_war.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/backend_war_exploded.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/User.java" afterDir="false" />
-
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +69,7 @@
     "JBoss/WildFly Server.JBoss/WildFly 30.0.1.Final.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "respetiva",
+    "git-widget-placeholder": "retrospectives",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/AoR/39. Projeto 2_Pedro_Joao_Castro/project2/backend",
     "node.js.detected.package.eslint": "true",
@@ -95,21 +88,6 @@
   <component name="QodanaCIConfigService">
     <option name="ciType" value="GITHUB" />
     <option name="path" value="$PROJECT_DIR$/.github/workflows/qodana_code_quality.yml" />
-  </component>
-  <component name="QodanaCloudProjectLink">
-    <option name="lastReportId" value="DVD6e" />
-    <option name="linkedProjectId" value="3Ja7k" />
-    <option name="linkedProjectName" value="project2" />
-    <option name="organizationId" value="3jwx4" />
-    <option name="userId" value="3kXOL" />
-  </component>
-  <component name="QodanaHighlightedReportService">
-    <option name="cloudReportPersistedInfo">
-      <CloudReportPersistedInfo>
-        <option name="projectId" value="3Ja7k" />
-        <option name="reportId" value="DVD6e" />
-      </CloudReportPersistedInfo>
-    </option>
   </component>
   <component name="QodanaIsSelectedPersistenceService">
     <option name="selectedOrLoading" value="true" />
@@ -221,8 +199,7 @@
       <workItem from="1707482629667" duration="448000" />
       <workItem from="1707483101114" duration="71000" />
       <workItem from="1707489310068" duration="1588000" />
-      <workItem from="1707491393102" duration="1313000" />
-
+      <workItem from="1707491393102" duration="2165000" />
     </task>
     <servers />
   </component>
