@@ -36,11 +36,17 @@ public class UserBean {
     }
 
     public User getUser(String username) {
-        for (User user : users) {
-            if (user.getUsername().equals(username))
-                return user;
+        User user = null;
+        boolean found = false;
+        for (User a : users) {
+            while (!found) {
+                if (a.getUsername().equals(username)) {
+                    user = a;
+                    found = true;
+                }
+            }
         }
-        return null;
+        return user;
     }
 
     public ArrayList<User> getUsers() {

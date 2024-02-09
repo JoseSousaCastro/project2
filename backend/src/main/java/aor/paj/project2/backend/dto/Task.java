@@ -3,21 +3,41 @@ package aor.paj.project2.backend.dto;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @XmlRootElement
 public class Task {
     private long id;
     private String title;
     private String description;
-    private int STATE_ID; // perceber se tem de ser static e final
+    private int STATE_ID;
     private int priority;
+    private LocalDate creationDate;
+    private LocalDate limitDate;
+    private final int lowPriority = 100;
+    private final int mediumPriority = 200;
+    private final int highPriority = 300;
+    private final int TODO = 100; // perceber se tem de ser static e final
+    private final int DOING = 200;
+    private final int DONE = 300;
     public Task() {
     }
-    public Task(int id, String title, String description, int priority) {
+    public Task(String title, String description, String priority, String limitDate) {
         this.id = System.currentTimeMillis(); 
         this.title = title;
         this.description= description;
-        this.STATE_ID = 100;
-        this.priority = priority;
+        this.STATE_ID = TODO;
+        this.creationDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        this.limitDate = LocalDate.parse(limitDate, formatter);
+        if (priority.equalsIgnoreCase("low")) {
+            this.priority = lowPriority;
+        } else if (priority.equalsIgnoreCase("medium")) {
+            this.priority = mediumPriority;
+        } else if (priority.equalsIgnoreCase("high")) {
+            this.priority = highPriority;
+        }
     }
     @XmlElement
     public long getId() {
@@ -51,6 +71,17 @@ public class Task {
     public void setPriority(int priority) {
         this.priority = priority;
     }
-
+    @XmlElement
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+    @XmlElement
+    public LocalDate getLimitDate() {
+        return limitDate;
+    }
+    public void setLimitDate(String limitDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        this.limitDate = LocalDate.parse(limitDate, formatter);
+    }
 }
 

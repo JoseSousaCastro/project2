@@ -11,7 +11,6 @@ public class User {
     private String email;
     private String firstName;
     private String lastName;
-
     private String phone;
     private String photoURL;
 
@@ -20,7 +19,9 @@ public class User {
 
 
     public User(String username, String password, String email, String firstName, String lastName, String phone, String photoURL) {
+        System.out.println("Entered user constructor");
         this.username = username;
+        System.out.println("Username: " + username);
         this.password = password;
         this.email = email;
         this.firstName = firstName;
