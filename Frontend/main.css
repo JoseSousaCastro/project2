@@ -234,15 +234,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
 }
-/* Título Welcome to Scrum */
-h1 {
-  margin-left: 20px;
-  font-size: 20px;
-  color: var(--light-grey);
-}
-/* Definições do relógio */
+/* Definições do relógio 
 .container.clock {
   justify-content: center;
   align-items: center;
@@ -264,22 +257,68 @@ h1 {
   margin-left: 0px;
   transition: ease-in-out 0.1s;
   transition-property: background, box-shadow, color;
+}*/
+.nav-menu-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-size: 20px;
+  color: var(--light-grey);
+  cursor: pointer;
 }
+
+.nav-menu-left {
+  margin-left: 50px;
+}
+.nav-menu-right {
+  margin-right: 100px;
+}
+.nav-menu-left ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  overflow: hidden;
+  background-color: var(--green3);
+}
+.nav-menu-left li {
+  display:inline;
+  margin-right: 40px;
+  font-size: 20px;
+  color: var(--light-grey);
+  cursor: pointer;
+}
+.nav-menu-left a,
+.nav-menu-right a {
+  text-decoration: none;
+  color: var(--light-grey);
+  font-size: 17px;
+}
+.nav-menu-left a:hover {
+  color: var(--doing);
+}
+.nav-menu-right {
+  display: flex;
+  align-items: center;
+}
+
+#profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
 /* Username */
-.username {
-  color: var(--green1);
-}
-.username input {
-  padding: 5px;
-  width: 150px;
-}
-.username #username {
+#username-header {
   color: var(--light-grey);
   font-weight: bold;
 }
 /* Logout button */
 .logout-button {
-  margin-right: 100px;
+  margin-right: 50px;
+  margin-left: 100px;
   background-color: var(--green3);
   color: var(--light-grey);
   border: none;
@@ -287,13 +326,13 @@ h1 {
   cursor: pointer;
   display: flex;
   align-items: center;
-  font-size: 15px;
+  font-size: 17px;
   border-radius: 5px;
 }
 .logout-button img {
-  width: 18px;
-  height: 19px;
-  margin-right: 8px;
+  width: 19px;
+  height: 20px;
+  margin-right: 9px;
 }
 /* Definições do link de logout no header (default e hover) */
 .logout-link {

@@ -1,7 +1,7 @@
 window.onload = function () {
-    var username = sessionStorage.getItem("username");
-    if (username) {
-      document.getElementById("username").textContent = username;
+    var usernameHeader = sessionStorage.getItem("username-header");
+    if (usernameHeader) {
+      document.getElementById("username-header").textContent = usernameHeader;
     }
     loadTasks();
   };

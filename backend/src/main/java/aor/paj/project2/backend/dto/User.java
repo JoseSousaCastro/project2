@@ -33,6 +33,10 @@ public class User {
     public String getUsername() {
         return username;
     }
+    @XmlElement
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     @XmlElement
     public String getPassword() {
