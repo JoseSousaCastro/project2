@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @ApplicationScoped
@@ -36,12 +37,17 @@ public class TaskBean {
     }
 
     public Task getTask(long id) {
-        for (Task a : tasks) {
-            if (a.getId() == id) {
-                return a;
+        Task task = null;
+        boolean found = false;
+        while (!found) {
+            for (Task a : tasks) {
+                if (a.getId() == id) {
+                    task = a;
+                    found = true;
+                }
             }
         }
-        return null;
+        return task;
     }
 
     public ArrayList<Task> getTasks() {
@@ -49,29 +55,43 @@ public class TaskBean {
     }
 
     public boolean removeTask(long id) {
-        for (Task a : tasks) {
-            if (a.getId() == id) {
-                tasks.remove(a);
-                writeIntoJsonFile();
-                return true;
+        boolean removed = false;
+        while (!removed) {
+            for (Task a : tasks) {
+                if (a.getId() == id) {
+                    tasks.remove(a);
+                    writeIntoJsonFile();
+                    removed = true;
+                }
             }
         }
-        return false;
+        return removed;
     }
 
-    public boolean updateTask(long id, Task task) {
-        for (Task a : tasks) {
-            if (a.getId() == id) {
-                a.setTitle(task.getTitle());
-                a.setDescription(task.getDescription());
-                a.setPriority(task.getPriority());
-                a.setSTATE_ID(task.getSTATE_ID());
-                writeIntoJsonFile();
-                return true;
+    public boolean updateTask(Task task) {
+        boolean updated = false;
+        while (!updated) {
+            for (Task a : tasks) {
+                if (a.getId() == task.getId()) {
+                    a.setTitle(task.getTitle());
+                    a.setDescription(task.getDescription());
+                    a.setPriority(task.getPriority());
+                    a.setSTATE_ID(task.getSTATE_ID());
+                    String limitDateString = task.getLimitDate().toString();
+                    a.setLimitDate(limitDateString);
+                    LocalDate limitDate = a.getLimitDate();
+                    if (limitDate.isBefore(a.getCreationDate()) || a.getTitle().isEmpty() || a.getDescription().isEmpty()) {
+                        updated = false;
+                    } else {
+                        updated = true;
+                        writeIntoJsonFile();
+                    }
+                }
             }
         }
-        return false;
+        return updated;
     }
+
 
     private void writeIntoJsonFile() {
         Jsonb jsonb = JsonbBuilder.create(new
