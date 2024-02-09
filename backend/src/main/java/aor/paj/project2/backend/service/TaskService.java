@@ -28,6 +28,7 @@ public class TaskService {
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addTask(Task task) {
+        System.out.println("Task: " + task.getTitle() + " " + task.getDescription() + " " + task.getPriority() + " " + task.getLimitDate());
         taskBean.addTask(task);
         return Response.status(201).entity("Task added").build();
     }
