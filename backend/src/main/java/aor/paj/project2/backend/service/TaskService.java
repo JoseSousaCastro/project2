@@ -49,21 +49,28 @@ public class TaskService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response removeTask(@QueryParam("id")int id) {
         boolean deleted = taskBean.removeTask(id);
-        if (!deleted)
-            return Response.status(200).entity("Task with this id is not found").build();
+        Response response;
+        if (!deleted) {
+            response = Response.status(200).entity("Task with this id is not found").build();
+        } else {
+            response = Response.status(200).entity("deleted").build();
+        }
 
-        return Response.status(200).entity("deleted").build();
+        return response;
     }
 
 
     @PUT
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateTask(Task task, @HeaderParam("id") int id) {
-        boolean updated = taskBean.updateTask(id, task);
-        if (!updated)
-            return Response.status(200).entity("Task with this id is not found").build();
-
-        return Response.status(200).entity("Task updated").build();
+    public Response updateTask(Task task) {
+        boolean updated = taskBean.updateTask(task);
+        Response response;
+        if (!updated) {
+            response = Response.status(200).entity("Task with this id is not found").build();
+        } else {
+            response = Response.status(200).entity("updated").build();
+        }
+        return response;
     }
 }
