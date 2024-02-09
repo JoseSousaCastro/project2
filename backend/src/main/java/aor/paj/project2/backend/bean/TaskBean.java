@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 @ApplicationScoped
 public class TaskBean {
-    final String filename = "tasks.json";
+    private final String filename = "tasks.json";
     private ArrayList<Task> tasks;
 
     public TaskBean() {
@@ -75,8 +75,10 @@ public class TaskBean {
                 if (a.getId() == task.getId()) {
                     a.setTitle(task.getTitle());
                     a.setDescription(task.getDescription());
-                    a.setPriority(task.getPriority());
-                    a.setSTATE_ID(task.getSTATE_ID());
+                    String priorityString = task.priorityString(task.getPriority()); // converte a prioridade de int para string
+                    a.setPriority(priorityString);
+                    String stateIdString = task.stateIdString(task.getStateId()); // converte o estado de int para string
+                    a.setStateId(stateIdString);
                     String limitDateString = task.getLimitDate().toString();
                     a.setLimitDate(limitDateString);
                     LocalDate limitDate = a.getLimitDate();
@@ -92,10 +94,8 @@ public class TaskBean {
         return updated;
     }
 
-
     private void writeIntoJsonFile() {
-        Jsonb jsonb = JsonbBuilder.create(new
-                JsonbConfig().withFormatting(true));
+        Jsonb jsonb = JsonbBuilder.create(new JsonbConfig().withFormatting(true));
         try {
             jsonb.toJson(tasks, new FileOutputStream(filename));
         } catch (FileNotFoundException e) {
