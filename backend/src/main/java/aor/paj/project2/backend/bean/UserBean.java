@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 @ApplicationScoped
 public class UserBean {
-    final String filename = "tasks.json";
+    private final String filename = "users.json";
     private ArrayList<User> users;
 
     public UserBean() {
@@ -63,6 +63,16 @@ public class UserBean {
         return false;
     }
 
+    public boolean isAuthenticated(String username, String password) {
+        boolean status = false;
+
+        for (User user : users) {
+            if(user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                status = true;
+            }
+        }
+        return status;
+    }
     private void writeIntoJsonFile() {
         Jsonb jsonb = JsonbBuilder.create(new
                 JsonbConfig().withFormatting(true));

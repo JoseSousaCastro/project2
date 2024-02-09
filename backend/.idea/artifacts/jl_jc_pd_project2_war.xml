@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="jl-jc-pd-project2:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war</output-path>
+    <root id="archive" name="jl-jc-pd-project2_war.war">
+      <element id="artifact" artifact-name="jl-jc-pd-project2:war exploded" />
+    </root>
+  </artifact>
+</component>

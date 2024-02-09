@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="backend:war exploded" />
+      <artifact name="jl-jc-pd-project2:war exploded" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -10,13 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2d6edc91-b28b-4e33-ab2b-2e083bb35001" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/jl_jc_pd_project2_war.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/jl_jc_pd_project2_war_exploded.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/backend_war.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/backend_war_exploded.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/bean/RetrospectiveBean$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/bean/RetrospectiveBean$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/bean/RetrospectiveBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/bean/RetrospectiveBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/bean/UserBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/bean/UserBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/dto/Retrospective.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/dto/Retrospective.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/dto/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/dto/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/service/ApplicationConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/service/ApplicationConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/UserBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/UserBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +59,8 @@
     "JBoss/WildFly Server.JBoss/WildFly 30.0.1.Final.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "PDO__backE__metodosTasks",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "login",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/AoR/39. Projeto 2_Pedro_Joao_Castro/project2/backend",
     "node.js.detected.package.eslint": "true",
@@ -84,7 +87,7 @@
       <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
-        <artifact name="backend:war exploded">
+        <artifact name="jl-jc-pd-project2:war exploded">
           <settings />
         </artifact>
       </deployment>
@@ -148,7 +151,7 @@
       <method v="2">
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
-          <artifact name="backend:war exploded" />
+          <artifact name="jl-jc-pd-project2:war exploded" />
         </option>
       </method>
     </configuration>

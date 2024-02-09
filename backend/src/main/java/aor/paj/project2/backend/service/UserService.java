@@ -53,4 +53,20 @@ public class UserService {
 
         return Response.status(200).entity("updated").build();
     }
+
+    @POST
+    @Path("/login")
+    @Produces(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response login(@FormParam("username") String username, @FormParam("password") String password) {
+
+        Response response;
+        boolean isAuth = userBean.isAuthenticated(username, password);
+
+        if (isAuth) {
+            response = Response.status(200).entity("login successful").build();
+        } else {
+            response = Response.status(401).entity("Invalid credentials").build();
+        }
+        return response;
+    }
 }
