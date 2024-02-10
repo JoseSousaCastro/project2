@@ -25,22 +25,21 @@ public class TaskService {
 
 
     @POST
-    @Path("/new")
+    @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newTask(Task temporaryTask) {
-        System.out.println("Task: " + temporaryTask.getTitle() + " " + temporaryTask.getDescription() + " " + temporaryTask.getPriority() + " " + temporaryTask.getLimitDate());
-        taskBean.createTask(temporaryTask);
+        taskBean.addTask(temporaryTask);
         return Response.status(201).entity("Task created successfuly").build();
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTask(@PathParam("id") long id) {
+    public Response getTask(@PathParam("id") String id) {
         Task task = taskBean.getTask(id);
-        if (task == null)
+        if (task == null) {
             return Response.status(200).entity("Task with this id is not found").build();
-
+        }
         return Response.status(200).entity(task).build();
     }
 
@@ -48,7 +47,7 @@ public class TaskService {
     @DELETE
     @Path("/delete")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response removeTask(@QueryParam("id")int id) {
+    public Response removeTask(@QueryParam("id")String id) {
         boolean deleted = taskBean.removeTask(id);
         Response response;
         if (!deleted) {
@@ -62,13 +61,15 @@ public class TaskService {
 
 
     @PUT
-    @Path("/update")
+    @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateTask(Task task) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateTask(@PathParam("id") String id) {
+        Task task = taskBean.getTask(id);
         boolean updated = taskBean.updateTask(task);
         Response response;
         if (!updated) {
-            response = Response.status(200).entity("Task with this id is not found").build();
+            response = Response.status(404).entity("Task with this id is not found").build();
         } else {
             response = Response.status(200).entity("updated").build();
         }

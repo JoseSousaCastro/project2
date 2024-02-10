@@ -31,32 +31,22 @@ public class TaskBean {
             tasks = new ArrayList<Task>();
     }
 
-    public void createTask(Task temporaryTask) {
-        // Convert LocalDate to String using a specified format
-        String limitDateString = temporaryTask.getLimitDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
-
-        // Create the task using the converted String date
-        Task task = new Task(
-                temporaryTask.getTitle(),
-                temporaryTask.getDescription(),
-                temporaryTask.getPriority(),
-                limitDateString // Pass the String representation of the LocalDate
-        );
-
-        addTask(task);
-    }
-
     public void addTask(Task task) {
+        task.setId();
+        task.setStateId(task.getStateId());
+        task.setCreationDate();
+        task.setLimitDate(task.getLimitDate());
+        task.setPriority(task.getPriority());
         tasks.add(task);
         writeIntoJsonFile();
     }
 
-    public Task getTask(long id) {
+    public Task getTask(String id) {
         Task task = null;
         boolean found = false;
         while (!found) {
             for (Task a : tasks) {
-                if (a.getId() == id) {
+                if (a.getId().equalsIgnoreCase(id)) {
                     task = a;
                     found = true;
                 }
@@ -69,11 +59,11 @@ public class TaskBean {
         return tasks;
     }
 
-    public boolean removeTask(long id) {
+    public boolean removeTask(String id) {
         boolean removed = false;
         while (!removed) {
             for (Task a : tasks) {
-                if (a.getId() == id) {
+                if (a.getId().equalsIgnoreCase(id)) {
                     tasks.remove(a);
                     writeIntoJsonFile();
                     removed = true;
@@ -87,13 +77,11 @@ public class TaskBean {
         boolean updated = false;
         while (!updated) {
             for (Task a : tasks) {
-                if (a.getId() == task.getId()) {
+                if (a.getId().equalsIgnoreCase(task.getId())) {
                     a.setTitle(task.getTitle());
                     a.setDescription(task.getDescription());
-                    String priorityString = task.priorityString(task.getPriority()); // converte a prioridade de int para string
-                    a.setPriority(Integer.parseInt(priorityString));
-                    String stateIdString = task.stateIdString(task.getStateId()); // converte o estado de int para string
-                    a.setStateId(stateIdString);
+                    a.setPriority(task.getPriority());
+                    a.setStateId(task.getStateId());
                     a.setLimitDate(task.getLimitDate());
                     if (a.getLimitDate().isBefore(a.getCreationDate()) || a.getTitle().isEmpty() || a.getDescription().isEmpty()) {
                         updated = false;
