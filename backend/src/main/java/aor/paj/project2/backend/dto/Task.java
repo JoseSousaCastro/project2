@@ -18,20 +18,22 @@ public class Task {
 
     public Task() {
     }
-    public Task(String title, String description, String priority, String limitDate) {
-        this.id = System.currentTimeMillis(); 
+    public Task(String title, String description, int priority, String limitDate) {
+        this.id = System.currentTimeMillis();
         this.title = title;
         this.description= description;
         this.stateId = setStateId("todo");
         this.creationDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        this.limitDate = LocalDate.parse(limitDate, formatter);
+        this.limitDate = parseLimitDate(limitDate);
         this.priority = setPriority(priority);
     }
     @XmlElement
     public long getId() {
         return id;
     }
+    /*public void setId() {
+        this.id = System.currentTimeMillis();
+    }*/
     @XmlElement
     public String getTitle() {
         return title;
@@ -82,18 +84,19 @@ public class Task {
     }
     // converte a prioridade de string para int, para não permitir que user insira um valor que não seja low, medium ou high
     // low = 100, medium = 200, high = 300 são valores constantes, apenas definidos para serem usados aqui
-    public int setPriority(String priority) {
+    public int setPriority(int priority) {
         final int lowPriority = 100;
         final int mediumPriority = 200;
         final int highPriority = 300;
         int newPriority = -1;
-        if (priority.equalsIgnoreCase("low")) {
+        if (priority == lowPriority) {
             newPriority = lowPriority;
-        } else if (priority.equalsIgnoreCase("medium")) {
+        } else if (priority == mediumPriority) {
             newPriority = mediumPriority;
-        } else if (priority.equalsIgnoreCase("high")) {
+        } else if (priority == highPriority) {
             newPriority = highPriority;
         }
+
         return newPriority;
 
     }
@@ -117,21 +120,13 @@ public class Task {
     public LocalDate getLimitDate() {
         return limitDate;
     }
-    public void setLimitDate(String limitDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        this.limitDate = LocalDate.parse(limitDate, formatter);
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public LocalDate parseLimitDate(String limitDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+        return LocalDate.parse(limitDate, formatter);
     }
 
     public void setStateId(int stateId) {
         this.stateId = stateId;
-    }
-
-    public void setPriority(int priority) {
-        this.priority = priority;
     }
 
     public void setCreationDate(LocalDate creationDate) {

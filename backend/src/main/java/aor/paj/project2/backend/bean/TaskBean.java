@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 @ApplicationScoped
@@ -29,6 +28,11 @@ public class TaskBean {
             }
         } else
             tasks = new ArrayList<Task>();
+    }
+
+    public void createTask(Task temporaryTask) {
+        Task task = new Task(temporaryTask.getTitle(), temporaryTask.getDescription(), temporaryTask.getPriority(), temporaryTask.getLimitDate());
+        addTask(task);
     }
 
     public void addTask(Task task) {
@@ -79,10 +83,8 @@ public class TaskBean {
                     a.setPriority(priorityString);
                     String stateIdString = task.stateIdString(task.getStateId()); // converte o estado de int para string
                     a.setStateId(stateIdString);
-                    String limitDateString = task.getLimitDate().toString();
-                    a.setLimitDate(limitDateString);
-                    LocalDate limitDate = a.getLimitDate();
-                    if (limitDate.isBefore(a.getCreationDate()) || a.getTitle().isEmpty() || a.getDescription().isEmpty()) {
+                    a.setLimitDate(task.getLimitDate());
+                    if (a.getLimitDate().isBefore(a.getCreationDate()) || a.getTitle().isEmpty() || a.getDescription().isEmpty()) {
                         updated = false;
                     } else {
                         updated = true;
