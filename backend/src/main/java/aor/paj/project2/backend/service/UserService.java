@@ -30,20 +30,41 @@ public class UserService {
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response registerUser(User user) {
-
         Response response;
-
 
         boolean isUsernameAvailable = userBean.isUsernameAvailable(user.getUsername());
         if (!isUsernameAvailable) {
-            response = Response.status(Response.Status.CONFLICT).entity("Username already in use").build();
+            response = Response.status(Response.Status.CONFLICT).entity("Username already in use").build(); //status code 409
         } else {
             boolean createUser = userBean.addUser(user);
             if (createUser) {
-                response = Response.status(Response.Status.CREATED).entity("User registred successfully").build();
+                response = Response.status(Response.Status.CREATED).entity("User registred successfully").build(); //status code 201
             } else {
-                response = Response.status(Response.Status.BAD_REQUEST).entity("Something went wrong").build();
+                response = Response.status(Response.Status.BAD_REQUEST).entity("Something went wrong").build(); //status code 400
             }
+        }
+        return response;
+    }
+
+    @POST
+    @Path("/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response editUserProfile(@PathParam("username")String username, User user) {
+        User currentUser = userBean.getUser(username);
+        Response response;
+
+        if (currentUser == null) {
+            response = Response.status(Response.Status.BAD_REQUEST).entity("User with this username was not found").build();
+        } else {
+            currentUser.setUsername(user.getUsername());
+            currentUser.setPassword(user.getPassword());
+            currentUser.setEmail(user.getEmail());
+            currentUser.setPhone(user.getPhone());
+            currentUser.setFirstName(user.getFirstName());
+            currentUser.setLastName(user.getLastName());
+            currentUser.setPhotoURL(user.getPhotoURL());
+
+            response = Response.status(Response.Status.OK).entity("User profile updated successfully").build();
         }
         return response;
     }

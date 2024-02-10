@@ -10,11 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2d6edc91-b28b-4e33-ab2b-2e083bb35001" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/TaskBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/TaskBean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/UserBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/UserBean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/dto/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/dto/User.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -57,7 +54,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "backend__user",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/User/Desktop/Projetos Faculdade/2_Projeto/project2/backend",
     "node.js.detected.package.eslint": "true",
@@ -68,6 +65,7 @@
     "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -178,7 +176,7 @@
       <workItem from="1707498952863" duration="1519000" />
       <workItem from="1707514732135" duration="472000" />
       <workItem from="1707515219527" duration="12396000" />
-      <workItem from="1707562994488" duration="2265000" />
+      <workItem from="1707562994488" duration="4847000" />
     </task>
     <servers />
   </component>
