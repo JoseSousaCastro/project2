@@ -10,10 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2d6edc91-b28b-4e33-ab2b-2e083bb35001" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/bean/UserBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/bean/UserBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/service/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/UserBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/UserBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,7 +177,7 @@
       <workItem from="1707515219527" duration="12396000" />
       <workItem from="1707562994488" duration="4847000" />
       <workItem from="1707584120167" duration="12141000" />
-      <workItem from="1707601828243" duration="3424000" />
+      <workItem from="1707601828243" duration="3725000" />
     </task>
     <servers />
   </component>
