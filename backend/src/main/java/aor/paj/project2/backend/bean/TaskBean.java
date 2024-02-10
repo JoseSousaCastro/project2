@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 @ApplicationScoped
@@ -31,7 +32,17 @@ public class TaskBean {
     }
 
     public void createTask(Task temporaryTask) {
-        Task task = new Task(temporaryTask.getTitle(), temporaryTask.getDescription(), temporaryTask.getPriority(), temporaryTask.getLimitDate());
+        // Convert LocalDate to String using a specified format
+        String limitDateString = temporaryTask.getLimitDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+        // Create the task using the converted String date
+        Task task = new Task(
+                temporaryTask.getTitle(),
+                temporaryTask.getDescription(),
+                temporaryTask.getPriority(),
+                limitDateString // Pass the String representation of the LocalDate
+        );
+
         addTask(task);
     }
 
@@ -80,7 +91,7 @@ public class TaskBean {
                     a.setTitle(task.getTitle());
                     a.setDescription(task.getDescription());
                     String priorityString = task.priorityString(task.getPriority()); // converte a prioridade de int para string
-                    a.setPriority(priorityString);
+                    a.setPriority(Integer.parseInt(priorityString));
                     String stateIdString = task.stateIdString(task.getStateId()); // converte o estado de int para string
                     a.setStateId(stateIdString);
                     a.setLimitDate(task.getLimitDate());

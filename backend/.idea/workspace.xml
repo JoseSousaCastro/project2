@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="backend:war exploded" />
+      <artifact name="jl-jc-pd-project2:war exploded" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -10,10 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2d6edc91-b28b-4e33-ab2b-2e083bb35001" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/TaskBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/TaskBean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/TaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/UserBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/UserBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,9 +57,9 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "corrigir-addTask",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/AoR/39. Projeto 2_Pedro_Joao_Castro/project2/backend",
+    "last_opened_file_path": "C:/Users/User/Desktop/Projetos Faculdade/2_Projeto/project2/backend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -82,7 +84,7 @@
       <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
-        <artifact name="backend:war exploded">
+        <artifact name="jl-jc-pd-project2:war exploded">
           <settings />
         </artifact>
       </deployment>
@@ -155,7 +157,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-openjdk-21.0.2-f644763e9732-c0c073db" />
+        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
       </set>
     </attachedChunks>
   </component>
@@ -176,6 +178,7 @@
       <workItem from="1707498952863" duration="1519000" />
       <workItem from="1707514732135" duration="472000" />
       <workItem from="1707515219527" duration="12396000" />
+      <workItem from="1707562994488" duration="2265000" />
     </task>
     <servers />
   </component>
