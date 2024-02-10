@@ -1,12 +1,14 @@
 package aor.paj.project2.backend.service;
 
 import aor.paj.project2.backend.bean.UserBean;
+import aor.paj.project2.backend.dto.Task;
 import aor.paj.project2.backend.dto.User;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/users")
@@ -24,34 +26,37 @@ public class UserService {
     }
 
 
-    @POST
-    @Path("/add")
+    @PUT
+    @Path("/{username}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addUser(User user) {
-        userBean.addUser(user);
-        return Response.status(200).entity("added").build();
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateUser(@PathParam("username")String username, User user) {
+        Response response;
+
+        boolean updatedUser = userBean.updateUser(user);
+
+        if (!updatedUser) {
+            response = Response.status(Response.Status.NOT_FOUND).entity("User with this username is not found").build();
+        } else {
+            User updatedUserDetails = userBean.getUser(username);
+            response = Response.status(Response.Status.OK).entity(updatedUserDetails).build(); //status code 200
+        }
+        return response;
     }
+
 
     @GET
     @Path("/{username}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@PathParam("username")String username) {
+        Response response;
         User user = userBean.getUser(username);
-        if (user==null)
-            return Response.status(200).entity("User with this username is not found").build();
-
-        return Response.status(200).entity(user).build();
-    }
-
-    @PUT
-    @Path("/update")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateUser(User user) {
-        boolean updated = userBean.updateUser(user);
-        if (!updated)
-            return Response.status(200).entity("User with this username is not found").build();
-
-        return Response.status(200).entity("updated").build();
+        if (user == null) {
+            response = Response.status(Response.Status.NOT_FOUND).entity("User with this username was not found").build();
+        } else {
+            response = Response.ok().entity(user).build();
+        }
+        return response;
     }
 
     @POST
@@ -83,6 +88,42 @@ public class UserService {
             response = Response.status(200).entity("Username available").build();
         } else {
             response = Response.status(404).entity("Username already in use").build();
+        }
+        return response;
+    }
+
+    @GET
+    @Path("/{username}/tasks")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllUsersTasks(@PathParam("username") String username) {
+
+        Response response;
+        ArrayList<Task> userTasks = userBean.getUserTasks(username);
+
+        if (userTasks == null) {
+            response = Response.status(Response.Status.BAD_REQUEST).entity("No task list to return").build();
+        } else {
+            response = Response.status(Response.Status.OK).entity(userTasks).build();
+        }
+        return response;
+    }
+
+    @POST
+    @Path("/register")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response registerUser(User user) {
+        Response response;
+
+        boolean isUsernameAvailable = userBean.isUsernameAvailable(user.getUsername());
+        if (!isUsernameAvailable) {
+            response = Response.status(Response.Status.CONFLICT).entity("Username already in use").build(); //status code 409
+        } else {
+            boolean createUser = userBean.addUser(user);
+            if (createUser) {
+                response = Response.status(Response.Status.CREATED).entity("User registred successfully").build(); //status code 201
+            } else {
+                response = Response.status(Response.Status.BAD_REQUEST).entity("Something went wrong").build(); //status code 400
+            }
         }
         return response;
     }

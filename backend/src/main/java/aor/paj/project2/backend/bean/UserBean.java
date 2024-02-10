@@ -1,5 +1,6 @@
 package aor.paj.project2.backend.bean;
 
+import aor.paj.project2.backend.dto.Task;
 import aor.paj.project2.backend.dto.User;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.json.bind.Jsonb;
@@ -30,9 +31,14 @@ public class UserBean {
             users = new ArrayList<User>();
     }
 
-    public void addUser(User user) {
-        users.add(user);
+    public boolean addUser(User user) {
+
+        boolean status = false;
+        if (users.add(user)) {
+            status = true;
+        }
         writeIntoJsonFile();
+        return status;
     }
 
     public User getUser(String username) {
@@ -47,7 +53,10 @@ public class UserBean {
         return users;
     }
 
+
     public boolean updateUser(User user) {
+        boolean status = false;
+
         for (User a : users) {
             if (a.getUsername().equals(user.getUsername())) {
                 a.setPassword(user.getPassword());
@@ -57,10 +66,10 @@ public class UserBean {
                 a.setPhone(user.getPhone());
                 a.setPhotoURL(user.getPhotoURL());
                 writeIntoJsonFile();
-                return true;
+                status = true;
             }
         }
-        return false;
+        return status;
     }
 
     public boolean isAuthenticated(String username, String password) {
@@ -83,6 +92,18 @@ public class UserBean {
             }
         }
         return status;
+    }
+
+    public ArrayList<Task> getUserTasks(String username) {
+
+        ArrayList<Task> userTasks = null;
+
+        for(User user : users) {
+            if(user.getUsername().equals(username)) {
+                userTasks = (ArrayList<Task>) user.getUserTasks();
+            }
+        }
+        return userTasks;
     }
 
     private void writeIntoJsonFile() {

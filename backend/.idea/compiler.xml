@@ -7,7 +7,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="jl-jc-pd-project2" />
-        <module name="backend" />
       </profile>
     </annotationProcessing>
   </component>
