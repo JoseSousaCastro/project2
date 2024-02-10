@@ -52,7 +52,7 @@ public class UserBean {
     public ArrayList<User> getUsers() {
         return users;
     }
-    
+
 
     public boolean updateUser(User user) {
         boolean status = false;

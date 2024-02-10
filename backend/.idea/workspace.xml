@@ -11,13 +11,9 @@
   <component name="ChangeListManager">
     <list default="true" id="2d6edc91-b28b-4e33-ab2b-2e083bb35001" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/META-INF/MANIFEST.MF" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/bean/UserBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/bean/UserBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/dto/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/dto/User.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/service/UserService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/UserBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/UserBean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -184,7 +180,7 @@
       <workItem from="1707515219527" duration="12396000" />
       <workItem from="1707562994488" duration="4847000" />
       <workItem from="1707584120167" duration="12141000" />
-      <workItem from="1707601828243" duration="1958000" />
+      <workItem from="1707601828243" duration="3424000" />
     </task>
     <servers />
   </component>
