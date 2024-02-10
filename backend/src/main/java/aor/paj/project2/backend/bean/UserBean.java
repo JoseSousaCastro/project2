@@ -52,8 +52,11 @@ public class UserBean {
     public ArrayList<User> getUsers() {
         return users;
     }
+    
 
     public boolean updateUser(User user) {
+        boolean status = false;
+
         for (User a : users) {
             if (a.getUsername().equals(user.getUsername())) {
                 a.setPassword(user.getPassword());
@@ -63,10 +66,10 @@ public class UserBean {
                 a.setPhone(user.getPhone());
                 a.setPhotoURL(user.getPhotoURL());
                 writeIntoJsonFile();
-                return true;
+                status = true;
             }
         }
-        return false;
+        return status;
     }
 
     public boolean isAuthenticated(String username, String password) {

@@ -26,45 +26,20 @@ public class UserService {
     }
 
 
-    @POST
-    @Path("/register")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response registerUser(User user) {
-        Response response;
-
-        boolean isUsernameAvailable = userBean.isUsernameAvailable(user.getUsername());
-        if (!isUsernameAvailable) {
-            response = Response.status(Response.Status.CONFLICT).entity("Username already in use").build(); //status code 409
-        } else {
-            boolean createUser = userBean.addUser(user);
-            if (createUser) {
-                response = Response.status(Response.Status.CREATED).entity("User registred successfully").build(); //status code 201
-            } else {
-                response = Response.status(Response.Status.BAD_REQUEST).entity("Something went wrong").build(); //status code 400
-            }
-        }
-        return response;
-    }
-
-    @POST
+    @PUT
     @Path("/{username}")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response editUserProfile(@PathParam("username")String username, User user) {
-        User currentUser = userBean.getUser(username);
+    public Response updateUser(@PathParam("username")String username, User user) {
         Response response;
 
-        if (currentUser == null) {
-            response = Response.status(Response.Status.BAD_REQUEST).entity("User with this username was not found").build();
-        } else {
-            currentUser.setUsername(user.getUsername());
-            currentUser.setPassword(user.getPassword());
-            currentUser.setEmail(user.getEmail());
-            currentUser.setPhone(user.getPhone());
-            currentUser.setFirstName(user.getFirstName());
-            currentUser.setLastName(user.getLastName());
-            currentUser.setPhotoURL(user.getPhotoURL());
+        boolean updatedUser = userBean.updateUser(user);
 
-            response = Response.status(Response.Status.OK).entity("User profile updated successfully").build();
+        if (!updatedUser) {
+            response = Response.status(Response.Status.NOT_FOUND).entity("User with this username is not found").build();
+        } else {
+            User updatedUserDetails = userBean.getUser(username);
+            response = Response.status(Response.Status.OK).entity(updatedUserDetails).build(); //status code 200
         }
         return response;
     }
@@ -74,22 +49,14 @@ public class UserService {
     @Path("/{username}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@PathParam("username")String username) {
+        Response response;
         User user = userBean.getUser(username);
-        if (user==null)
-            return Response.status(Response.Status.NOT_FOUND).entity("User with this username was not found").build();
-
-        return Response.ok().entity(user).build();
-    }
-
-    @PUT
-    @Path("/update")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateUser(User user) {
-        boolean updated = userBean.updateUser(user);
-        if (!updated)
-            return Response.status(200).entity("User with this username is not found").build();
-
-        return Response.status(200).entity("updated").build();
+        if (user == null) {
+            response = Response.status(Response.Status.NOT_FOUND).entity("User with this username was not found").build();
+        } else {
+            response = Response.ok().entity(user).build();
+        }
+        return response;
     }
 
     @POST
@@ -136,7 +103,27 @@ public class UserService {
         if (userTasks == null) {
             response = Response.status(Response.Status.BAD_REQUEST).entity("No task list to return").build();
         } else {
-            response = Response.status(Response.Status.OK).entity("List of tasks returned successfully").build();
+            response = Response.status(Response.Status.OK).entity(userTasks).build();
+        }
+        return response;
+    }
+
+    @POST
+    @Path("/register")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response registerUser(User user) {
+        Response response;
+
+        boolean isUsernameAvailable = userBean.isUsernameAvailable(user.getUsername());
+        if (!isUsernameAvailable) {
+            response = Response.status(Response.Status.CONFLICT).entity("Username already in use").build(); //status code 409
+        } else {
+            boolean createUser = userBean.addUser(user);
+            if (createUser) {
+                response = Response.status(Response.Status.CREATED).entity("User registred successfully").build(); //status code 201
+            } else {
+                response = Response.status(Response.Status.BAD_REQUEST).entity("Something went wrong").build(); //status code 400
+            }
         }
         return response;
     }

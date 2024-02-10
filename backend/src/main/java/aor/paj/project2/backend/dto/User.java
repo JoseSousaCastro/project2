@@ -24,7 +24,7 @@ public class User {
     @XmlElement
     private String photoURL;
     @XmlElement
-    private List<Task> userTasks;
+    private ArrayList<Task> userTasks = new ArrayList<>();
 
     public User() {
     }
@@ -38,7 +38,6 @@ public class User {
         this.lastName = lastName;
         this.phone = phone;
         this.photoURL = photoURL;
-        this.userTasks = new ArrayList<>();
     }
 
 
@@ -72,7 +71,7 @@ public class User {
         return userTasks;
     }
 
-    public void setUserTasks(List<Task> userTasks) {
+    public void setUserTasks(ArrayList<Task> userTasks) {
         this.userTasks = userTasks;
     }
 

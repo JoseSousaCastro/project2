@@ -11,7 +11,12 @@
   <component name="ChangeListManager">
     <list default="true" id="2d6edc91-b28b-4e33-ab2b-2e083bb35001" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/bean/UserBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/bean/UserBean.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/dto/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/dto/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/jl_jc_pd_project2_war_exploded/WEB-INF/classes/aor/paj/project2/backend/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/UserBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/UserBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,28 +52,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "JBoss/WildFly Server.JBoss/WildFly 30.0.1.Final.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "backend__user",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/User/Desktop/Projetos Faculdade/2_Projeto/project2/backend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;JBoss/WildFly Server.JBoss/WildFly 30.0.1.Final.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;user__backend__laptop&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/User/Desktop/Projetos Faculdade/2_Projeto/project2/backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="aor.paj.project2.backend.service" />
@@ -146,8 +151,8 @@
       <method v="2">
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
-          <artifact name="jl-jc-pd-project2:war exploded" />
           <artifact name="backend:war exploded" />
+          <artifact name="jl-jc-pd-project2:war exploded" />
         </option>
       </method>
     </configuration>
@@ -155,6 +160,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
+        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351" />
         <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
       </set>
     </attachedChunks>
@@ -177,6 +183,8 @@
       <workItem from="1707514732135" duration="472000" />
       <workItem from="1707515219527" duration="12396000" />
       <workItem from="1707562994488" duration="4847000" />
+      <workItem from="1707584120167" duration="12141000" />
+      <workItem from="1707601828243" duration="1958000" />
     </task>
     <servers />
   </component>
