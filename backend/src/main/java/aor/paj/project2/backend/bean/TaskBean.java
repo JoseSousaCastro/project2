@@ -30,12 +30,12 @@ public class TaskBean {
             tasks = new ArrayList<Task>();
     }
 
-    public void createTask(Task temporaryTask) {
-        Task task = new Task(temporaryTask.getTitle(), temporaryTask.getDescription(), temporaryTask.getPriority(), temporaryTask.getLimitDate());
-        addTask(task);
-    }
-
     public void addTask(Task task) {
+        task.setId();
+        task.setStateId(task.getStateId());
+        task.setCreationDate();
+        task.setLimitDate(task.getLimitDate());
+        task.setPriority(task.getPriority());
         tasks.add(task);
         writeIntoJsonFile();
     }
@@ -79,10 +79,8 @@ public class TaskBean {
                 if (a.getId() == task.getId()) {
                     a.setTitle(task.getTitle());
                     a.setDescription(task.getDescription());
-                    String priorityString = task.priorityString(task.getPriority()); // converte a prioridade de int para string
-                    a.setPriority(priorityString);
-                    String stateIdString = task.stateIdString(task.getStateId()); // converte o estado de int para string
-                    a.setStateId(stateIdString);
+                    a.setPriority(task.getPriority());
+                    a.setStateId(task.getStateId());
                     a.setLimitDate(task.getLimitDate());
                     if (a.getLimitDate().isBefore(a.getCreationDate()) || a.getTitle().isEmpty() || a.getDescription().isEmpty()) {
                         updated = false;
