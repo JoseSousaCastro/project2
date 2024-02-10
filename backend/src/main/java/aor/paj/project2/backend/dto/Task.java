@@ -8,30 +8,32 @@ import java.time.format.DateTimeFormatter;
 
 @XmlRootElement
 public class Task {
-    private long id;
+    private String id;
     private String title;
     private String description;
     private int stateId;
     private int priority;
     private LocalDate creationDate;
+    private LocalDate editionDate;
     private LocalDate limitDate;
     private static final int TODO = 100;
-    private final int DOING = 200;
-    private final int DONE = 300;
+    private static final int DOING = 200;
+    private static final int DONE = 300;
     private static final int LOWPRIORITY = 100;
-    private final int MEDIUMPRIORITY = 200;
-    private final int HIGHPRIORITY = 300;
+    private static final int MEDIUMPRIORITY = 200;
+    private static final int HIGHPRIORITY = 300;
 
     public Task() {
     }
 
     @XmlElement
-    public long getId() {
+    public String getId() {
+        System.out.println("Task id: " + id);
         return id;
     }
 
     public void setId() {
-        this.id = System.currentTimeMillis();
+        this.id = String.valueOf(System.currentTimeMillis());
     }
 
     @XmlElement
@@ -92,9 +94,13 @@ public class Task {
         return limitDate;
     }
 
-    public LocalDate parseLimitDate(String limitDate) {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
-        return LocalDate.parse(limitDate, formatter);
+    @XmlElement
+    public LocalDate getEditionDate() {
+        return editionDate;
+    }
+
+    public void setEditionDate() {
+        this.editionDate = LocalDate.now();
     }
 
     public void setCreationDate() {

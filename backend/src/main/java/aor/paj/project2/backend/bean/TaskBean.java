@@ -40,12 +40,12 @@ public class TaskBean {
         writeIntoJsonFile();
     }
 
-    public Task getTask(long id) {
+    public Task getTask(String id) {
         Task task = null;
         boolean found = false;
         while (!found) {
             for (Task a : tasks) {
-                if (a.getId() == id) {
+                if (a.getId().equalsIgnoreCase(id)) {
                     task = a;
                     found = true;
                 }
@@ -58,11 +58,11 @@ public class TaskBean {
         return tasks;
     }
 
-    public boolean removeTask(long id) {
+    public boolean removeTask(String id) {
         boolean removed = false;
         while (!removed) {
             for (Task a : tasks) {
-                if (a.getId() == id) {
+                if (a.getId().equalsIgnoreCase(id)) {
                     tasks.remove(a);
                     writeIntoJsonFile();
                     removed = true;
@@ -76,7 +76,7 @@ public class TaskBean {
         boolean updated = false;
         while (!updated) {
             for (Task a : tasks) {
-                if (a.getId() == task.getId()) {
+                if (a.getId().equalsIgnoreCase(task.getId())) {
                     a.setTitle(task.getTitle());
                     a.setDescription(task.getDescription());
                     a.setPriority(task.getPriority());
