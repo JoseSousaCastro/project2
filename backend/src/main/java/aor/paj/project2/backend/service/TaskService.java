@@ -25,11 +25,10 @@ public class TaskService {
 
 
     @POST
-    @Path("/new")
+    @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newTask(Task temporaryTask) {
-        System.out.println("Task: " + temporaryTask.getTitle() + " " + temporaryTask.getDescription() + " " + temporaryTask.getPriority() + " " + temporaryTask.getLimitDate());
-        taskBean.createTask(temporaryTask);
+        taskBean.addTask(temporaryTask);
         return Response.status(201).entity("Task created successfuly").build();
     }
 
@@ -64,7 +63,8 @@ public class TaskService {
     @PUT
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateTask(Task task) {
+    public Response updateTask(@QueryParam("id")int id) {
+        Task task = taskBean.getTask(id);
         boolean updated = taskBean.updateTask(task);
         Response response;
         if (!updated) {
