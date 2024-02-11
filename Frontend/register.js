@@ -1,14 +1,17 @@
 // register.js
+    
 
-document.getElementById('registerButton-register').addEventListener("click", function () {
-    var username = document.getElementById('username-register').value.trim();
-    var password = document.getElementById('password-register').value.trim();
-    var passwordConfirm = document.getElementById('passwordConfirm-register').value.trim();
-    var email = document.getElementById('email-register').value.trim();
-    var firstName = document.getElementById('firstName-register').value.trim();
-    var lastName = document.getElementById('lastName-register').value.trim();
-    var phone = document.getElementById('phone-register').value.trim();
-    var photoURL = document.getElementById('photoURL-register').value.trim();
+document.getElementById('registrationForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    let username = document.getElementById('username-register').value.trim();
+    let password = document.getElementById('password-register').value.trim();
+    let passwordConfirm = document.getElementById('passwordConfirm-register').value.trim();
+    let firstName = document.getElementById('firstName-register').value.trim();
+    let lastName = document.getElementById('lastName-register').value.trim();
+    let phone = document.getElementById('phone-register').value.trim();
+    let photoURL = document.getElementById('photoURL-register').value.trim();
+
 
     // Validar o username
     if (username === '') {
@@ -37,14 +40,6 @@ document.getElementById('registerButton-register').addEventListener("click", fun
         document.getElementById('passwordConfirm-register').setCustomValidity('');
     }
 
-    // Validar o email
-    if (email === '') {
-        document.getElementById('email-register').setCustomValidity('Email é obrigatório.');
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        document.getElementById('email-register').setCustomValidity('Por favor, insira um endereço de e-mail válido.');
-    } else {
-        document.getElementById('email-register').setCustomValidity('');
-    }
 
     // Validar o primeiro nome
     if (firstName === '') {
@@ -76,60 +71,100 @@ document.getElementById('registerButton-register').addEventListener("click", fun
     // Validar o URL da foto
     if (photoURL === '') {
         document.getElementById('photoURL-register').setCustomValidity('URL da foto é obrigatório.');
-    } else if (!/^(http:\/\/|https:\/\/).+$/i.test(photoURL)) {
+    } else if (/\s/.test(photoURL)) {
         document.getElementById('photoURL-register').setCustomValidity('Por favor, insira uma URL válida começando com "http://" ou "https://".');
     } else {
         document.getElementById('photoURL-register').setCustomValidity('');
     }
 
-      // Retorna true se o formulário for válido, false caso contrário
-document.getElementById('registrationForm').addEventListener('submit', function (event) {
-    event.preventDefault();
     let newUser = createUserData();
-// Send userData to the backend
-fetch('http://localhost:8080/backend_war_exploded/rest/users/add', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(newUser)
-})
-    .then(response => {
+    let registerRequest = "http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/register";
+    const inputFieldIds = [
+        'username-register', 
+        'password-register', 
+        'email-register', 
+        'passwordConfirm-register',
+        'firstName-register',
+        'lastName-register',
+        'phone-register',
+        'photoURL-register'
+    ];
+
+    try {
+        const response = await fetch(registerRequest, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': '*/*'
+            },
+            body: JSON.stringify(newUser)
+        });
+
         if (response.ok) {
-            // Redirect to index.html after successful registration
-            //window.location.href = 'index.html';
-        } else {
-            throw new Error('Failed to register');
+            alert("Account registred successfully!")
+
+            //depois da conta criada com sucesso, apaga os campos escritos pelo user
+    
+
+            inputFieldIds.forEach(fieldId => {
+                document.getElementById(fieldId).value = '';
+            });
+            window.location.href = 'index.html';
+
+        } else if (response.status === 409) {
+            alert("Username already in use");
         }
-    })
-    .catch(error => {
-        console.error(error);
-        // Handle error
-    });
-});
 
-    function createUserData() {
-        let isFormValid = document.getElementById('registrationForm').checkValidity();
-        console.log('Form is valid');
-
-        let userData =null;
-
-        if (isFormValid) {
-            userData = {
-                username: username,
-                password: password,
-                email: email,
-                firstName: firstName,
-                lastName: lastName,
-                phone: phone,
-                photoURL: photoURL
-            };
-
-        } else {
-            document.getElementById('registrationForm').reportValidity();
-            console.error('Form is not valid');
-        }
-        return userData;
+    } catch (error) {
+        console.error('Error:', error);
+        alert("Something went wrong");
     }
-
 });
+
+function createUserData() {
+    let isFormValid = document.getElementById('registrationForm').checkValidity();
+
+    if (isFormValid) {
+        let username = document.getElementById('username-register').value.trim();
+        let password = document.getElementById('password-register').value.trim();
+        let email = document.getElementById('email-register').value.trim();
+        let firstName = document.getElementById('firstName-register').value.trim();
+        let lastName = document.getElementById('lastName-register').value.trim();
+        let phone = document.getElementById('phone-register').value.trim();
+        let photoURL = document.getElementById('photoURL-register').value.trim();
+
+        return {
+            username: username,
+            password: password,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            phone: phone,
+            photoURL: photoURL
+        };
+    } else {
+        document.getElementById('registrationForm').reportValidity();
+        console.error('Form is not valid');
+        return null;
+    }
+}
+
+function createUserObject() {
+    return [
+        username = document.getElementById('username-register').value.trim(),
+        password = document.getElementById('password-register').value.trim(),
+        email = document.getElementById('email-register').value.trim(),
+        firstName = document.getElementById('firstName-register').value.trim(),
+        lastName = document.getElementById('lastName-register').value.trim(),
+        phone = document.getElementById('phone-register').value.trim(),
+        photoURL = document.getElementById('photoURL-register').value.trim()
+    ]
+}
+
+function verifyIfAnyFieldIsEmpty(fields) {
+    fields.forEach(field => {
+        
+    })
+}
+
+
