@@ -4,6 +4,8 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 @XmlRootElement
 public class User {
@@ -21,6 +23,8 @@ public class User {
     private String phone;
     @XmlElement
     private String photoURL;
+    @XmlElement
+    private ArrayList<Task> userTasks = new ArrayList<>();
 
     public User() {
     }
@@ -47,12 +51,10 @@ public class User {
     }
 
     public void setUsername(String username) {
-        System.out.println(username);
         this.username = username;
     }
 
     public void setPassword(String password) {
-        System.out.println(password);
         this.password = password;
     }
 
@@ -65,6 +67,13 @@ public class User {
         this.email = email;
     }
 
+    public List<Task> getUserTasks() {
+        return userTasks;
+    }
+
+    public void setUserTasks(ArrayList<Task> userTasks) {
+        this.userTasks = userTasks;
+    }
 
     public String getFirstName() {
         return firstName;

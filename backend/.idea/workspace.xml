@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="backend:war exploded" />
+      <artifact name="jl-jc-pd-project2:war exploded" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -10,10 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2d6edc91-b28b-4e33-ab2b-2e083bb35001" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/TaskBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/bean/TaskBean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/dto/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/TaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +65,7 @@
     "project.structure.side.proportion": "0.2",
     "vue.rearranger.settings.migration": "true"
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="aor.paj.project2.backend.service" />
@@ -76,10 +73,12 @@
       <recent name="aor.paj.project2.backend.dto" />
     </key>
   </component>
+
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-openjdk-21.0.2-f644763e9732-c0c073db" />
+        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351" />
+        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
       </set>
     </attachedChunks>
   </component>
