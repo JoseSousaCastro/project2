@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 @ApplicationScoped
@@ -33,7 +32,7 @@ public class TaskBean {
 
     public void addTask(Task task) {
         task.setId();
-        task.setStateId(Task.TODO);
+        task.setStateId(task.getStateId());
         task.setCreationDate();
         task.setLimitDate(task.getLimitDate());
         task.setPriority(task.getPriority());
@@ -42,12 +41,11 @@ public class TaskBean {
     }
 
     public Task getTask(String id) {
-        System.out.println("getTask id: " + id);
         Task task = null;
         boolean found = false;
         while (!found) {
             for (Task a : tasks) {
-                if (a.getId().equals(id)) {
+                if (a.getId().equalsIgnoreCase(id)) {
                     task = a;
                     found = true;
                 }
@@ -74,16 +72,16 @@ public class TaskBean {
         return removed;
     }
 
-    public boolean updateTask(String id, Task editedTask) {
+    public boolean updateTask(Task task) {
         boolean updated = false;
         while (!updated) {
             for (Task a : tasks) {
-                if (a.getId().equals(id)) {
-                    a.setTitle(editedTask.getTitle());
-                    a.setDescription(editedTask.getDescription());
-                    a.setPriority(editedTask.getPriority());
-                    a.setStateId(editedTask.getStateId());
-                    a.setLimitDate(editedTask.getLimitDate());
+                if (a.getId().equalsIgnoreCase(task.getId())) {
+                    a.setTitle(task.getTitle());
+                    a.setDescription(task.getDescription());
+                    a.setPriority(task.getPriority());
+                    a.setStateId(task.getStateId());
+                    a.setLimitDate(task.getLimitDate());
                     if (a.getLimitDate().isBefore(a.getCreationDate()) || a.getTitle().isEmpty() || a.getDescription().isEmpty()) {
                         updated = false;
                     } else {
