@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Scrum</title>
+    <title>Retrospectives</title>
     <link  type="text/css" rel="stylesheet" href="main.css">
     <link rel="icon" href="multimedia/favicon.png" type="image/x-icon">
 </head>
@@ -29,7 +29,7 @@
     <div class="container"> <!--Container para o aside e o main-->
     <aside>
         <div class="add-retro-container">
-            <h3>Add retrospective</h3>
+            <h3 id="retro-title">Add retrospective</h3>
             <input type="text" id="retroName" placeholder="Title (required)" maxlength="15">
             <input type="date" id="retroDate" required>
             <button id="addRetro">Add</button> <!--js para adicionar esta retro à lista, com o status Scheduled-->
@@ -37,16 +37,16 @@
         </div>
     </aside>
     <main>
-        <div class="retros-table">
-            <table>
-                <thead>
+        <div class="table-container">
+            <table class="retros-table">
+                <thead class="retros-table-header">
                     <tr>
-                        <th>Date</th>
-                        <th>Title</th>
-                        <th>Status</th>
+                        <th class="table-header">Date</th>
+                        <th class="table-header">Title</th>
+                        <th class="table-header">Status</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="retros-table-body">
                     <tr>
                         <td>2024-03-13</td>
                         <td>Task 1</td>
@@ -62,8 +62,133 @@
                         <td>Task 3</td>
                         <td>Happening</td>
                     </tr>
+                    <tr>
+                        <td>2024-02-24</td>
+                        <td>Task 4</td>
+                        <td>Scheduled</td>
+                    </tr>
+                    <tr>
+                        <td>2024-03-01</td>
+                        <td>Task 5</td>
+                        <td>Scheduled</td>
+                    </tr>
+                    <tr>
+                        <td>2024-03-13</td>
+                        <td>Task 6</td>
+                        <td>Scheduled</td>
+                    </tr>
+                    <tr>
+                        <td>2024-01-30</td>
+                        <td>Task 7</td>
+                        <td>Closed</td>
+                    </tr>
+                    <tr>
+                        <td>2024-03-13</td>
+                        <td>Task 1</td>
+                        <td>Scheduled</td>
+                    </tr>
+                    <tr>
+                        <td>2024-01-30</td>
+                        <td>Task 2</td>
+                        <td>Closed</td>
+                    </tr>
+                    <tr>
+                        <td>2024-02-09</td>
+                        <td>Task 3</td>
+                        <td>Happening</td>
+                    </tr>
+                    <tr>
+                        <td>2024-02-24</td>
+                        <td>Task 4</td>
+                        <td>Scheduled</td>
+                    </tr>
+                    <tr>
+                        <td>2024-03-01</td>
+                        <td>Task 5</td>
+                        <td>Scheduled</td>
+                    </tr>
+                    <tr>
+                        <td>2024-03-13</td>
+                        <td>Task 6</td>
+                        <td>Scheduled</td>
+                    </tr>
+                    <tr>
+                        <td>2024-01-30</td>
+                        <td>Task 7</td>
+                        <td>Closed</td>
+                    </tr>
+                    <tr>
+                        <td>2024-03-13</td>
+                        <td>Task 1</td>
+                        <td>Scheduled</td>
+                    </tr>
+                    <tr>
+                        <td>2024-01-30</td>
+                        <td>Task 2</td>
+                        <td>Closed</td>
+                    </tr>
+                    <tr>
+                        <td>2024-02-09</td>
+                        <td>Task 3</td>
+                        <td>Happening</td>
+                    </tr>
+                    <tr>
+                        <td>2024-02-24</td>
+                        <td>Task 4</td>
+                        <td>Scheduled</td>
+                    </tr>
+                    <tr>
+                        <td>2024-03-01</td>
+                        <td>Task 5</td>
+                        <td>Scheduled</td>
+                    </tr>
+                    <tr>
+                        <td>2024-03-13</td>
+                        <td>Task 6</td>
+                        <td>Scheduled</td>
+                    </tr>
+                    <tr>
+                        <td>2024-01-30</td>
+                        <td>Task 7</td>
+                        <td>Closed</td>
+                    </tr>
+                    <tr>
+                        <td>2024-03-13</td>
+                        <td>Task 1</td>
+                        <td>Scheduled</td>
+                    </tr>
+                    <tr>
+                        <td>2024-01-30</td>
+                        <td>Task 2</td>
+                        <td>Closed</td>
+                    </tr>
+                    <tr>
+                        <td>2024-02-09</td>
+                        <td>Task 3</td>
+                        <td>Happening</td>
+                    </tr>
+                    <tr>
+                        <td>2024-02-24</td>
+                        <td>Task 4</td>
+                        <td>Scheduled</td>
+                    </tr>
+                    <tr>
+                        <td>2024-03-01</td>
+                        <td>Task 5</td>
+                        <td>Scheduled</td>
+                    </tr>
+                    <tr>
+                        <td>2024-03-13</td>
+                        <td>Task 6</td>
+                        <td>Scheduled</td>
+                    </tr>
+                    <tr>
+                        <td>2024-01-30</td>
+                        <td>Task 7</td>
+                        <td>Closed</td>
+                    </tr>
                 </tbody>
-              </table>              
+              </table>
         </div>
     </main>
     </div>
