@@ -65,7 +65,9 @@ public class TaskService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateTask(@PathParam("id") String id) {
+        System.out.println("id: " + id);
         Task task = taskBean.getTask(id);
+        System.out.println("task id: " + task.getId());
         boolean updated = taskBean.updateTask(task);
         Response response;
         if (!updated) {

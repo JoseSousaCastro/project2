@@ -10,7 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2d6edc91-b28b-4e33-ab2b-2e083bb35001" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/service/TaskService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/backend_war_exploded/WEB-INF/classes/aor/paj/project2/backend/service/TaskService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/aor/paj/project2/backend/service/TaskService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +102,7 @@
       <workItem from="1707514732135" duration="472000" />
       <workItem from="1707515219527" duration="12396000" />
       <workItem from="1707529883149" duration="7000" />
-      <workItem from="1707573999429" duration="14123000" />
+      <workItem from="1707573999429" duration="15925000" />
     </task>
     <servers />
   </component>
