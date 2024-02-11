@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="edit-profile">Edit profile</title>
+    <link  type="text/css" rel="stylesheet" href="main.css">
+    <link rel="icon" href="multimedia/favicon.png" type="image/x-icon">
+</head>
+<body>
+    <div id="cancel-modal" class="modal">
+        <div class="modal-content">
+            <p>Cancel changes?</p>
+            <button class="modal-button" id="confirm-cancel-button">Yes</button>
+            <button class="modal-button" id="continue-editing-button">No</button>
+        </div>
+    </div>
+    <header>
+        <img src="multimedia/logo-scrum-05.png" id="logo-header" height="50">
+        <nav class="nav-menu-left">
+            <ul>
+                <li id="nav-home"><a href="home.html">My Scrum</a></li>
+                <li id="nav-retro"><a href="retrospectives.html">Retrospectives</a></li>
+            </ul>
+        </nav>
+        
+        <div class="nav-menu-right">
+            <img src="multimedia/JSC_close up.png" id="profile-pic">
+            <a href="profile.html">Profile</a>
+            <button class="logout-button" onclick="location.href='index.html'">
+                <img src="multimedia/logout.png" alt="Logout Icon">
+                Logout
+            </button>
+        </div>
+    </header>
+    <main class="main-editProfile">
+        <div class="details-editProfile">
+            <label id="username-title-editProfile">Username</label> <!--Alterar para o first name do utilizador-->
+            <form class="editProfile-register">
+                <div class="editProfile-fieldsContainer">
+                    <div class="left-fields-editProfile">
+                        <input type="text" class="editProfile-fields" id="username-editProfile" name="username" placeholder="Username" required readonly>
+                        <input type="password" class="editProfile-fields" id="password-editProfile" name="password" placeholder="Password" required>
+                        <input type="password" class="editProfile-fields" id="passwordConfirm-editProfile" name="passwordConfirm" placeholder="Confirm Password" required>
+                        <input type="email" class="editProfile-fields" id="email-editProfile" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="right-fields-editProfile">
+                        <input type="text" class="editProfile-fields" id="firstName-editProfile" name="firstName" placeholder="First Name" required>
+                        <input type="text" class="editProfile-fields" id="lastName-editProfile" name="lastName" placeholder="Last Name" required>
+                        <input type="text" class="editProfile-fields" id="phone-editProfile" name="phone" placeholder="Phone" required>
+                        <input type="url" class="editProfile-fields" id="photoURL-editProfile" name="photoURL" placeholder="Photo URL" required>
+                    </div>
+                </div>
+                <div class="editProfile-submitButton">
+                        <button type="submit" id="profile-save-button">Save</button>
+                        <button type="submit" id="profile-cancel-button">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <div class="label-left">&copy; João Luís</div>
+            <div class="label-right">Programação Avançada em Java</div>
+            <div class="label-left">&copy; José Sousa Castro</div>
+            <div class="label-right">Projeto 2</div>
+            <div class="label-left">&copy; Pedro Domingos</div>
+        </div>
+    </footer>
+    <script src="task.js" defer></script>
+</body>
+</html>
