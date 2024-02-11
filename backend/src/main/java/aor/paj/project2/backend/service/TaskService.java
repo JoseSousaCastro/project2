@@ -64,11 +64,9 @@ public class TaskService {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateTask(@PathParam("id") String id) {
+    public Response updateTask(@PathParam("id") String id, Task editedTask) {
         System.out.println("id: " + id);
-        Task task = taskBean.getTask(id);
-        System.out.println("task id: " + task.getId());
-        boolean updated = taskBean.updateTask(task);
+        boolean updated = taskBean.updateTask(id, editedTask);
         Response response;
         if (!updated) {
             response = Response.status(404).entity("Task with this id is not found").build();
