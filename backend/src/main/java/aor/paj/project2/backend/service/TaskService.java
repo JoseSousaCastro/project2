@@ -45,9 +45,9 @@ public class TaskService {
 
 
     @DELETE
-    @Path("/delete")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response removeTask(@QueryParam("id")String id) {
+    public Response removeTask(@PathParam("id") String id) {
         boolean deleted = taskBean.removeTask(id);
         Response response;
         if (!deleted) {
@@ -63,10 +63,8 @@ public class TaskService {
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response updateTask(@PathParam("id") String id) {
-        Task task = taskBean.getTask(id);
-        boolean updated = taskBean.updateTask(task);
+    public Response updateTask(@PathParam("id") String id, Task task) {
+        boolean updated = taskBean.updateTask(id, task);
         Response response;
         if (!updated) {
             response = Response.status(404).entity("Task with this id is not found").build();

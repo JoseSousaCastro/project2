@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 @ApplicationScoped
 public class TaskBean {
@@ -45,7 +46,7 @@ public class TaskBean {
         boolean found = false;
         while (!found) {
             for (Task a : tasks) {
-                if (a.getId().equalsIgnoreCase(id)) {
+                if (a.getId().equals(id)) {
                     task = a;
                     found = true;
                 }
@@ -60,23 +61,23 @@ public class TaskBean {
 
     public boolean removeTask(String id) {
         boolean removed = false;
-        while (!removed) {
-            for (Task a : tasks) {
-                if (a.getId().equalsIgnoreCase(id)) {
-                    tasks.remove(a);
-                    writeIntoJsonFile();
-                    removed = true;
-                }
+        Iterator<Task> iterator = tasks.iterator();
+        while (iterator.hasNext()) {
+            Task task = iterator.next();
+            if (task.getId().equals(id)) {
+                iterator.remove();
+                removed = true;
+                writeIntoJsonFile();
             }
         }
         return removed;
     }
 
-    public boolean updateTask(Task task) {
+    public boolean updateTask(String id, Task task) {
         boolean updated = false;
         while (!updated) {
             for (Task a : tasks) {
-                if (a.getId().equalsIgnoreCase(task.getId())) {
+                if (a.getId().equals(id)) {
                     a.setTitle(task.getTitle());
                     a.setDescription(task.getDescription());
                     a.setPriority(task.getPriority());
