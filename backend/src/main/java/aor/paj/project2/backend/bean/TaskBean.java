@@ -1,6 +1,7 @@
 package aor.paj.project2.backend.bean;
 
 import aor.paj.project2.backend.dto.Task;
+import aor.paj.project2.backend.bean.UserBean;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
@@ -73,10 +74,10 @@ public class TaskBean {
         return removed;
     }
 
-    public boolean updateTask(String id, Task task) {
+    public boolean updateTask(UserBean userBean, String username, String id, Task task) {
         boolean updated = false;
         while (!updated) {
-            for (Task a : tasks) {
+            for (Task a : userBean.getUserTasks(username)) {
                 if (a.getId().equals(id)) {
                     a.setTitle(task.getTitle());
                     a.setDescription(task.getDescription());

@@ -155,7 +155,7 @@ public class UserService {
         if (!userBean.isAuthenticated(username, password)) {
             response = Response.status(401).entity("Invalid credentials").build();
         } else {
-            boolean updated = taskBean.updateTask(id, task);
+            boolean updated = taskBean.updateTask(userBean, username, id, task);
             if (!updated) {
                 response = Response.status(404).entity("Task with this id is not found").build();
             } else {
