@@ -65,7 +65,7 @@ public class UserService {
     @POST
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response login(@QueryParam("username") String username, @QueryParam("password") String password){
+    public Response login(@HeaderParam("username") String username, @HeaderParam("password") String password) {
 
         Response response;
         boolean isAuth = userBean.isAuthenticated(username, password);
