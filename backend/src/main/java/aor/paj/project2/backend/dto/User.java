@@ -31,17 +31,6 @@ public class User {
     }
 
 
-    public User(String username, String password, String email, String firstName, String lastName, String phone, String photoURL) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.photoURL = photoURL;
-    }
-
-
     public String getUsername() {
         return username;
     }
