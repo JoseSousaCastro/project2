@@ -7,25 +7,38 @@ import java.time.LocalDate;
 
 @XmlRootElement
 public class Task {
+    @XmlElement
     private String id;
+    @XmlElement
     private String title;
+    @XmlElement
     private String description;
+    @XmlElement
     private int stateId;
+    @XmlElement
     private int priority;
+    @XmlElement
     private LocalDate creationDate;
+    @XmlElement
     private LocalDate editionDate;
+    @XmlElement
     private LocalDate limitDate;
+    @XmlElement
     private static final int TODO = 100;
+    @XmlElement
     private static final int DOING = 200;
+    @XmlElement
     private static final int DONE = 300;
+    @XmlElement
     private static final int LOWPRIORITY = 100;
+    @XmlElement
     private static final int MEDIUMPRIORITY = 200;
+    @XmlElement
     private static final int HIGHPRIORITY = 300;
 
     public Task() {
     }
 
-    @XmlElement
     public String getId() {
         System.out.println("Task id: " + id);
         return id;
@@ -35,7 +48,6 @@ public class Task {
         this.id = String.valueOf(System.currentTimeMillis());
     }
 
-    @XmlElement
     public String getTitle() {
         return title;
     }
@@ -44,7 +56,6 @@ public class Task {
         this.title = title;
     }
 
-    @XmlElement
     public String getDescription() {
         return description;
     }
@@ -53,7 +64,6 @@ public class Task {
         this.description = description;
     }
 
-    @XmlElement
     public int getStateId() {
         return stateId;
     }
@@ -68,7 +78,6 @@ public class Task {
         }
     }
 
-    @XmlElement
     public int getPriority() {
         return priority;
     }
@@ -83,17 +92,14 @@ public class Task {
         }
     }
 
-    @XmlElement
     public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    @XmlElement
     public LocalDate getLimitDate() {
         return limitDate;
     }
 
-    @XmlElement
     public LocalDate getEditionDate() {
         return editionDate;
     }
