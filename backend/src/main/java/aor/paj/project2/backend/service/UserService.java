@@ -1,6 +1,7 @@
 package aor.paj.project2.backend.service;
 
 import aor.paj.project2.backend.bean.UserBean;
+import aor.paj.project2.backend.bean.TaskBean;
 import aor.paj.project2.backend.dto.Task;
 import aor.paj.project2.backend.dto.User;
 import jakarta.inject.Inject;
@@ -16,6 +17,8 @@ public class UserService {
 
     @Inject
     UserBean userBean;
+    @Inject
+    TaskBean taskBean;
 
 
     @GET
@@ -127,4 +130,39 @@ public class UserService {
         }
         return response;
     }
+
+    @POST
+    @Path("/{username}/addTask")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response newTask(@HeaderParam("username") String username, @HeaderParam("password") String password, Task task) {
+        Response response;
+        if(!userBean.isAuthenticated(username, password)) {
+            response = Response.status(401).entity("Invalid credentials").build();
+        } else {
+            userBean.getUserTasks(username).add(task);
+            taskBean.addTask(task);
+            response = Response.status(201).entity("Task created successfully").build();
+        }
+
+        return response;
+    }
+
+    @PUT
+    @Path("/{username}/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response newTask(@HeaderParam("username") String username, @HeaderParam("password") String password, @PathParam("id") String id, Task task) {
+        Response response;
+        if (!userBean.isAuthenticated(username, password)) {
+            response = Response.status(401).entity("Invalid credentials").build();
+        } else {
+            boolean updated = taskBean.updateTask(id, task);
+            if (!updated) {
+                response = Response.status(404).entity("Task with this id is not found").build();
+            } else {
+                response = Response.status(200).entity("updated").build();
+            }
+        }
+        return response;
+    }
+
 }

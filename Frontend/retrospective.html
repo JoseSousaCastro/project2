@@ -1,9 +1,15 @@
+<!--
+    linha 12 - alterar o título para o nome da retro
+    linha 94 - depois de criar o fichero js, alterar para o nome desse ficheiro
+-->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="retro-title">Retrospective 2</title> <!--Alterar o título para o nome da retro-->
+    <title id="retro-title">Retrospective 1</title> <!--Alterar o título para o nome da retro-->
     <link  type="text/css" rel="stylesheet" href="main.css">
     <link rel="icon" href="multimedia/favicon.png" type="image/x-icon">
 </head>
@@ -13,10 +19,9 @@
         <nav class="nav-menu-left">
             <ul>
                 <li id="nav-home"><a href="home.html">My Scrum</a></li>
-                <li id="nav-retro"><a href="retrospectives.html">Retrospectives</a></li>
+                <li id="nav-retro"><a href="retrospectives-list.html">Retrospectives</a></li>
             </ul>
         </nav>
-        
         <div class="nav-menu-right">
             <img src="multimedia/JSC_close up.png" id="profile-pic">
             <a href="profile.html">Profile</a>
@@ -28,37 +33,43 @@
     </header>
     <div class="container"> <!--Container para o aside e o main-->
     <aside>
-        <div class="retro-open">
+        <div class="retro-each">
             <h3 id="retro-title">getRetroName</h3>
-            <p id="retro-dateScheduled">getDateScheduled</p>
-            <p id="scheduled-members">Members</p>
-            <p id="getMembers">getMember1, getMember2, getMember3</p>
-            <button id="retro-open">Open</button>
+            <p id="retro-date-each">getDate</p>
+            <p id="p-members">Members</p>
+            <p id="view-members">getMember1, getMember2, getMember3</p>
             <hr id="horizontalLine">
-                <div class="retro-member">
-                    <form action="" id="scheduled-addMember">
-                        <label id="addMember">Add member</label>
-                        <input type="text" placeholder="Name (required)" id="name-addMember" required>          
-                        <input type="submit" value="Add member" id="addMemberBTN">
+                <div class="retro-comment">
+                    <form action="" id="dropdown-menu">
+                        <label id="addComment">Add comment</label>
+                        <textarea id="taskDescription-retro" placeholder="Description (required)" required></textarea>
+                        <select id="dropdown-categories" name="categories" required>
+                            <option value="" disabled selected hidden>--Choose a category--</option>
+                            <option value="strengths">Strengths</option>
+                            <option value="challenges">Challenges</option>
+                            <option value="improvements">Improvements</option>
+                        </select>
+                        <input type="text" placeholder="Member name (required)" id="name-addMember" required>
+                        <input type="submit" value="Add comment" id="addCommentBTN">
                     </form>
                 </div>
             <p id="warningMessage2"></p>
         </div>
     </aside>
     <main>
-        <div class="titulo-retroScheduled">
-            <h2 class="pci-title">Positive</h2>
-            <div class="panel-positive" id="scheduled-positive">
+        <div class="titulo-retro">
+            <h2 class="pci-title">Strengths</h2>
+            <div class="panel-strengths" id="strengths">
             </div>
         </div>
-        <div class="titulo-retroScheduled">
+        <div class="titulo-retro">
             <h2 class="pci-title">Challenges</h2>
-            <div class="panel-challenges" id="scheduled-challenges">
+            <div class="panel-challenges" id="challenges">
             </div>
         </div>
-            <div class="titulo-retroScheduled">
+            <div class="titulo-retro">
             <h2 class="pci-title">Improvements</h2>
-            <div class="panel-improvements" id="scheduled-improvements">
+            <div class="panel-improvements" id="improvements">
             </div>
         </div>
         <div id="delete-modal" class="modal">

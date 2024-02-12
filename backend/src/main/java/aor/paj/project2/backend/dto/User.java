@@ -1,4 +1,5 @@
 package aor.paj.project2.backend.dto;
+
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
@@ -67,7 +68,7 @@ public class User {
         this.email = email;
     }
 
-    public List<Task> getUserTasks() {
+    public ArrayList<Task> getUserTasks() {
         return userTasks;
     }
 
@@ -109,4 +110,5 @@ public class User {
     public void setPhotoURL(String photoURL) {
         this.photoURL = photoURL;
     }
+
 }

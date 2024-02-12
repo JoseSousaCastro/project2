@@ -386,6 +386,7 @@ aside h3 {
 /* Campos para adicionar task */
 #taskName,
 #taskDescription,
+#taskDescription-retro,
 #name-addMember,
 #retroName {
   padding-left: 10px;
@@ -399,20 +400,22 @@ aside h3 {
 #taskName,
 #name-addMember,
 #retroName {
-  margin-bottom: 10px;
-  height: 30px;
+  height: 20px;
 }
-#taskDescription {
+#taskDescription,
+#taskDescription-retro {
   resize: none;
   padding-top: 10px;
   height: 200px;
   line-height: 1.4;
 }
 /* Quando a task description não está selecionada mantém a border */
-#taskDescription:not(:focus) {
+#taskDescription:not(:focus),
+#taskDescription-retro:not(:focus) {
   border: var(--green3) 2px solid;
 }
-#taskDescription::placeholder {
+#taskDescription::placeholder,
+#taskDescription-retro::placeholder {
   font-size: 12px;
   position: absolute;
   top: 10px;
@@ -513,9 +516,7 @@ main {
 }
 /* Definições do main home.html */
 .titulo-main,
-.titulo-retroOpen,
-.titulo-retroScheduled,
-.titulo-retroClosed {
+.titulo-retro {
   flex: 1;
 }
 .main-home,
@@ -527,9 +528,9 @@ main {
   padding-top: 40px;
   padding-bottom: 10px;
 }
-/* Definições gerais dos painéis To do, Doing e Done & Positive, Challenges e Improvements */
+/* Definições gerais dos painéis To do, Doing e Done & strengths, Challenges e Improvements */
 .panel,
-.panel-positive,
+.panel-strengths,
 .panel-challenges,
 .panel-improvements {
   flex: 1;
@@ -551,28 +552,22 @@ main {
 }
 /* Cor de fundo de cada painel */
 #todo,
-#open-positive,
-#scheduled-positive,
-#closed-positive {
+#strengths {
   background-color: var(--todo);
 }
 #doing,
-#open-challenges,
-#scheduled-challenges,
-#closed-challenges {
+#challenges {
   background-color: var(--doing);
 }
 #done,
-#open-improvements,
-#scheduled-improvements,
-#closed-improvements {
+#improvements {
   background-color: var(--done);
 }
 /* Estilos da scroll bar (painéis da home.html e da task no task.html) */
 /* Tamanho da barra */
 .panel::-webkit-scrollbar,
 .text-task::-webkit-scrollbar,
-.panel-positive::-webkit-scrollbar,
+.panel-strengths::-webkit-scrollbar,
 .panel-challenges::-webkit-scrollbar,
 .panel-improvements::-webkit-scrollbar,
 .table-container::-webkit-scrollbar {
@@ -581,18 +576,18 @@ main {
 /* Cor da barra */
 .panel::-webkit-scrollbar-thumb,
 .text-task::-webkit-scrollbar-thumb,
-.panel-positive::-webkit-scrollbar-thumb,
+.panel-strengths::-webkit-scrollbar-thumb,
 .panel-challenges::-webkit-scrollbar-thumb,
 .panel-improvements::-webkit-scrollbar-thumb,
 .table-container::-webkit-scrollbar-thumb {
   background-color: var(--green2);
   border-top-right-radius: 8px;
 }
-/* Distância à direita a que a barra fica da border, cor do trilho e arredondamento para fazer
+/* Distância à direita a que a barra fica da border, cor do trilho e arredondamento para fazerstrengths
 match ao arredondamento do painel (home.html) */
 .panel::-webkit-scrollbar-track,
 .text-task::-webkit-scrollbar-track,
-.panel-positive::-webkit-scrollbar-track,
+.panel-strengths::-webkit-scrollbar-track,
 .panel-challenges::-webkit-scrollbar-track,
 .panel-improvements::-webkit-scrollbar-track,
 .table-container::-webkit-scrollbar-track {
@@ -603,7 +598,7 @@ match ao arredondamento do painel (home.html) */
 /* Altura da scroll bar */
 .panel::-webkit-scrollbar,
 .text-task::-webkit-scrollbar,
-.panel-positive::-webkit-scrollbar,
+.panel-strengths::-webkit-scrollbar,
 .panel-challenges::-webkit-scrollbar,
 .panel-improvements::-webkit-scrollbar,
 .table-container::-webkit-scrollbar {
@@ -1022,7 +1017,7 @@ footer {
   text-align: left;
 }
 
-/* Definições do retro-open.html */
+/* Definições do retro-each.html */
 #retro-title {
   margin-top: 40px;
   text-align: center;
@@ -1031,14 +1026,17 @@ footer {
   font-size: 17px;
 }
 #retroDate,
-#retro-dateOpen,
-#retro-dateScheduled,
-#retro-dateClosed {
+#retro-date-each {
   margin-top: 20px;
   text-align: center;
   color: var(--green3);
   font-size: 15px;
   font-weight: bold;
+}
+#retro-date-each {
+  color: var(--green2);
+  font-weight: normal;
+  font-size: 17px;
 }
 #retroDate {
   margin-block: 20px;
@@ -1046,25 +1044,24 @@ footer {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
-#open-members,
-#scheduled-members,
-#closed-members {
-  margin-top: 20px;
+#retro-date-each {
+  margin-top: 10px;
+}
+#p-members {
+  margin-top: 10px;
   margin-inline: 40px;
-  color: var(--green2);
+  color: var(--green3);
   font-size: 15px;
+  font-weight: bold;
   text-transform: uppercase;
 }
-#getMembers {
-  margin-inline: 40px;
+#view-members {
   margin-bottom: 20px;
+  margin-inline: 40px;
   color: var(--green3);
   font-size: 13px;
 }
-#addRetro,
-#retro-close,
-#retro-open,
-#retro-closed {
+#addRetro {
   margin-bottom: 20px;
   width: 150px;
   height: 32px;
@@ -1077,24 +1074,16 @@ footer {
   transition: background-color 0.3s, color 0.3s;
   cursor: pointer;
 }
-#addRetro:hover,
-#retro-close:hover,
-#retro-open:hover {
+#addRetro:hover {
   background-color: var(--green2);
   color: var(--light-grey);
-}
-#retro-closed {
-  border: var(--green3) 2px solid;
-  background-color: var(--todo);
-  color: var(--green3);
 }
 #horizontalLine {
   margin-bottom: 20px;
   margin-inline: 40px;
   border: 1px solid var(--green2);
 }
-#addComment,
-#addMember {
+#addComment {
   margin-inline: 40px;
   color: var(--green3);
   font-size: 15px;
@@ -1102,16 +1091,20 @@ footer {
   text-transform: uppercase;
 }
 #name-addMember {
-  margin-top: 20px;
+  margin-top: 15px;
 }
-#taskDescription {
+#taskDescription,
+#taskDescription-retro {
   margin-top: 20px;
   padding: 5px;
   width: 180px;
   height: 150px;
 }
+#taskDescription-retro {
+  margin-top: 15px;
+}
 #dropdown-categories {
-  margin-top: 20px;
+  margin-top: 15px;
   width: 190px;
   padding: 3px;
   margin-inline: 40px;
@@ -1121,8 +1114,7 @@ footer {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
-#addCommentBTN,
-#addMemberBTN {
+#addCommentBTN {
   margin-top: 20px;
   width: 150px;
   height: 32px;
@@ -1135,8 +1127,7 @@ footer {
   transition: background-color 0.3s, color 0.3s;
   cursor: pointer;
 }
-#addCommentBTN:hover,
-#addMemberBTN:hover {
+#addCommentBTN:hover {
   background-color: var(--green3);
   color: var(--green1);
 }

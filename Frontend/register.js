@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 // register.js
     
 
@@ -165,6 +165,7 @@ function createUserObject() {
 //redundante? 
 function verifyIfAnyFieldIsEmpty(fields) {
 
+
     let emptyField = false;
     
     for (let field of fields) {
@@ -176,7 +177,3 @@ function verifyIfAnyFieldIsEmpty(fields) {
     }
     return emptyField; 
 }
-
-
-=======
->>>>>>> 2f5c5b1b9495c0127a778a90a0b0feb3bd4947ae

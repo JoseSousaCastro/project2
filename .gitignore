@@ -7,3 +7,10 @@ backend/out/artifacts/
 backend/out/
 
 backend/
+.idea/compiler.xml
+.idea/encodings.xml
+.idea/jarRepositories.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/project2.iml
+.idea/vcs.xml
