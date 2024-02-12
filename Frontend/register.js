@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // register.js
     
 
@@ -177,3 +178,5 @@ function verifyIfAnyFieldIsEmpty(fields) {
 }
 
 
+=======
+>>>>>>> 2f5c5b1b9495c0127a778a90a0b0feb3bd4947ae

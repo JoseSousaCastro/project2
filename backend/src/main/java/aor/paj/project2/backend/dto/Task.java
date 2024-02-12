@@ -4,7 +4,6 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @XmlRootElement
 public class Task {
@@ -111,4 +110,3 @@ public class Task {
         this.limitDate = limitDate;
     }
 }
-
