@@ -252,7 +252,7 @@ window.onclose = function () { // Guarda as tarefas na local storage quando a p√
   saveTasks();
 }
 
-document.getElementById("logout-button").addEventListener('click', function() {
+document.getElementById("logout-button-header").addEventListener('click', function() {
   localStorage.removeItem("username");
   localStorage.removeItem("password");
   window.location.href="index.html";
