@@ -67,7 +67,7 @@ public class User {
         this.email = email;
     }
 
-    public List<Task> getUserTasks() {
+    public ArrayList<Task> getUserTasks() {
         return userTasks;
     }
 
@@ -109,4 +109,5 @@ public class User {
     public void setPhotoURL(String photoURL) {
         this.photoURL = photoURL;
     }
+
 }

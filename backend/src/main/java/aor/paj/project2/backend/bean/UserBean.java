@@ -100,7 +100,7 @@ public class UserBean {
 
         for(User user : users) {
             if(user.getUsername().equals(username)) {
-                userTasks = (ArrayList<Task>) user.getUserTasks();
+                userTasks = user.getUserTasks();
             }
         }
         return userTasks;
