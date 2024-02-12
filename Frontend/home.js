@@ -251,6 +251,13 @@ function deleteTask(id) {
 window.onclose = function () { // Guarda as tarefas na local storage quando a página é fechada
   saveTasks();
 }
+
+document.getElementById("logout-button").addEventListener('click', function() {
+  localStorage.removeItem("username");
+  localStorage.removeItem("password");
+  window.location.href="index.html";
+})
+
  // Elemento html onde vai ser mostrada a hora
 const displayTime = document.querySelector(".display-time");
 
