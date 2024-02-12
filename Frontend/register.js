@@ -150,6 +150,7 @@ function createUserData() {
     }
 }
 
+//como implementar?
 function createUserObject() {
     return [
         username = document.getElementById('username-register').value.trim(),
@@ -161,9 +162,18 @@ function createUserObject() {
         photoURL = document.getElementById('photoURL-register').value.trim()
     ]
 }
-
+//redundante? 
 function verifyIfAnyFieldIsEmpty(fields) {
-    fields.forEach(field => {
-        
-    })
+
+
+    let emptyField = false;
+    
+    for (let field of fields) {
+        let fieldValue = document.getElementById(field).value.trim();
+
+        if (fieldValue === '') {
+            emptyField = true;
+        }
+    }
+    return emptyField; 
 }
