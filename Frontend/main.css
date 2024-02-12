@@ -325,7 +325,7 @@ header {
   font-weight: bold;
 }
 /* Logout button */
-#logout-button {
+.logout-button {
   margin-right: 50px;
   margin-left: 100px;
   background-color: var(--green3);
@@ -338,21 +338,21 @@ header {
   font-size: 17px;
   border-radius: 5px;
 }
-#logout-button img {
+.logout-button img {
   width: 19px;
   height: 20px;
   margin-right: 9px;
 }
 /* Definições do link de logout no header (default e hover) */
-#logout-link {
+.logout-link {
   margin-right: 100px;
   color: var(--green2);
 }
-#logout-button:hover {
+.logout-button:hover {
   background-color: var(--light-grey);
   color: var(--green2);
 }
-#logout-button:hover img {
+.logout-button:hover img {
   content: url("multimedia/logout_hover.png");
 }
 
