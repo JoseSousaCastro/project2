@@ -102,11 +102,10 @@ document.getElementById('registrationForm').addEventListener('submit', async fun
         });
 
         if (response.ok) {
-            alert("Account registred successfully!")
+            alert("Account registered successfully!")
 
             //depois da conta criada com sucesso, apaga os campos escritos pelo user
     
-
             inputFieldIds.forEach(fieldId => {
                 document.getElementById(fieldId).value = '';
             });
@@ -114,6 +113,8 @@ document.getElementById('registrationForm').addEventListener('submit', async fun
 
         } else if (response.status === 409) {
             alert("Username already in use");
+        } else if (response.status === 406) {
+            alert("Invalid email, try again")
         }
 
     } catch (error) {
