@@ -25,7 +25,7 @@ public class User {
     @XmlElement
     private String photoURL;
     @XmlElement
-    private ArrayList<Task> userTasks = new ArrayList<>();
+    private ArrayList<Task> userTasks = new ArrayList<>(); //ser array de ids das tasks assim as tasks ficavam no json das tasks
 
     public User() {
     }

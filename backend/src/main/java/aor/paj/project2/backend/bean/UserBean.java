@@ -6,6 +6,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbConfig;
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -90,6 +92,36 @@ public class UserBean {
             if(user.getUsername().equals(username)) {
                 status = false;
             }
+        }
+        return status;
+    }
+
+    private boolean isEmailFormatValid(String email) {
+        boolean status;
+
+        try {
+            InternetAddress emailAddress = new InternetAddress(email);
+            emailAddress.validate();
+            status = true;
+
+        } catch (AddressException ex) {
+            status = false;
+        }
+        return status;
+    }
+
+    public boolean isEmailValid(String email) {
+
+        boolean status = true;
+
+        if (isEmailFormatValid(email)) {
+            for (User user : users) {
+                if (user.getEmail().equals(email)) {
+                    status = false;
+                }
+            }
+        } else {
+            status = false;
         }
         return status;
     }

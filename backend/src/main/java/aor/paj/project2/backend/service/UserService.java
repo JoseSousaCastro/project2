@@ -9,6 +9,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,19 +115,22 @@ public class UserService {
     @POST
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response registerUser(User user) {
+    public Response registerUser(User user){
         Response response;
 
         boolean isUsernameAvailable = userBean.isUsernameAvailable(user.getUsername());
+        System.out.println(user.getEmail());
+        System.out.println(user.getUsername());
+        boolean isEmailValid = userBean.isEmailValid(user.getEmail());
+
         if (!isUsernameAvailable) {
             response = Response.status(Response.Status.CONFLICT).entity("Username already in use").build(); //status code 409
-        } else {
-            boolean createUser = userBean.addUser(user);
-            if (createUser) {
-                response = Response.status(Response.Status.CREATED).entity("User registred successfully").build(); //status code 201
-            } else {
-                response = Response.status(Response.Status.BAD_REQUEST).entity("Something went wrong").build(); //status code 400
-            }
+        } else if (!isEmailValid) {
+            response = Response.status(Response.Status.NOT_ACCEPTABLE).entity("Invalid email, try again").build();
+        } else if(userBean.addUser(user)) {
+            response = Response.status(Response.Status.CREATED).entity("User registered successfully").build(); //status code 201
+        }else {
+            response = Response.status(Response.Status.BAD_REQUEST).entity("Something went wrong").build(); //status code 400
         }
         return response;
     }
