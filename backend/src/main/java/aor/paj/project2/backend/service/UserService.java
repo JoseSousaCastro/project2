@@ -119,8 +119,6 @@ public class UserService {
         Response response;
 
         boolean isUsernameAvailable = userBean.isUsernameAvailable(user.getUsername());
-        System.out.println(user.getEmail());
-        System.out.println(user.getUsername());
         boolean isEmailValid = userBean.isEmailValid(user.getEmail());
 
         if (!isUsernameAvailable) {
