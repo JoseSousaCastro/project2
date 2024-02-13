@@ -143,10 +143,11 @@ public class UserBean {
 
     public boolean isPhoneNumberValid(String phone) {
         boolean status = true;
+        int i = 0;
 
-        while (status) {
+        while (status && i < phone.length()-1) {
             if (phone.length() == 9 ) {
-                for (int i = 0; i < phone.length(); i++) {
+                for ( ;i < phone.length(); i++) {
                     if (!Character.isDigit(phone.charAt(i))) {
                         status = false;
                     }
@@ -155,6 +156,24 @@ public class UserBean {
                 status = false;
             }
         }
+        return status;
+    }
+    public boolean isImageUrlValid(String url) {
+        boolean status = true;
+
+        if (url == null) {
+            status = false; // Handle null URL gracefully
+        }
+
+        try {
+            BufferedImage img = ImageIO.read(new URL(url));
+            if (img == null) {
+                status = false;
+            }
+        } catch (IOException e) {
+            status = false;
+        }
+
         return status;
     }
 
