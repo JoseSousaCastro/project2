@@ -15,7 +15,7 @@ public class Retrospective {
     @XmlElement
     private LocalDate date;
     @XmlElement
-    private ArrayList<String> Comment;
+    private ArrayList<Comment> retrospectiveComments = new ArrayList<>();
 
 
     public Retrospective() {
@@ -38,5 +38,11 @@ public class Retrospective {
     }
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+    public void addComment(Comment comment) {
+        retrospectiveComments.add(comment);
+    }
+    public ArrayList<Comment> getRetrospectiveComments() {
+        return retrospectiveComments;
     }
 }
