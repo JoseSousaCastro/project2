@@ -1,6 +1,7 @@
 package aor.paj.project2.backend.bean;
 
 import aor.paj.project2.backend.dto.Retrospective;
+import aor.paj.project2.backend.dto.Comment;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
@@ -58,6 +59,7 @@ public class RetrospectiveBean {
             if (a.getId().equals(retrospective.getId())) {
                 a.setTitle(retrospective.getTitle());
                 a.setDate(retrospective.getDate());
+                a.addComment(retrospective.getRetrospectiveComments().get(0));
                 status = true;
             }
         }
@@ -65,7 +67,36 @@ public class RetrospectiveBean {
             writeIntoJsonFile();
         }
     }
+    public void deleteRetrospective(String id) {
+        boolean removed = false;
+        for (Retrospective a : retrospectives) {
+            if (a.getId().equals(id)) {
+                retrospectives.remove(a);
+                removed = true;
+                break;
+            }
+        }
+        if (removed) {
+            writeIntoJsonFile();
+        }
+    }
+    public void deleteAllComments(String id) {
+        for (Retrospective a : retrospectives) {
+            if (a.getId().equals(id)) {
+                a.getRetrospectiveComments().clear();
+                writeIntoJsonFile();
+            }
+        }
+    }
 
+    public void addCommentToRetrospective(String id, Comment comment) {
+        for (Retrospective a : retrospectives) {
+            if (a.getId().equals(id)) {
+                a.addComment(comment);
+                writeIntoJsonFile();
+            }
+        }
+    }
 
     private void writeIntoJsonFile() {
         Jsonb jsonb = JsonbBuilder.create(new
