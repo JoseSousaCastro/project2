@@ -29,6 +29,42 @@ public class RetrospectiveBean {
         } else
             retrospectives = new ArrayList<Retrospective>();
     }
+    public void addRetrospective(Retrospective retrospective) {
+        retrospective.setId();
+        retrospective.setTitle(retrospective.getTitle());
+        retrospective.setDate(retrospective.getDate());
+        retrospectives.add(retrospective);
+        writeIntoJsonFile();
+    }
+    public Retrospective getRetrospective(String id) {
+        Retrospective retrospective = null;
+        boolean found = false;
+        while (!found) {
+            for (Retrospective a : retrospectives) {
+                if (a.getId().equals(id)) {
+                    retrospective = a;
+                    found = true;
+                }
+            }
+        }
+        return retrospective;
+    }
+    public ArrayList<Retrospective> getRetrospectives() {
+        return retrospectives;
+    }
+    public void updateRetrospective(Retrospective retrospective) {
+        boolean status = false;
+        for (Retrospective a : retrospectives) {
+            if (a.getId().equals(retrospective.getId())) {
+                a.setTitle(retrospective.getTitle());
+                a.setDate(retrospective.getDate());
+                status = true;
+            }
+        }
+        if (status) {
+            writeIntoJsonFile();
+        }
+    }
 
 
     private void writeIntoJsonFile() {
