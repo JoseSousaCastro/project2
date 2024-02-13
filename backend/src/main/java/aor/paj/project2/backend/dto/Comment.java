@@ -9,7 +9,7 @@ public class Comment {
     @XmlElement
     private String description;
     @XmlElement
-    private String author;
+    private String user;
     @XmlElement
     private int commentId;
     @XmlElement
@@ -35,16 +35,16 @@ public class Comment {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String getAuthor() {
-        return author;
+    public String getUser() {
+        return user;
     }
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setUser(String user) {
+        this.user = user;
     }
     public int getCommentId() {
         return commentId;
     }
-    public void commentId(int stateId) {
+    public void setCommentId(int stateId) {
         if (stateId == STRENGTHS) {
             this.commentId = STRENGTHS;
         } else if (stateId == CHALLENGES) {
