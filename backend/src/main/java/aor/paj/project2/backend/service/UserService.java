@@ -120,19 +120,29 @@ public class UserService {
     @POST
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response registerUser(User user){
         Response response;
 
         boolean isUsernameAvailable = userBean.isUsernameAvailable(user.getUsername());
         boolean isEmailValid = userBean.isEmailValid(user.getEmail());
+        boolean isFieldEmpty = userBean.isAnyFieldEmpty(user);
+        boolean isPhoneNumberValid = userBean.isPhoneNumberValid(user.getPhone());
+        boolean isImageValid = userBean.isImageUrlValid(user.getPhotoURL());
 
-        if (!isUsernameAvailable) {
-            response = Response.status(Response.Status.CONFLICT).entity("Username already in use").build(); //status code 409
+        if (isFieldEmpty) {
+            response = Response.status(422).entity("There's an empty field, fill all values").build();
         } else if (!isEmailValid) {
-            response = Response.status(Response.Status.NOT_ACCEPTABLE).entity("Invalid email, try again").build();
+            response = Response.status(422).entity("Invalid email").build();
+        } else if (!isUsernameAvailable) {
+            response = Response.status(Response.Status.CONFLICT).entity("Username already in use").build(); //status code 409
+        } else if (!isImageValid) {
+            response = Response.status(422).entity("Image URL invalid").build(); //400
+        }else if (!isPhoneNumberValid) {
+            response = Response.status(422).entity("Invalid phone number").build();
         } else if(userBean.addUser(user)) {
             response = Response.status(Response.Status.CREATED).entity("User registered successfully").build(); //status code 201
-        }else {
+        } else {
             response = Response.status(Response.Status.BAD_REQUEST).entity("Something went wrong").build(); //status code 400
         }
         return response;
