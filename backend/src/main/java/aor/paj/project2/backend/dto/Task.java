@@ -2,7 +2,6 @@ package aor.paj.project2.backend.dto;
 
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
-
 import java.time.LocalDate;
 
 @XmlRootElement
@@ -24,7 +23,9 @@ public class Task {
     @XmlElement
     private LocalDate limitDate;
     @XmlElement
-    public static final int TODO = 100;
+    private Retrospective retrospective;
+    @XmlElement
+    private static final int TODO = 100;
     @XmlElement
     public static final int DOING = 200;
     @XmlElement
@@ -123,7 +124,16 @@ public class Task {
         this.limitDate = limitDate;
     }
 
-@Override
+    public void addRetrospective(Retrospective retrospective) {
+        if (stateId == DONE) {
+            this.retrospective = retrospective;
+        }
+    }
+    public Retrospective getRetrospective() {
+        return retrospective;
+    }
+
+  @Override
     public String toString() {
         return "Task{" +
                 "id='" + id + '\'' +
@@ -136,5 +146,4 @@ public class Task {
                 ", limitDate=" + limitDate +
                 '}';
     }
-
 }
