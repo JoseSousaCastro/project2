@@ -65,9 +65,7 @@ public class User {
         this.userTasks = userTasks;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
+    public String getFirstName() { return firstName; }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
