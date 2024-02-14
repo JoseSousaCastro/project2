@@ -25,7 +25,7 @@ public class Task {
     @XmlElement
     private Retrospective retrospective;
     @XmlElement
-    private static final int TODO = 100;
+    public static final int TODO = 100;
     @XmlElement
     public static final int DOING = 200;
     @XmlElement
