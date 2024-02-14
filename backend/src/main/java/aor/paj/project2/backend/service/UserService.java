@@ -148,6 +148,21 @@ public class UserService {
         return response;
     }
 
+    @GET
+    @Path("/getFirstName")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getFirstName(@HeaderParam("username") String username, @HeaderParam("password") String password) {
+        Response response;
+        User currentUser = userBean.getUser(username);
+
+        if (!userBean.isAuthenticated(username, password)) {
+            response = Response.status(401).entity("Invalid credentials").build();
+        } else {
+            response = Response.status(200).entity(currentUser.getFirstName()).build();
+        }
+        return response;
+    }
+
     @POST
     @Path("/{username}/addTask")
     @Consumes(MediaType.APPLICATION_JSON)
