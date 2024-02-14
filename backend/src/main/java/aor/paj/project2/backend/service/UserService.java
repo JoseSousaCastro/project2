@@ -157,13 +157,13 @@ public class UserService {
     @Path("/{username}/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateTask(@HeaderParam("username") String username, @HeaderParam("password") String password, @PathParam("id") String id, Task task) {
-        System.out.println("entrou no endpoint updateTask");
+
         Response response;
         if (!userBean.isAuthenticated(username, password)) {
             response = Response.status(401).entity("Invalid credentials").build();
         } else {
-            System.out.println("entrou no else do updateTask");
-            boolean updated = userBean.updateTask(taskBean, username, id, task);
+            task.setId(id);
+            boolean updated = userBean.updateTask(username, task);
             if (!updated) {
                 response = Response.status(404).entity("Task with this id is not found").build();
             } else {
@@ -177,12 +177,11 @@ public class UserService {
     @Path("/{username}/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response removeTask(@HeaderParam("username") String username, @HeaderParam("password") String password, @PathParam("id") String id) {
-        System.out.println("entrou no endpoint removeTask");
+
         Response response;
         if (!userBean.isAuthenticated(username, password)) {
             response = Response.status(401).entity("Invalid credentials").build();
         } else {
-            System.out.println("entrou no else do removeTask");
             boolean removed = userBean.removeTask(username, id);
             if (!removed) {
                 response = Response.status(404).entity("Task with this id is not found").build();
@@ -192,5 +191,4 @@ public class UserService {
         }
         return response;
     }
-
 }

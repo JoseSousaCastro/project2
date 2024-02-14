@@ -98,4 +98,17 @@ public class User {
         this.photoURL = photoURL;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", photoURL='" + photoURL + '\'' +
+                ", userTasks=" + userTasks +
+                '}';
+    }
 }

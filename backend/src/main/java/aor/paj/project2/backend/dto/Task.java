@@ -41,11 +41,12 @@ public class Task {
     }
 
     public String getId() {
-        System.out.println("Task id: " + id);
         return id;
     }
-
-    public void setId() {
+    public void setId(String id) {
+        this.id = id;
+    }
+    public void generateId() {
         this.id = String.valueOf(System.currentTimeMillis());
     }
 
@@ -69,6 +70,9 @@ public class Task {
         return stateId;
     }
 
+    public void setStateId(int stateId) {
+        this.stateId = stateId;
+    }
     public void setInitialStateId() {
         this.stateId = TODO;
     }
@@ -103,9 +107,19 @@ public class Task {
     public LocalDate getCreationDate() {
         return creationDate;
     }
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
+    public void defineCreationDate() {
+        this.creationDate = LocalDate.now();
+    }
 
     public LocalDate getLimitDate() {
         return limitDate;
+    }
+
+    public void setLimitDate(LocalDate limitDate) {
+        this.limitDate = limitDate;
     }
 
     public LocalDate getEditionDate() {
@@ -116,13 +130,6 @@ public class Task {
         this.editionDate = LocalDate.now();
     }
 
-    public void setCreationDate() {
-        this.creationDate = LocalDate.now();
-    }
-
-    public void setLimitDate(LocalDate limitDate) {
-        this.limitDate = limitDate;
-    }
 
     public void addRetrospective(Retrospective retrospective) {
         if (stateId == DONE) {
