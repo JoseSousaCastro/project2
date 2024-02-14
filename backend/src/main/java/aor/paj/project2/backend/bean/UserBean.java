@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 @ApplicationScoped
 public class UserBean {
@@ -126,16 +127,77 @@ public class UserBean {
         return status;
     }
 
-    public ArrayList<Task> getUserTasks(String username) {
-
+  
+    public ArrayList<Task> getUserAndHisTasks(String username) {
+        System.out.println("entrou no getUserAndHisTasks");
         ArrayList<Task> userTasks = null;
 
         for(User user : users) {
             if(user.getUsername().equals(username)) {
                 userTasks = user.getUserTasks();
+                System.out.println("Tasks do user (" + user.getUsername() + ") : ");
+                System.out.println(userTasks.toString());
             }
         }
         return userTasks;
+    }
+
+    public void addTaskToUser(String username, Task temporaryTask) {
+        Task task = new Task();
+        task.setId();
+        task.setTitle(temporaryTask.getTitle());
+        task.setDescription(temporaryTask.getDescription());
+        task.setPriority(temporaryTask.getPriority());
+        task.setInitialStateId();
+        task.setCreationDate();
+        task.setLimitDate(temporaryTask.getLimitDate());
+        System.out.println("Task criada: " + task);
+        getUserAndHisTasks(username).add(task);
+        System.out.println("Tasks do user (" + username + ") : ");
+        System.out.println(getUserAndHisTasks(username).toString());
+        writeIntoJsonFile();
+    }
+
+    public boolean updateTask(TaskBean taskBean, String username, String id, Task task) {
+        System.out.println(" entrou no método updateTask = " + task);
+        boolean updated = false;
+        while (!updated) {
+            System.out.println("entrou no while do updateTask" + username);
+            for (Task a : getUserAndHisTasks(username)) {
+                System.out.println("entrou no for do updateTask \n" + "a. getId = " + a.getId() + " id passado " + id);
+                if (a.getId().equals(id)) {
+                    a.setTitle(task.getTitle());
+                    a.setDescription(task.getDescription());
+                    a.setPriority(task.getPriority());
+                    //a.setInitialStateId();
+                    System.out.println("task.stateId = " + task.getStateId() + " a.stateId = " + a.getStateId());
+                    a.editStateId(task.getStateId());
+                    a.setEditionDate();
+                    a.setLimitDate(task.getLimitDate());
+                    if (!taskBean.validateTask(a)) {
+                        updated = false;
+                    } else {
+                        updated = true;
+                        writeIntoJsonFile();
+                    }
+                }
+            }
+        }
+        return updated;
+    }
+
+    public boolean removeTask(String username, String id) {
+        boolean removed = false;
+        Iterator<Task> iterator = getUserAndHisTasks(username).iterator();
+        while (iterator.hasNext()) {
+            Task task = iterator.next();
+            if (task.getId().equals(id)) {
+                iterator.remove();
+                removed = true;
+                writeIntoJsonFile();
+            }
+        }
+        return removed;
     }
 
     private void writeIntoJsonFile() {

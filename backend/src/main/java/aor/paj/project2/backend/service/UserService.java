@@ -1,9 +1,11 @@
 package aor.paj.project2.backend.service;
 
-import aor.paj.project2.backend.bean.UserBean;
 import aor.paj.project2.backend.bean.TaskBean;
+import aor.paj.project2.backend.bean.UserBean;
+//import aor.paj.project2.backend.bean.TaskBean;
 import aor.paj.project2.backend.dto.Task;
 import aor.paj.project2.backend.dto.User;
+import jakarta.ejb.Remove;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -102,8 +104,11 @@ public class UserService {
     public Response getAllUsersTasks(@PathParam("username") String username) {
 
         Response response;
-        ArrayList<Task> userTasks = userBean.getUserTasks(username);
+        ArrayList<Task> userTasks = userBean.getUserAndHisTasks(username);
 
+        System.out.println("entrou no endpoint getAllUsersTasks");
+        System.out.println("tasks: ");
+        System.out.println(userTasks);
         if (userTasks == null) {
             response = Response.status(Response.Status.BAD_REQUEST).entity("No task list to return").build();
         } else {
@@ -141,8 +146,7 @@ public class UserService {
         if(!userBean.isAuthenticated(username, password)) {
             response = Response.status(401).entity("Invalid credentials").build();
         } else {
-            userBean.getUserTasks(username).add(task);
-            taskBean.addTask(task);
+            userBean.addTaskToUser(username, task);
             response = Response.status(201).entity("Task created successfully").build();
         }
 
@@ -152,16 +156,38 @@ public class UserService {
     @PUT
     @Path("/{username}/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response newTask(@HeaderParam("username") String username, @HeaderParam("password") String password, @PathParam("id") String id, Task task) {
+    public Response updateTask(@HeaderParam("username") String username, @HeaderParam("password") String password, @PathParam("id") String id, Task task) {
+        System.out.println("entrou no endpoint updateTask");
         Response response;
         if (!userBean.isAuthenticated(username, password)) {
             response = Response.status(401).entity("Invalid credentials").build();
         } else {
-            boolean updated = taskBean.updateTask(userBean, username, id, task);
+            System.out.println("entrou no else do updateTask");
+            boolean updated = userBean.updateTask(taskBean, username, id, task);
             if (!updated) {
                 response = Response.status(404).entity("Task with this id is not found").build();
             } else {
-                response = Response.status(200).entity("updated").build();
+                response = Response.status(200).entity("Task updated successfully").build();
+            }
+        }
+        return response;
+    }
+
+    @DELETE
+    @Path("/{username}/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response removeTask(@HeaderParam("username") String username, @HeaderParam("password") String password, @PathParam("id") String id) {
+        System.out.println("entrou no endpoint removeTask");
+        Response response;
+        if (!userBean.isAuthenticated(username, password)) {
+            response = Response.status(401).entity("Invalid credentials").build();
+        } else {
+            System.out.println("entrou no else do removeTask");
+            boolean removed = userBean.removeTask(username, id);
+            if (!removed) {
+                response = Response.status(404).entity("Task with this id is not found").build();
+            } else {
+                response = Response.status(200).entity("Task removed successfully").build();
             }
         }
         return response;

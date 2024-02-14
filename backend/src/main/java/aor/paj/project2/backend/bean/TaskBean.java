@@ -1,7 +1,7 @@
+
 package aor.paj.project2.backend.bean;
 
 import aor.paj.project2.backend.dto.Task;
-import aor.paj.project2.backend.bean.UserBean;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
@@ -16,10 +16,10 @@ import java.util.Iterator;
 
 @ApplicationScoped
 public class TaskBean {
-    private final String filename = "tasks.json";
+   // private final String filename = "tasks.json";
     private ArrayList<Task> tasks;
 
-    public TaskBean() {
+ /*public TaskBean() {
         File f = new File(filename);
         if (f.exists()) {
             try {
@@ -31,16 +31,20 @@ public class TaskBean {
         } else
             tasks = new ArrayList<Task>();
     }
+*/
 
-    public void addTask(Task task) {
+   /* public void addTask(Task temporaryTask) {
+        Task task = new Task();
         task.setId();
-        task.setStateId(task.getStateId());
+        task.setTitle(temporaryTask.getTitle());
+        task.setDescription(temporaryTask.getDescription());
+        task.setPriority(temporaryTask.getPriority());
+        task.setInitialStateId();
         task.setCreationDate();
-        task.setLimitDate(task.getLimitDate());
-        task.setPriority(task.getPriority());
-        tasks.add(task);
-        writeIntoJsonFile();
-    }
+        task.setLimitDate(temporaryTask.getLimitDate());
+        //tasks.add(task);
+        //writeIntoJsonFile();
+    }*/
 
     public Task getTask(String id) {
         Task task = null;
@@ -68,40 +72,66 @@ public class TaskBean {
             if (task.getId().equals(id)) {
                 iterator.remove();
                 removed = true;
-                writeIntoJsonFile();
+                //writeIntoJsonFile();
             }
         }
         return removed;
     }
 
-    public boolean updateTask(UserBean userBean, String username, String id, Task task) {
+/*    public boolean updateTask(UserBean userBean, String username, String id, Task task) {
+        System.out.println(" entrou no método updateTask");
         boolean updated = false;
         while (!updated) {
-            for (Task a : userBean.getUserTasks(username)) {
+            System.out.println("entrou no while do updateTask" + username);
+            for (Task a : userBean.getUserAndHisTasks(username)) {
+                System.out.println("entrou no for do updateTask \n" + "a. getId = " + a.getId() + " id passado " + id);
                 if (a.getId().equals(id)) {
                     a.setTitle(task.getTitle());
                     a.setDescription(task.getDescription());
                     a.setPriority(task.getPriority());
-                    a.setStateId(task.getStateId());
+                    //a.setInitialStateId();
+                    a.editStateId(task.getStateId());
                     a.setLimitDate(task.getLimitDate());
-                    if (a.getLimitDate().isBefore(a.getCreationDate()) || a.getTitle().isEmpty() || a.getDescription().isEmpty()) {
+                    if (!validateTask(a)) {
                         updated = false;
                     } else {
                         updated = true;
-                        writeIntoJsonFile();
+                        userBean.writeIntoJsonFile();
                     }
                 }
             }
         }
         return updated;
+    }*/
+
+    public boolean validateTask(Task task) {
+        boolean valid = false;
+        if (!(task.getLimitDate().isBefore(task.getCreationDate())
+                || task.getTitle().isBlank()
+                || task.getDescription().isBlank()
+                || (task.getPriority() != Task.LOWPRIORITY && task.getPriority() != Task.MEDIUMPRIORITY && task.getPriority() != Task.HIGHPRIORITY)
+                || (task.getStateId() != Task.TODO && task.getStateId() != Task.DOING && task.getStateId() != Task.DONE)
+            )){
+            valid = true;
+        }
+        return valid;
     }
 
-    private void writeIntoJsonFile() {
+    @Override
+    public String toString() {
+        return "TaskBean{" +
+                "tasks=" + tasks +
+                '}';
+    }
+
+    /* private void writeIntoJsonFile() {
         Jsonb jsonb = JsonbBuilder.create(new JsonbConfig().withFormatting(true));
         try {
             jsonb.toJson(tasks, new FileOutputStream(filename));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
+
 }
+
