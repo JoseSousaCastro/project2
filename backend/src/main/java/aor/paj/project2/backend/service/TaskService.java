@@ -1,3 +1,4 @@
+/*
 package aor.paj.project2.backend.service;
 
 import aor.paj.project2.backend.bean.TaskBean;
@@ -60,7 +61,7 @@ public class TaskService {
     }
 
 
-   /* @PUT
+ @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateTask(@PathParam("id") String id, Task task) {
@@ -72,5 +73,7 @@ public class TaskService {
             response = Response.status(200).entity("updated").build();
         }
         return response;
-    }*/
+    }
+
 }
+*/
