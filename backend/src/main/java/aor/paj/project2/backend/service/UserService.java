@@ -115,6 +115,7 @@ public class UserService {
     @POST
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response registerUser(User user){
         Response response;
 
@@ -127,11 +128,11 @@ public class UserService {
         if (isFieldEmpty) {
             response = Response.status(422).entity("There's an empty field, fill all values").build();
         } else if (!isEmailValid) {
-            response = Response.status(Response.Status.NOT_ACCEPTABLE).entity("Invalid email, try again").build();
+            response = Response.status(422).entity("Invalid email").build();
         } else if (!isUsernameAvailable) {
             response = Response.status(Response.Status.CONFLICT).entity("Username already in use").build(); //status code 409
         } else if (!isImageValid) {
-            response = Response.status(Response.Status.BAD_REQUEST).entity("Image URL invalid").build();
+            response = Response.status(422).entity("Image URL invalid").build(); //400
         }else if (!isPhoneNumberValid) {
             response = Response.status(422).entity("Invalid phone number").build();
         } else if(userBean.addUser(user)) {
