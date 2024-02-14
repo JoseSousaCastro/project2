@@ -18,7 +18,7 @@
         </nav>
         <div class="nav-menu-right">
             <img src="multimedia/JSC_close up.png" id="profile-pic">
-            <a href="profile.html" id="link-profile">Profile</a>
+            <a href="edit-profile.html" id="link-profile">Profile</a>
             <button class="logout-button" onclick="location.href='index.html'">
                 <img src="multimedia/logout.png" alt="Logout Icon">
                 Logout
@@ -29,9 +29,9 @@
     <aside>
         <div class="add-retro-container">
             <h3 id="retro-title">Add retrospective</h3>
-            <input type="text" id="retroName" placeholder="Title (required)" maxlength="15">
+            <input type="text" id="retroName" placeholder="Title (required)" maxlength="20">
             <input type="date" id="retroDate" required>
-            <button id="addRetro">Add</button> <!--js para adicionar esta retro à lista, com o status Scheduled-->
+            <button id="addRetroBTN">Add</button> <!--js para adicionar esta retro à lista, com o status Scheduled-->
             <p id="warningMessage2"></p>
         </div>
     </aside>

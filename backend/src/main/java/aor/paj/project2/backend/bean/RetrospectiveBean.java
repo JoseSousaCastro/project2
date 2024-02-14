@@ -53,6 +53,30 @@ public class RetrospectiveBean {
     public ArrayList<Retrospective> getRetrospectives() {
         return retrospectives;
     }
+    public ArrayList<Comment> getComments(String id) {
+        ArrayList<Comment> comment = null;
+        for (Retrospective a : retrospectives) {
+            if (a.getId().equals(id)) {
+                comment = a.getRetrospectiveComments();
+            }
+        }
+        return comment;
+    }
+
+    public Comment getComment(String id, String commentId) {
+        Comment comment = null;
+        for (Retrospective a : retrospectives) {
+            if (a.getId().equals(id)) {
+                for (Comment c : a.getRetrospectiveComments()) {
+                    if (c.getId().equals(commentId)) {
+                        comment = c;
+                    }
+                }
+            }
+        }
+        return comment;
+    }
+
     public void updateRetrospective(Retrospective retrospective) {
         boolean status = false;
         for (Retrospective a : retrospectives) {
@@ -67,26 +91,34 @@ public class RetrospectiveBean {
             writeIntoJsonFile();
         }
     }
-    public void deleteRetrospective(String id) {
-        boolean removed = false;
-        for (Retrospective a : retrospectives) {
-            if (a.getId().equals(id)) {
-                retrospectives.remove(a);
-                removed = true;
-                break;
-            }
-        }
+    public boolean deleteRetrospective(String id) {
+        boolean removed = retrospectives.removeIf(a -> a.getId().equals(id));
         if (removed) {
             writeIntoJsonFile();
         }
+        return removed;
     }
-    public void deleteAllComments(String id) {
-        for (Retrospective a : retrospectives) {
-            if (a.getId().equals(id)) {
-                a.getRetrospectiveComments().clear();
+
+    public boolean deleteAllComments(String id) {
+    Retrospective retrospective = getRetrospective(id);
+        if (retrospective != null) {
+            retrospective.getRetrospectiveComments().clear();
+            writeIntoJsonFile();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deleteComment(String id, String commentId) {
+        Retrospective retrospective = getRetrospective(id);
+        if (retrospective != null) {
+            boolean removed = retrospective.getRetrospectiveComments().removeIf(c -> c.getId().equals(commentId));
+            if (removed) {
                 writeIntoJsonFile();
             }
+            return removed;
         }
+        return false;
     }
 
     public void addCommentToRetrospective(String id, Comment comment) {
