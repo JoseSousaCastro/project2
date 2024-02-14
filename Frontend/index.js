@@ -20,7 +20,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
         'password'
     ];
 
-    try {
+    try {   
         const response = await fetch(loginRequest, {
             method: 'POST',
             headers: {
