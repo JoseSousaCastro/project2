@@ -24,17 +24,17 @@ public class Task {
     @XmlElement
     private LocalDate limitDate;
     @XmlElement
-    private static final int TODO = 100;
+    public static final int TODO = 100;
     @XmlElement
-    private static final int DOING = 200;
+    public static final int DOING = 200;
     @XmlElement
-    private static final int DONE = 300;
+    public static final int DONE = 300;
     @XmlElement
-    private static final int LOWPRIORITY = 100;
+    public static final int LOWPRIORITY = 100;
     @XmlElement
-    private static final int MEDIUMPRIORITY = 200;
+    public static final int MEDIUMPRIORITY = 200;
     @XmlElement
-    private static final int HIGHPRIORITY = 300;
+    public static final int HIGHPRIORITY = 300;
 
     public Task() {
     }
@@ -68,17 +68,24 @@ public class Task {
         return stateId;
     }
 
-    public void setStateId(int stateId) {
-        if (stateId == TODO) {
-            this.stateId = TODO;
-        } else if (stateId == DOING) {
-            this.stateId = DOING;
-        } else if (stateId == DONE) {
-            this.stateId = DONE;
-        }
+    public void setInitialStateId() {
+        this.stateId = TODO;
+    }
+    public void editStateId(int stateId) {
+        /*if (stateId != TODO && stateId != DOING && stateId != DONE) {
+            throw new IllegalArgumentException("Invalid stateId");
+        } else {*/
+            if (stateId == TODO) {
+                this.stateId = TODO;
+            } else if (stateId == DOING) {
+                this.stateId = DOING;
+            } else {
+                this.stateId = DONE;
+            }
+        //}
     }
 
-    public int getPriority() {
+     public int getPriority() {
         return priority;
     }
 
@@ -115,4 +122,19 @@ public class Task {
     public void setLimitDate(LocalDate limitDate) {
         this.limitDate = limitDate;
     }
+
+@Override
+    public String toString() {
+        return "Task{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", stateId=" + stateId +
+                ", priority=" + priority +
+                ", creationDate=" + creationDate +
+                ", editionDate=" + editionDate +
+                ", limitDate=" + limitDate +
+                '}';
+    }
+
 }
