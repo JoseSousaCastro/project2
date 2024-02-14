@@ -128,7 +128,7 @@ public class RetrospectiveService {
         } else {
             boolean deleted = retrospectiveBean.deleteRetrospective(id);
             if (!deleted) {
-                response = Response.status(200).entity("Retrospective with this id is not found").build();
+                response = Response.status(404).entity("Retrospective with this id is not found").build();
             } else {
                 response = Response.status(200).entity("deleted").build();
             }
@@ -172,9 +172,39 @@ public class RetrospectiveService {
         return response;
     }
 
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateRetrospective(@HeaderParam("username") String username, @HeaderParam("password") String password, @PathParam("id") String id, Retrospective temporaryRetrospective) {
+        Response response;
+        if (!userBean.isAuthenticated(username, password)) {
+            response = Response.status(401).entity("Invalid credentials").build();
+        } else {
+            boolean updated = retrospectiveBean.updateRetrospective(id, temporaryRetrospective);
+            if (!updated) {
+                response = Response.status(404).entity("Retrospective with this id is not found").build();
+            } else {
+                response = Response.status(200).entity("updated").build();
+            }
+        }
+        return response;
+    }
 
-
-
-
-
+    @PUT
+    @Path("/{id}/comment/{id2}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateComment(@HeaderParam("username") String username, @HeaderParam("password") String password, @PathParam("id") String id, @PathParam("id2") String id2, Comment temporaryComment) {
+        Response response;
+        if (!userBean.isAuthenticated(username, password)) {
+            response = Response.status(401).entity("Invalid credentials").build();
+        } else {
+            boolean updated = retrospectiveBean.updateComment(id, id2, temporaryComment);
+            if (!updated) {
+                response = Response.status(404).entity("Comment with this id is not found").build();
+            } else {
+                response = Response.status(200).entity("updated").build();
+            }
+        }
+        return response;
+    }
 }

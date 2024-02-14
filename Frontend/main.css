@@ -995,6 +995,17 @@ match ao arredondamento do painel (home.html) */
 .priority-button.selected {
   background-color: color-mix(in srgb, var(--grey), white 30%) !important;
 }
+.updateDate {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-top: 30px;
+  letter-spacing: 0.5px;
+  font-style: italic;
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--green3);
+  text-align: center;
+}
 
 /* Definições do footer */
 footer {
