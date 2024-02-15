@@ -2,23 +2,27 @@ package aor.paj.project2.backend.bean;
 
 import aor.paj.project2.backend.dto.Task;
 import jakarta.enterprise.context.ApplicationScoped;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 @ApplicationScoped
 public class TaskBean {
 
-    public void newTask(Task task) {
+    public boolean newTask(Task task) {
         task.generateId();
         task.setInitialStateId();
         task.defineCreationDate();
+        return validateTask(task);
     }
 
     public boolean editTask(Task task, ArrayList<Task> tasks) {
         boolean edited = false;
 
-            for (Task a : tasks) {
-                if (a.getId().equals(task.getId())) {
+        for (Task a : tasks) {
+            if (a.getId().equals(task.getId())) {
+                if (task.getStateId() != 0) {
                     a.setTitle(task.getTitle());
                     a.setDescription(task.getDescription());
                     a.setPriority(task.getPriority());
@@ -28,6 +32,7 @@ public class TaskBean {
                     edited = validateTask(a);
                 }
             }
+        }
 
         return edited;
     }
@@ -46,16 +51,17 @@ public class TaskBean {
     }
 
     public boolean validateTask(Task task) {
-        boolean valid = false;
-        if (!(task.getLimitDate().isBefore(task.getCreationDate())
+        boolean valid = true;
+        if ((task.getLimitDate().isBefore(task.getCreationDate())
                 || task.getTitle().isBlank()
                 || task.getDescription().isBlank()
+                || task.getPriority() == 0
                 || (task.getPriority() != Task.LOWPRIORITY && task.getPriority() != Task.MEDIUMPRIORITY && task.getPriority() != Task.HIGHPRIORITY)
                 || (task.getStateId() != Task.TODO && task.getStateId() != Task.DOING && task.getStateId() != Task.DONE)
-            )){
-            valid = true;
+        )) {
+            valid = false;
         }
         return valid;
     }
-}
 
+}

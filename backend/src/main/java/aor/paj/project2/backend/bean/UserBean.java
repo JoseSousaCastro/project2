@@ -190,11 +190,14 @@ public class UserBean {
         return userTasks;
     }
 
-    public void addTaskToUser(String username, Task temporaryTask) {
+    public boolean addTaskToUser(String username, Task temporaryTask) {
         TaskBean taskBean = new TaskBean();
-        taskBean.newTask(temporaryTask);
-        getUserAndHisTasks(username).add(temporaryTask);
-        writeIntoJsonFile();
+        boolean done = taskBean.newTask(temporaryTask);
+        if(done) {
+            getUserAndHisTasks(username).add(temporaryTask);
+            writeIntoJsonFile();
+        }
+        return done;
     }
 
     public boolean updateTask(String username, Task task) {
