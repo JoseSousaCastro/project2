@@ -77,20 +77,36 @@ public class RetrospectiveBean {
         return comment;
     }
 
-    public void updateRetrospective(Retrospective retrospective) {
-        boolean status = false;
+    public boolean updateRetrospective(String id, Retrospective retrospective) {
+        boolean updated = false;
         for (Retrospective a : retrospectives) {
-            if (a.getId().equals(retrospective.getId())) {
+            if (a.getId().equals(id)) {
                 a.setTitle(retrospective.getTitle());
                 a.setDate(retrospective.getDate());
                 a.addComment(retrospective.getRetrospectiveComments().get(0));
-                status = true;
+                updated = true;
+                writeIntoJsonFile();
             }
         }
-        if (status) {
-            writeIntoJsonFile();
-        }
+        return updated;
     }
+
+    public boolean updateComment(String id, String commentId, Comment comment) {
+        boolean updated = false;
+        for (Retrospective a : retrospectives) {
+            if (a.getId().equals(id)) {
+                for (Comment c : a.getRetrospectiveComments()) {
+                    if (c.getId().equals(commentId)) {
+                        c.setDescription(comment.getDescription());
+                        updated = true;
+                        writeIntoJsonFile();
+                    }
+                }
+            }
+        }
+        return updated;
+    }
+
     public boolean deleteRetrospective(String id) {
         boolean removed = retrospectives.removeIf(a -> a.getId().equals(id));
         if (removed) {
