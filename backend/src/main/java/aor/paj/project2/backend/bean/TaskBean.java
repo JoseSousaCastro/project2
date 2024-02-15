@@ -3,7 +3,6 @@ package aor.paj.project2.backend.bean;
 import aor.paj.project2.backend.dto.Task;
 import jakarta.enterprise.context.ApplicationScoped;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -13,7 +12,7 @@ public class TaskBean {
     public boolean newTask(Task task) {
         task.generateId();
         task.setInitialStateId();
-        task.defineCreationDate();
+        //task.setStartDate(task.getStartDate());
         return validateTask(task);
     }
 
@@ -52,7 +51,9 @@ public class TaskBean {
 
     public boolean validateTask(Task task) {
         boolean valid = true;
-        if ((task.getLimitDate().isBefore(task.getCreationDate())
+        if ((task.getStartDate() == null
+                || task.getLimitDate() == null
+                || task.getLimitDate().isBefore(task.getStartDate())
                 || task.getTitle().isBlank()
                 || task.getDescription().isBlank()
                 || task.getPriority() == 0
