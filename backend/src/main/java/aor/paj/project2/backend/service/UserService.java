@@ -33,11 +33,11 @@ public class UserService {
     @Path("/update/{username}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateUser(@PathParam("username")String username, @HeaderParam("username") String usernameHeader, @HeaderParam("password") String password, User user) {
+    public Response updateUser(@PathParam("username") String username, @HeaderParam("username") String usernameHeader, @HeaderParam("password") String password, User user) {
         Response response;
 
-        if(userBean.isAuthenticated(usernameHeader, password)) {
-            if(usernameHeader.equals(username)) {
+        if (userBean.isAuthenticated(usernameHeader, password)) {
+            if (usernameHeader.equals(username)) {
                 boolean updatedUser = userBean.updateUser(user);
                 response = Response.status(Response.Status.OK).entity(updatedUser).build(); //status code 200
             } else {
@@ -53,11 +53,11 @@ public class UserService {
     @GET
     @Path("/{username}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUser(@PathParam("username")String username, @HeaderParam("username")String usernameHeader, @HeaderParam("password") String password) {
+    public Response getUser(@PathParam("username") String username, @HeaderParam("username") String usernameHeader, @HeaderParam("password") String password) {
         Response response;
 
-        if(userBean.isAuthenticated(usernameHeader, password)) {
-            if(usernameHeader.equals(username)) {
+        if (userBean.isAuthenticated(usernameHeader, password)) {
+            if (usernameHeader.equals(username)) {
                 User user = userBean.getUser(username);
                 response = Response.ok().entity(user).build();
             } else {
@@ -109,8 +109,8 @@ public class UserService {
 
         Response response;
 
-        if(userBean.isAuthenticated(usernameHeader, password)) {
-            if(usernameHeader.equals(username)) {
+        if (userBean.isAuthenticated(usernameHeader, password)) {
+            if (usernameHeader.equals(username)) {
                 ArrayList<Task> userTasks = userBean.getUserAndHisTasks(username);
                 response = Response.status(Response.Status.OK).entity(userTasks).build();
             } else {
@@ -126,7 +126,7 @@ public class UserService {
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response registerUser(User user){
+    public Response registerUser(User user) {
         Response response;
 
         boolean isUsernameAvailable = userBean.isUsernameAvailable(user.getUsername());
@@ -136,16 +136,16 @@ public class UserService {
         boolean isImageValid = userBean.isImageUrlValid(user.getPhotoURL());
 
         if (isFieldEmpty) {
-            response = Response.status(422).entity("There's an empty field, fill all values").build();
+            response = Response.status(422).entity("There's an empty field. ALl fields must be filled in").build();
         } else if (!isEmailValid) {
             response = Response.status(422).entity("Invalid email").build();
         } else if (!isUsernameAvailable) {
             response = Response.status(Response.Status.CONFLICT).entity("Username already in use").build(); //status code 409
         } else if (!isImageValid) {
             response = Response.status(422).entity("Image URL invalid").build(); //400
-        }else if (!isPhoneNumberValid) {
+        } else if (!isPhoneNumberValid) {
             response = Response.status(422).entity("Invalid phone number").build();
-        } else if(userBean.addUser(user)) {
+        } else if (userBean.addUser(user)) {
             response = Response.status(Response.Status.CREATED).entity("User registered successfully").build(); //status code 201
         } else {
             response = Response.status(Response.Status.BAD_REQUEST).entity("Something went wrong").build(); //status code 400
@@ -188,8 +188,8 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newTask(@HeaderParam("username") String usernameHeader, @HeaderParam("password") String password, @PathParam("username") String username, Task task) {
         Response response;
-        if(userBean.isAuthenticated(usernameHeader, password)) {
-            if(usernameHeader.equals(username)) {
+        if (userBean.isAuthenticated(usernameHeader, password)) {
+            if (usernameHeader.equals(username)) {
                 boolean added = userBean.addTaskToUser(username, task);
                 if (added) {
                     response = Response.status(201).entity("Task created successfully").build();
@@ -213,7 +213,7 @@ public class UserService {
 
         Response response;
         if (userBean.isAuthenticated(username, password)) {
-            if(usernameHeader.equals(username)) {
+            if (usernameHeader.equals(username)) {
                 task.setId(id);
                 boolean updated = userBean.updateTask(username, task);
                 if (updated) {
