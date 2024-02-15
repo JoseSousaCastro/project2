@@ -1,9 +1,12 @@
-window.onload = function () {
-    var usernameHeader = sessionStorage.getItem("username-header");
-    if (usernameHeader) {
-      document.getElementById("username-header").textContent = usernameHeader;
-    }
-    loadTasks();
+
+window.onload = function() {
+  console.log('window on load está a funcionar!')
+  getFirstName();
+  getPhotoUrl();
+  loadTasks();
+
+
+
   };
 const tasks = document.querySelectorAll('.task')
 const panels = document.querySelectorAll('.panel')
@@ -258,57 +261,107 @@ document.getElementById("logout-button-header").addEventListener('click', functi
   window.location.href="index.html";
 })
 
- // Elemento html onde vai ser mostrada a hora
-const displayTime = document.querySelector(".display-time");
 
-function showTime() {
-  let time = new Date();
-  let timeString = time.toLocaleTimeString("en-US", { hour12: false, hour: '2-digit', minute: '2-digit' });
-  displayTime.innerText = timeString;
-  setTimeout(showTime, 1000);
+async function getFirstName() {
+
+  let usernameValue = localStorage.getItem('username')
+  let passwordValue = localStorage.getItem('password')
+
+  let firstNameRequest = "http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/getFirstName";
+    
+    try {
+        const response = await fetch(firstNameRequest, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/JSON',
+                'Accept': '*/*',
+                username: usernameValue,
+                password: passwordValue
+            },    
+        });
+
+        if (response.ok) {
+
+          const data = await response.text();
+          console.log(data.firstName)
+          document.getElementById("first-name-label").innerText = data;
+
+        } else if (!response.ok) {
+            alert("Invalid credentials")
+        }
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert("Something went wrong");
+    }
+}
+async function getFirstName() {
+
+  let usernameValue = localStorage.getItem('username')
+  let passwordValue = localStorage.getItem('password')
+
+  let firstNameRequest = "http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/getFirstName";
+    
+    try {
+        const response = await fetch(firstNameRequest, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/JSON',
+                'Accept': '*/*',
+                username: usernameValue,
+                password: passwordValue
+            },    
+        });
+
+        if (response.ok) {
+
+          const data = await response.text();
+          console.log(data.firstName)
+          document.getElementById("first-name-label").innerText = data;
+
+        } else if (!response.ok) {
+            alert("Invalid credentials")
+        }
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert("Something went wrong");
+    }
 }
 
-showTime();
+async function getPhotoUrl() {
 
-// Data
-function updateDate() { // Mostra a data atual
-  let today = new Date();
+  let usernameValue = localStorage.getItem('username')
+  let passwordValue = localStorage.getItem('password')
 
-  let dayName = today.getDay(), // 0 - 6
-    dayNum = today.getDate(), // 1 - 31
-    month = today.getMonth(), // 0 - 11
-    year = today.getFullYear(); // 2020
 
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const dayWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  // Valor -> ID do elemento html
-  const IDCollection = ["day", "daynum", "month", "year"]; // Array com os IDs dos elementos html que vão mostrar a data
-  // Retornar um array com números como índices
-  const val = [dayWeek[dayName], dayNum, months[month], year]; // Array com os valores que vão ser mostrados nos elementos html
-  for (let i = 0; i < IDCollection.length; i++) { // Percorre o array de IDs
-    document.getElementById(IDCollection[i]).firstChild.nodeValue = val[i]; // Altera o valor do elemento html com o ID correspondente
-  }
+  let photoUrlRequest = "http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/getPhotoUrl";
+    
+    try {
+        const response = await fetch(photoUrlRequest, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/JSON',
+                'Accept': '*/*',
+                username: usernameValue,
+                password: passwordValue
+            },    
+        });
+
+        if (response.ok) {
+
+          const data = await response.text();
+          document.getElementById("profile-pic").src = data;
+
+        } else if (response.status === 401) {
+            alert("Invalid credentials")
+        } else if (response.status === 404) {
+          alert("teste 404")
+        }
+
+    } catch (error) {
+        console.error('Error:', error);
+        alert("Something went wrong");
+    }
 }
 
-updateDate();

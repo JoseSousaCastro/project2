@@ -9,10 +9,10 @@ import jakarta.json.bind.JsonbConfig;
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 
 @ApplicationScoped
@@ -127,8 +127,60 @@ public class UserBean {
         return status;
     }
 
+
+    public boolean isAnyFieldEmpty(User user) {
+        boolean status = false;
+
+        if (user.getUsername().isEmpty() ||
+                user.getPassword().isEmpty() ||
+                user.getEmail().isEmpty() ||
+                user.getFirstName().isEmpty() ||
+                user.getLastName().isEmpty() ||
+                user.getPhone().isEmpty() ||
+                user.getPhotoURL().isEmpty()) {
+            status = true;
+        }
+        return status;
+    }
+
+    public boolean isPhoneNumberValid(String phone) {
+        boolean status = true;
+        int i = 0;
+
+        while (status && i < phone.length()-1) {
+            if (phone.length() == 9 ) {
+                for ( ;i < phone.length(); i++) {
+                    if (!Character.isDigit(phone.charAt(i))) {
+                        status = false;
+                    }
+                }
+            } else {
+                status = false;
+            }
+        }
+        return status;
+    }
+    public boolean isImageUrlValid(String url) {
+        boolean status = true;
+
+        if (url == null) {
+            status = false; // Handle null URL gracefully
+        }
+
+        try {
+            BufferedImage img = ImageIO.read(new URL(url));
+            if (img == null) {
+                status = false;
+            }
+        } catch (IOException e) {
+            status = false;
+        }
+
+        return status;
+    }
+
     public ArrayList<Task> getUserAndHisTasks(String username) {
-                ArrayList<Task> userTasks = null;
+        ArrayList<Task> userTasks = null;
 
         for (User user : users) {
             if (user.getUsername().equals(username)) {
@@ -175,7 +227,6 @@ public class UserBean {
             jsonb.toJson(users, new FileOutputStream(filename));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
-
         }
     }
 

@@ -111,12 +111,40 @@ document.getElementById('registrationForm').addEventListener('submit', async fun
             });
             window.location.href = 'index.html';
 
-        } else if (response.status === 409) {
-            alert("Username already in use");
-        } else if (response.status === 406) {
-            alert("Invalid email, try again")
-        }
+        } else {
 
+            switch (response.status) {
+                case 422:
+                    const errorData = await response.text();
+                
+                    switch (errorData) {
+                        case "There's an empty field, fill all values":
+                            alert("Please fill all fields");
+                            break;
+                        case "Invalid email":
+                            alert("The email you used is not valid");
+                            break;
+                        case "Image URL invalid":
+                            alert("Image url provided not valid");
+                            break;
+                        case "Invalid phone number":
+                            alert("The phone number is not valid");
+                            break;
+                        case "Username already in use":
+                            alert("Username already in use");
+                            break;
+                        default:
+                            console.error('Unknown error message:', errorData);
+                            alert("Something went wrong");
+                    }
+                    break;
+                case 409: 
+                    alert("Username already in use");
+                    break;
+                default:
+                    alert("Something went wrong");
+            }
+        }
     } catch (error) {
         console.error('Error:', error);
         alert("Something went wrong");

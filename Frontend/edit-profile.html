@@ -30,8 +30,8 @@
             </ul>
         </nav>
         <div class="nav-menu-right">
-            <img src="multimedia/JSC_close up.png" id="profile-pic">
-            <a href="profile.html">Profile</a>
+            <img src="multimedia/test.png" id="profile-pic">
+            <a href="edit-profile.html" id="first-name-label"></a>
             <button class="logout-button" onclick="location.href='index.html'">
                 <img src="multimedia/logout.png" alt="Logout Icon">
                 Logout
@@ -44,9 +44,9 @@
             <form class="editProfile-register">
                 <div class="editProfile-fieldsContainer">
                     <div class="left-fields-editProfile">
-                        <input type="text" class="editProfile-fields" id="username-editProfile" name="username" placeholder="Username" required readonly>
-                        <input type="password" class="editProfile-fields" id="password-editProfile" name="password" placeholder="Password" required>
-                        <input type="password" class="editProfile-fields" id="passwordConfirm-editProfile" name="passwordConfirm" placeholder="Confirm Password" required>
+                        <input type="password" class="editProfile-fields" id="currentPass-editProfile" name="currentPassword" placeholder="Current password" required readonly>
+                        <input type="password" class="editProfile-fields" id="newPassword-editProfile" name="newPassword" placeholder="New password">
+                        <input type="password" class="editProfile-fields" id="newPasswordConfirm-editProfile" name="nemPasswordConfirm" placeholder="Confirm new password">
                         <input type="email" class="editProfile-fields" id="email-editProfile" name="email" placeholder="Email" required>
                     </div>
                     <div class="right-fields-editProfile">
@@ -72,6 +72,6 @@
             <div class="label-left">&copy; Pedro Domingos</div>
         </div>
     </footer>
-    <script src="task.js" defer></script>
+    <script src="edit-profile.js" defer></script>
 </body>
 </html>
