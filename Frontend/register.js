@@ -1,5 +1,8 @@
 
 // register.js
+window.onload = function () {
+
+}
     
 
 document.getElementById('registrationForm').addEventListener('submit', async function (event) {
@@ -151,6 +154,7 @@ document.getElementById('registrationForm').addEventListener('submit', async fun
     }
 });
 
+
 function createUserData() {
     let isFormValid = document.getElementById('registrationForm').checkValidity();
 
@@ -179,6 +183,7 @@ function createUserData() {
     }
 }
 
+
 //como implementar?
 function createUserObject() {
     return [
@@ -206,3 +211,4 @@ function verifyIfAnyFieldIsEmpty(fields) {
     }
     return emptyField; 
 }
+
