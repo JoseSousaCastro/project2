@@ -14,6 +14,7 @@ public class Retrospective {
     private String title;
     @XmlElement
     private LocalDate date;
+    private ArrayList<User> retrospectiveUsers = new ArrayList<>();
     @XmlElement
     private ArrayList<Comment> retrospectiveComments = new ArrayList<>();
 
@@ -24,8 +25,12 @@ public class Retrospective {
     public String getId() {
         return id;
     }
-    public void setId() {
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String generateId() {
         this.id = String.valueOf(System.currentTimeMillis());
+        return id;
     }
     public String getTitle() {
         return title;
@@ -38,6 +43,12 @@ public class Retrospective {
     }
     public void setDate(LocalDate date) {
         this.date = LocalDate.now();
+    }
+    public void addUser(User user) {
+        retrospectiveUsers.add(user);
+    }
+    public ArrayList<User> getRetrospectiveUsers() {
+        return retrospectiveUsers;
     }
     public void addComment(Comment comment) {
         retrospectiveComments.add(comment);
