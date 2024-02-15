@@ -2,6 +2,7 @@ package aor.paj.project2.backend.dto;
 
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
+
 @XmlRootElement
 public class Comment {
     @XmlElement
@@ -11,13 +12,13 @@ public class Comment {
     @XmlElement
     private String user;
     @XmlElement
-    private int commentId;
+    private int commentStatus;
     @XmlElement
-    private static final int STRENGTHS = 100;
+    public static final int STRENGTHS = 100;
     @XmlElement
-    private static final int CHALLENGES = 200;
+    public static final int CHALLENGES = 200;
     @XmlElement
-    private static final int IMPROVEMENTS = 300;
+    public static final int IMPROVEMENTS = 300;
 
 
     public Comment() {
@@ -26,31 +27,47 @@ public class Comment {
     public String getId() {
         return id;
     }
-    public void setId() {
-        this.id = String.valueOf(System.currentTimeMillis());
+
+    public void setId(String id) {
+        this.id = id;
     }
+
+    public String generateId() {
+        this.id = String.valueOf(System.currentTimeMillis());
+        return this.id;
+    }
+
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
+
     public String getUser() {
         return user;
     }
+
     public void setUser(String user) {
         this.user = user;
     }
-    public int getCommentId() {
-        return commentId;
+
+    public int getCommentStatus() {
+        return commentStatus;
     }
-    public void setCommentId(int stateId) {
+
+    public void setCommentStatus(int commentStatus) {
+        this.commentStatus = commentStatus;
+    }
+
+    public void generateCommentId(int stateId) {
         if (stateId == STRENGTHS) {
-            this.commentId = STRENGTHS;
+            this.commentStatus = STRENGTHS;
         } else if (stateId == CHALLENGES) {
-            this.commentId = CHALLENGES;
+            this.commentStatus = CHALLENGES;
         } else if (stateId == IMPROVEMENTS) {
-            this.commentId = IMPROVEMENTS;
+            this.commentStatus = IMPROVEMENTS;
         }
     }
 }

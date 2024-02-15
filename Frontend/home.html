@@ -34,7 +34,7 @@
     <div class="container"> <!--Container para o aside e o main-->
     <aside>
         <div class="add-task-container">
-            <h3>Add task</h3>
+            <h3 id="addTask-h3">Add task</h3>
             <input type="text" id="taskName" placeholder="Title (required)" maxlength="15">
             <textarea id="taskDescription" placeholder="Description (required)"></textarea>
                 <div class="priority-buttons-home">
@@ -42,6 +42,10 @@
                     <button class="priority-button-home medium" id="medium-button-home">Medium</button>
                     <button class="priority-button-home high" id="high-button-home">High</button>
                 </div>
+            <label class="labels-task-dates" id="label-startDate">Start date</label>
+            <input type="date" id="task-startDate" required>
+            <label class="labels-task-dates" id="label-limitDate">End date</label>
+            <input type="date" id="task-limitDate" required>
             <button id="addTask">Add task</button>
             <p id="warningMessage2"></p>
         </div>
