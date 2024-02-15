@@ -41,19 +41,27 @@
     <main class="main-editProfile">
         <div class="details-editProfile">
             <label id="username-title-editProfile">Username</label> <!--Alterar para o first name do utilizador-->
-            <form class="editProfile-register">
+            <form class="editProfile-register" id="edit-profile-form">
                 <div class="editProfile-fieldsContainer">
                     <div class="left-fields-editProfile">
-                        <input type="password" class="editProfile-fields" id="currentPass-editProfile" name="currentPassword" placeholder="Current password" required readonly>
-                        <input type="password" class="editProfile-fields" id="newPassword-editProfile" name="newPassword" placeholder="New password">
-                        <input type="password" class="editProfile-fields" id="newPasswordConfirm-editProfile" name="nemPasswordConfirm" placeholder="Confirm new password">
-                        <input type="email" class="editProfile-fields" id="email-editProfile" name="email" placeholder="Email" required>
+                        <label class="labels-edit-profile" id="currentPass-editProfile-label">Current password (non-editable)</label>
+                        <input type="password" class="editProfile-fields" id="currentPass-editProfile" name="currentPassword" required readonly>
+                        <label class="labels-edit-profile" id="newPass-editProfile-label">New password</label>
+                        <input type="password" class="editProfile-fields" id="newPassword-editProfile" name="newPassword">
+                        <label class="labels-edit-profile" id="newPassConfirm-editProfile-label">Confirm new password</label>
+                        <input type="password" class="editProfile-fields" id="newPasswordConfirm-editProfile" name="nemPasswordConfirm">
+                        <label class="labels-edit-profile" id="email-editProfile-label">Email</label>
+                        <input type="email" class="editProfile-fields" id="email-editProfile" name="email" required>
                     </div>
                     <div class="right-fields-editProfile">
-                        <input type="text" class="editProfile-fields" id="firstName-editProfile" name="firstName" placeholder="First Name" required>
-                        <input type="text" class="editProfile-fields" id="lastName-editProfile" name="lastName" placeholder="Last Name" required>
-                        <input type="text" class="editProfile-fields" id="phone-editProfile" name="phone" placeholder="Phone" required>
-                        <input type="url" class="editProfile-fields" id="photoURL-editProfile" name="photoURL" placeholder="Photo URL" required>
+                        <label class="labels-edit-profile" id="firstName-editProfile-label">First Name</label>
+                        <input type="text" class="editProfile-fields" id="firstName-editProfile" name="firstName" required>
+                        <label class="labels-edit-profile" id="lastName-editProfile-label">Last Name</label>
+                        <input type="text" class="editProfile-fields" id="lastName-editProfile" name="lastName" required>
+                        <label class="labels-edit-profile" id="phone-editProfile-label">Phone</label>
+                        <input type="text" class="editProfile-fields" id="phone-editProfile" name="phone" required>
+                        <label class="labels-edit-profile" id="photoURL-editProfile-label">Photo URL</label>
+                        <input type="url" class="editProfile-fields" id="photoURL-editProfile" name="photoURL" required>
                     </div>
                 </div>
                 <div class="editProfile-submitButton">
