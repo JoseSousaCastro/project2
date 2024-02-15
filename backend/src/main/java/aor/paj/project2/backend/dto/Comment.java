@@ -11,7 +11,7 @@ public class Comment {
     @XmlElement
     private String user;
     @XmlElement
-    private int commentId;
+    private int commentStatus;
     @XmlElement
     private static final int STRENGTHS = 100;
     @XmlElement
@@ -26,8 +26,12 @@ public class Comment {
     public String getId() {
         return id;
     }
-    public void setId() {
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String generateId() {
         this.id = String.valueOf(System.currentTimeMillis());
+        return this.id;
     }
     public String getDescription() {
         return description;
@@ -41,16 +45,19 @@ public class Comment {
     public void setUser(String user) {
         this.user = user;
     }
-    public int getCommentId() {
-        return commentId;
+    public int getCommentStatus() {
+        return commentStatus;
     }
-    public void setCommentId(int stateId) {
+    public void setCommentStatus(int commentStatus) {
+        this.commentStatus = commentStatus;
+    }
+    public void generateCommentId(int stateId) {
         if (stateId == STRENGTHS) {
-            this.commentId = STRENGTHS;
+            this.commentStatus = STRENGTHS;
         } else if (stateId == CHALLENGES) {
-            this.commentId = CHALLENGES;
+            this.commentStatus = CHALLENGES;
         } else if (stateId == IMPROVEMENTS) {
-            this.commentId = IMPROVEMENTS;
+            this.commentStatus = IMPROVEMENTS;
         }
     }
 }

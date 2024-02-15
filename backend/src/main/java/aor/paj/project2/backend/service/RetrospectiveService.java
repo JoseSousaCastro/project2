@@ -23,7 +23,7 @@ public class RetrospectiveService {
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getRetrospectives(@HeaderParam("username") String username, @HeaderParam("password") String password ) {
+    public Response getRetrospectives(@HeaderParam("username") String username, @HeaderParam("password") String password) {
         Response response;
         if (!userBean.isAuthenticated(username, password)) {
             response = Response.status(401).entity("Invalid credentials").build();
@@ -92,13 +92,17 @@ public class RetrospectiveService {
     @POST
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response newRetrospective(@HeaderParam("username") String username, @HeaderParam("password") String password, Retrospective temporaryRetrospective) {
+    public Response addRetrospective(@HeaderParam("username") String username, @HeaderParam("password") String password, Retrospective temporaryRetrospective) {
         Response response;
         if (!userBean.isAuthenticated(username, password)) {
             response = Response.status(401).entity("Invalid credentials").build();
         } else {
-            retrospectiveBean.addRetrospective(temporaryRetrospective);
-            response = Response.status(201).entity("Retrospective created successfuly").build();
+            boolean added = retrospectiveBean.addRetrospective(temporaryRetrospective);
+            if (!added) {
+                response = Response.status(400).entity("Retrospective not created. Verify all fields").build();
+            } else {
+                response = Response.status(201).entity("Retrospective created successfuly").build();
+            }
         }
         return response;
     }
@@ -112,7 +116,7 @@ public class RetrospectiveService {
         if (!userBean.isAuthenticated(username, password)) {
             response = Response.status(401).entity("Invalid credentials").build();
         } else {
-            retrospectiveBean.addCommentToRetrospective(id, temporaryComment);
+            boolean added = retrospectiveBean.addCommentToRetrospective(id, temporaryComment);
             response = Response.status(201).entity("Comment created successfuly").build();
         }
         return response;
