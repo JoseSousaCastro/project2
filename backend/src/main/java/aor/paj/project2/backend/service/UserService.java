@@ -20,9 +20,6 @@ public class UserService {
 
     @Inject
     UserBean userBean;
-    @Inject
-    TaskBean taskBean;
-
 
     @GET
     @Path("/all")
@@ -108,18 +105,19 @@ public class UserService {
     @GET
     @Path("/{username}/tasks")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllUsersTasks(@PathParam("username") String username) {
+    public Response getAllUsersTasks(@HeaderParam("username") String usernameHeader, @HeaderParam("password") String password, @PathParam("username") String username) {
 
         Response response;
-        ArrayList<Task> userTasks = userBean.getUserAndHisTasks(username);
 
-        System.out.println("entrou no endpoint getAllUsersTasks");
-        System.out.println("tasks: ");
-        System.out.println(userTasks);
-        if (userTasks == null) {
-            response = Response.status(Response.Status.BAD_REQUEST).entity("No task list to return").build();
+        if(userBean.isAuthenticated(usernameHeader, password)) {
+            if(usernameHeader.equals(username)) {
+                ArrayList<Task> userTasks = userBean.getUserAndHisTasks(username);
+                response = Response.status(Response.Status.OK).entity(userTasks).build();
+            } else {
+                response = Response.status(Response.Status.BAD_REQUEST).entity("Invalid username on path").build();
+            }
         } else {
-            response = Response.status(Response.Status.OK).entity(userTasks).build();
+            response = Response.status(Response.Status.OK).entity("Invalid credentials").build();
         }
         return response;
     }
@@ -188,13 +186,21 @@ public class UserService {
     @POST
     @Path("/{username}/addTask")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response newTask(@HeaderParam("username") String username, @HeaderParam("password") String password, Task task) {
+    public Response newTask(@HeaderParam("username") String usernameHeader, @HeaderParam("password") String password, @PathParam("username") String username, Task task) {
         Response response;
-        if(!userBean.isAuthenticated(username, password)) {
-            response = Response.status(401).entity("Invalid credentials").build();
+        if(userBean.isAuthenticated(usernameHeader, password)) {
+            if(usernameHeader.equals(username)) {
+                boolean added = userBean.addTaskToUser(username, task);
+                if (added) {
+                    response = Response.status(201).entity("Task created successfully").build();
+                } else {
+                    response = Response.status(404).entity("Impossible to create task. Verify all fields").build();
+                }
+            } else {
+                response = Response.status(Response.Status.BAD_REQUEST).entity("Invalid username on path").build();
+            }
         } else {
-            userBean.addTaskToUser(username, task);
-            response = Response.status(201).entity("Task created successfully").build();
+            response = Response.status(Response.Status.OK).entity("Invalid credentials").build();
         }
 
         return response;
@@ -203,19 +209,23 @@ public class UserService {
     @PUT
     @Path("/{username}/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateTask(@HeaderParam("username") String username, @HeaderParam("password") String password, @PathParam("id") String id, Task task) {
+    public Response updateTask(@HeaderParam("username") String usernameHeader, @HeaderParam("password") String password, @PathParam("username") String username, @PathParam("id") String id, Task task) {
 
         Response response;
-        if (!userBean.isAuthenticated(username, password)) {
-            response = Response.status(401).entity("Invalid credentials").build();
-        } else {
-            task.setId(id);
-            boolean updated = userBean.updateTask(username, task);
-            if (!updated) {
-                response = Response.status(404).entity("Task with this id is not found").build();
+        if (userBean.isAuthenticated(username, password)) {
+            if(usernameHeader.equals(username)) {
+                task.setId(id);
+                boolean updated = userBean.updateTask(username, task);
+                if (updated) {
+                    response = Response.status(200).entity("Task updated successfully").build();
+                } else {
+                    response = Response.status(404).entity("Impossible to edit task. Verify all fields").build();
+                }
             } else {
-                response = Response.status(200).entity("Task updated successfully").build();
+                response = Response.status(Response.Status.BAD_REQUEST).entity("Invalid username on path").build();
             }
+        } else {
+            response = Response.status(Response.Status.OK).entity("Invalid credentials").build();
         }
         return response;
     }
@@ -223,18 +233,22 @@ public class UserService {
     @DELETE
     @Path("/{username}/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response removeTask(@HeaderParam("username") String username, @HeaderParam("password") String password, @PathParam("id") String id) {
+    public Response removeTask(@HeaderParam("username") String usernameHeader, @HeaderParam("password") String password, @PathParam("username") String username, @PathParam("id") String id) {
 
         Response response;
-        if (!userBean.isAuthenticated(username, password)) {
-            response = Response.status(401).entity("Invalid credentials").build();
-        } else {
-            boolean removed = userBean.removeTask(username, id);
-            if (!removed) {
-                response = Response.status(404).entity("Task with this id is not found").build();
+        if (userBean.isAuthenticated(username, password)) {
+            if (usernameHeader.equals(username)) {
+                boolean removed = userBean.removeTask(username, id);
+                if (removed) {
+                    response = Response.status(200).entity("Task removed successfully").build();
+                } else {
+                    response = Response.status(404).entity("Task with this id is not found").build();
+                }
             } else {
-                response = Response.status(200).entity("Task removed successfully").build();
+                response = Response.status(Response.Status.BAD_REQUEST).entity("Invalid username on path").build();
             }
+        } else {
+            response = Response.status(Response.Status.OK).entity("Invalid credentials").build();
         }
         return response;
     }
