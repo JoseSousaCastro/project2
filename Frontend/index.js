@@ -1,9 +1,14 @@
+window.onload = function() {
+
+    localStorage.removeItem("username");
+    localStorage.removeItem("password");
+}
+
+
 // ID do botão loginButton
 document.getElementById('login-form').addEventListener('submit', async function(event) {
     event.preventDefault();
 
-    localStorage.removeItem("username");
-    localStorage.removeItem("password");
 
     let loginValue = document.getElementById('username').value.trim();
     let passwordValue = document.getElementById('password').value.trim();
@@ -49,12 +54,10 @@ document.getElementById('login-form').addEventListener('submit', async function(
         } else if (!response.ok) {
             alert("something went wrong")
         }
-
     } catch (error) {
         console.error('Error:', error);
         alert("Something went wrong");
     }
-
 
     function createUserData() {
         let isFormValid = document.getElementById('login-form').checkValidity();

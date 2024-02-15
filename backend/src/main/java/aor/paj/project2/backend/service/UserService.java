@@ -33,19 +33,21 @@ public class UserService {
 
 
     @PUT
-    @Path("/{username}")
+    @Path("/update/{username}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateUser(@PathParam("username")String username, User user) {
+    public Response updateUser(@PathParam("username")String username, @HeaderParam("username") String usernameHeader, @HeaderParam("password") String password, User user) {
         Response response;
 
-        boolean updatedUser = userBean.updateUser(user);
-
-        if (!updatedUser) {
-            response = Response.status(Response.Status.NOT_FOUND).entity("User with this username is not found").build();
+        if(userBean.isAuthenticated(usernameHeader, password)) {
+            if(usernameHeader.equals(username)) {
+                boolean updatedUser = userBean.updateUser(user);
+                response = Response.status(Response.Status.OK).entity(updatedUser).build(); //status code 200
+            } else {
+                response = Response.status(Response.Status.NOT_ACCEPTABLE).entity("Invalid username on path").build();
+            }
         } else {
-            User updatedUserDetails = userBean.getUser(username);
-            response = Response.status(Response.Status.OK).entity(updatedUserDetails).build(); //status code 200
+            response = Response.status(401).entity("Invalid credentials").build();
         }
         return response;
     }
@@ -54,13 +56,18 @@ public class UserService {
     @GET
     @Path("/{username}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUser(@PathParam("username")String username) {
+    public Response getUser(@PathParam("username")String username, @HeaderParam("username")String usernameHeader, @HeaderParam("password") String password) {
         Response response;
-        User user = userBean.getUser(username);
-        if (user == null) {
-            response = Response.status(Response.Status.NOT_FOUND).entity("User with this username was not found").build();
+
+        if(userBean.isAuthenticated(usernameHeader, password)) {
+            if(usernameHeader.equals(username)) {
+                User user = userBean.getUser(username);
+                response = Response.ok().entity(user).build();
+            } else {
+                response = Response.status(Response.Status.BAD_REQUEST).entity("Invalid username on path").build();
+            }
         } else {
-            response = Response.ok().entity(user).build();
+            response = Response.status(401).entity("Invalid credentials").build();
         }
         return response;
     }
