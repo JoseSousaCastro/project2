@@ -44,7 +44,7 @@ public class RetrospectiveService {
         } else {
             List<Comment> comments = retrospectiveBean.getComments(id);
             if (comments == null) {
-                response = Response.status(404).entity("Retrospective with this id is not found").build();
+                response = Response.status(404).entity("Retrospective with this id not found").build();
             } else {
                 response = Response.status(200).entity(comments).build();
             }
@@ -62,7 +62,7 @@ public class RetrospectiveService {
         } else {
             Retrospective retrospective = retrospectiveBean.getRetrospective(id);
             if (retrospective == null) {
-                response = Response.status(404).entity("Retrospective with this id is not found").build();
+                response = Response.status(404).entity("Retrospective with this id not found").build();
             } else {
                 response = Response.status(200).entity(retrospective).build();
             }
@@ -78,11 +78,15 @@ public class RetrospectiveService {
         if (!userBean.isAuthenticated(username, password)) {
             response = Response.status(401).entity("Invalid credentials").build();
         } else {
-            Comment comment = retrospectiveBean.getComment(id, id2);
-            if (comment == null) {
-                response = Response.status(404).entity("Comment with this id is not found").build();
+            if (id == null) {
+                response = Response.status(400).entity("Invalid retrospective id").build();
             } else {
-                response = Response.status(200).entity(comment).build();
+                Comment comment = retrospectiveBean.getComment(id, id2);
+                if (comment == null) {
+                    response = Response.status(404).entity("Comment with this id not found").build();
+                } else {
+                    response = Response.status(200).entity(comment).build();
+                }
             }
         }
         return response;
@@ -92,7 +96,8 @@ public class RetrospectiveService {
     @POST
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addRetrospective(@HeaderParam("username") String username, @HeaderParam("password") String password, Retrospective temporaryRetrospective) {
+    public Response addRetrospective(@HeaderParam("username") String username, @HeaderParam("password") String
+            password, Retrospective temporaryRetrospective) {
         Response response;
         if (!userBean.isAuthenticated(username, password)) {
             response = Response.status(401).entity("Invalid credentials").build();
@@ -101,7 +106,7 @@ public class RetrospectiveService {
             if (!added) {
                 response = Response.status(400).entity("Retrospective not created. Verify all fields").build();
             } else {
-                response = Response.status(201).entity("Retrospective created successfuly").build();
+                response = Response.status(200).entity("Retrospective created successfuly").build();
             }
         }
         return response;
@@ -111,102 +116,17 @@ public class RetrospectiveService {
     @POST
     @Path("/{id}/addComment")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response newComment(@HeaderParam("username") String username, @HeaderParam("password") String password, @PathParam("id") String id, Comment temporaryComment) {
+    public Response newComment(@HeaderParam("username") String username, @HeaderParam("password") String
+            password, @PathParam("id") String id, Comment temporaryComment) {
         Response response;
         if (!userBean.isAuthenticated(username, password)) {
             response = Response.status(401).entity("Invalid credentials").build();
         } else {
             boolean added = retrospectiveBean.addCommentToRetrospective(id, temporaryComment);
-            response = Response.status(201).entity("Comment created successfuly").build();
-        }
-        return response;
-    }
-
-    @DELETE
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response removeRetrospective(@HeaderParam("username") String username, @HeaderParam("password") String password, @PathParam("id") String id) {
-        Response response;
-        if (!userBean.isAuthenticated(username, password)) {
-            response = Response.status(401).entity("Invalid credentials").build();
-        } else {
-            boolean deleted = retrospectiveBean.deleteRetrospective(id);
-            if (!deleted) {
-                response = Response.status(404).entity("Retrospective with this id is not found").build();
+            if (!added) {
+                response = Response.status(400).entity("Comment not created. Verify all fields").build();
             } else {
-                response = Response.status(200).entity("deleted").build();
-            }
-        }
-        return response;
-    }
-
-    @DELETE
-    @Path("/{id}/deleteAllComments")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response removeComments(@HeaderParam("username") String username, @HeaderParam("password") String password, @PathParam("id") String id, Comment temporaryComment) {
-        Response response;
-        if (!userBean.isAuthenticated(username, password)) {
-            response = Response.status(401).entity("Invalid credentials").build();
-        } else {
-            boolean deleted = retrospectiveBean.deleteAllComments(id);
-            if (!deleted) {
-                response = Response.status(404).entity("Retrospective with this id is not found").build();
-            } else {
-                response = Response.status(200).entity("deleted").build();
-            }
-        }
-        return response;
-    }
-
-    @DELETE
-    @Path("/{id}/comment/{id2}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response removeComment(@HeaderParam("username") String username, @HeaderParam("password") String password, @PathParam("id") String id, @PathParam("id2") String id2) {
-        Response response;
-        if (!userBean.isAuthenticated(username, password)) {
-            response = Response.status(401).entity("Invalid credentials").build();
-        } else {
-            boolean deleted = retrospectiveBean.deleteComment(id, id2);
-            if (!deleted) {
-                response = Response.status(404).entity("Comment with this id is not found").build();
-            } else {
-                response = Response.status(200).entity("deleted").build();
-            }
-        }
-        return response;
-    }
-
-    @PUT
-    @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateRetrospective(@HeaderParam("username") String username, @HeaderParam("password") String password, @PathParam("id") String id, Retrospective temporaryRetrospective) {
-        Response response;
-        if (!userBean.isAuthenticated(username, password)) {
-            response = Response.status(401).entity("Invalid credentials").build();
-        } else {
-            boolean updated = retrospectiveBean.updateRetrospective(id, temporaryRetrospective);
-            if (!updated) {
-                response = Response.status(404).entity("Retrospective with this id is not found").build();
-            } else {
-                response = Response.status(200).entity("updated").build();
-            }
-        }
-        return response;
-    }
-
-    @PUT
-    @Path("/{id}/comment/{id2}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateComment(@HeaderParam("username") String username, @HeaderParam("password") String password, @PathParam("id") String id, @PathParam("id2") String id2, Comment temporaryComment) {
-        Response response;
-        if (!userBean.isAuthenticated(username, password)) {
-            response = Response.status(401).entity("Invalid credentials").build();
-        } else {
-            boolean updated = retrospectiveBean.updateComment(id, id2, temporaryComment);
-            if (!updated) {
-                response = Response.status(404).entity("Comment with this id is not found").build();
-            } else {
-                response = Response.status(200).entity("updated").build();
+                response = Response.status(200).entity("Comment created successfuly").build();
             }
         }
         return response;

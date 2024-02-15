@@ -2,6 +2,7 @@ package aor.paj.project2.backend.dto;
 
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.time.LocalDate;
 
 @XmlRootElement
@@ -43,9 +44,11 @@ public class Task {
     public String getId() {
         return id;
     }
+
     public void setId(String id) {
         this.id = id;
     }
+
     public void generateId() {
         this.id = String.valueOf(System.currentTimeMillis());
     }
@@ -73,24 +76,26 @@ public class Task {
     public void setStateId(int stateId) {
         this.stateId = stateId;
     }
+
     public void setInitialStateId() {
         this.stateId = TODO;
     }
+
     public void editStateId(int stateId) {
         /*if (stateId != TODO && stateId != DOING && stateId != DONE) {
             throw new IllegalArgumentException("Invalid stateId");
         } else {*/
-            if (stateId == TODO) {
-                this.stateId = TODO;
-            } else if (stateId == DOING) {
-                this.stateId = DOING;
-            } else {
-                this.stateId = DONE;
-            }
+        if (stateId == TODO) {
+            this.stateId = TODO;
+        } else if (stateId == DOING) {
+            this.stateId = DOING;
+        } else {
+            this.stateId = DONE;
+        }
         //}
     }
 
-     public int getPriority() {
+    public int getPriority() {
         return priority;
     }
 
@@ -107,6 +112,7 @@ public class Task {
     public LocalDate getStartDate() {
         return startDate;
     }
+
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
@@ -133,11 +139,12 @@ public class Task {
             this.retrospective = retrospective;
         }
     }
+
     public Retrospective getRetrospective() {
         return retrospective;
     }
 
-  @Override
+    @Override
     public String toString() {
         return "Task{" +
                 "id='" + id + '\'' +

@@ -25,12 +25,13 @@ public class UserBean {
         if (f.exists()) {
             try {
                 FileReader filereader = new FileReader(f);
-                users = JsonbBuilder.create().fromJson(filereader, new ArrayList<User>() {}.getClass().getGenericSuperclass());
+                users = JsonbBuilder.create().fromJson(filereader, new ArrayList<User>() {
+                }.getClass().getGenericSuperclass());
                 System.out.println("Users: " + users);
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
-        }else {
+        } else {
             users = new ArrayList<>();
         }
     }
@@ -147,9 +148,9 @@ public class UserBean {
         boolean status = true;
         int i = 0;
 
-        while (status && i < phone.length()-1) {
-            if (phone.length() == 9 ) {
-                for ( ;i < phone.length(); i++) {
+        while (status && i < phone.length() - 1) {
+            if (phone.length() == 9) {
+                for (; i < phone.length(); i++) {
                     if (!Character.isDigit(phone.charAt(i))) {
                         status = false;
                     }
@@ -160,6 +161,7 @@ public class UserBean {
         }
         return status;
     }
+
     public boolean isImageUrlValid(String url) {
         boolean status = true;
 
@@ -193,7 +195,7 @@ public class UserBean {
     public boolean addTaskToUser(String username, Task temporaryTask) {
         TaskBean taskBean = new TaskBean();
         boolean done = taskBean.newTask(temporaryTask);
-        if(done) {
+        if (done) {
             getUserAndHisTasks(username).add(temporaryTask);
             writeIntoJsonFile();
         }
@@ -202,20 +204,20 @@ public class UserBean {
 
     public boolean updateTask(String username, Task task) {
         TaskBean taskBean = new TaskBean();
-         boolean updated = false;
+        boolean updated = false;
 
-         if (taskBean.editTask(task, getUserAndHisTasks(username))) {
-             writeIntoJsonFile();
-             updated = true;
-         }
-         return updated;
+        if (taskBean.editTask(task, getUserAndHisTasks(username))) {
+            writeIntoJsonFile();
+            updated = true;
+        }
+        return updated;
     }
 
     public boolean removeTask(String username, String id) {
         TaskBean taskBean = new TaskBean();
         boolean removed = false;
 
-        if(taskBean.removeTask(id, getUserAndHisTasks(username))) {
+        if (taskBean.removeTask(id, getUserAndHisTasks(username))) {
             writeIntoJsonFile();
             removed = true;
         }
