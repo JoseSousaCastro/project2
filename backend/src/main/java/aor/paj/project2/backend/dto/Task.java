@@ -17,7 +17,7 @@ public class Task {
     @XmlElement
     private int priority;
     @XmlElement
-    private LocalDate creationDate;
+    private LocalDate startDate;
     @XmlElement
     private LocalDate editionDate;
     @XmlElement
@@ -104,14 +104,11 @@ public class Task {
         }
     }
 
-    public LocalDate getCreationDate() {
-        return creationDate;
+    public LocalDate getStartDate() {
+        return startDate;
     }
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
-    }
-    public void defineCreationDate() {
-        this.creationDate = LocalDate.now();
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
     public LocalDate getLimitDate() {
@@ -148,7 +145,7 @@ public class Task {
                 ", description='" + description + '\'' +
                 ", stateId=" + stateId +
                 ", priority=" + priority +
-                ", creationDate=" + creationDate +
+                ", creationDate=" + startDate +
                 ", editionDate=" + editionDate +
                 ", limitDate=" + limitDate +
                 '}';
