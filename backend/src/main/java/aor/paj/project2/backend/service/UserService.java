@@ -40,6 +40,7 @@ public class UserService {
             if (usernameHeader.equals(username)) {
                 boolean updatedUser = userBean.updateUser(user);
                 response = Response.status(Response.Status.OK).entity(updatedUser).build(); //status code 200
+                
             } else {
                 response = Response.status(Response.Status.NOT_ACCEPTABLE).entity("Invalid username on path").build();
             }

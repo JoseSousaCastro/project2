@@ -7,6 +7,8 @@ window.onload = function() {
     getFirstName(usernameValue, passwordValue);
     getPhotoUrl(usernameValue, passwordValue);
     loadUserData(usernameValue, passwordValue);
+
+    clearInputValues();
   
 };
 
@@ -94,12 +96,12 @@ window.onload = function() {
 
             
             document.getElementById("username-title-editProfile").textContent = data.username || '';
-            document.getElementById("firstName-editProfile").value = data.firstName || '';
-            document.getElementById("lastName-editProfile").value = data.lastName || '';
-            document.getElementById("phone-editProfile").value = data.phone || '';
-            document.getElementById("photoURL-editProfile").value = data.photoURL || '';
-            document.getElementById("email-editProfile").value = data.email || '';
-            document.getElementById("currentPass-editProfile").value = data.password || '';
+            document.getElementById("firstName-editProfile").placeholder = data.firstName || '';
+            document.getElementById("lastName-editProfile").placeholder = data.lastName || '';
+            document.getElementById("phone-editProfile").placeholder = data.phone || '';
+            document.getElementById("photoURL-editProfile").placeholder = data.photoURL || '';
+            document.getElementById("email-editProfile").placeholder = data.email || '';
+            document.getElementById("currentPass-editProfile").placeholder = '******';
 
         } else {
 
@@ -116,60 +118,134 @@ document.getElementById("profile-save-button").addEventListener('click', async f
     let usernameValue = localStorage.getItem('username');
     let passwordValue = localStorage.getItem('password');
 
-    let updatedUser = createUserData();
+    let newPassword = document.getElementById('newPassword-editProfile').value.trim();
+    let confirmNewPassword = document.getElementById('newPasswordConfirm-editProfile').value.trim();
+
+
+    /*
+    Para verificar qual a password que se atualizar, se os campos não estiverem vazios e forem iguais
+    a nova password vai ser isso, se os campos estiverem vazios a password vai ficar a password antiga 
+    que está guardada na local storage se não, se o user escrever nova passaword mas não for igual, vai ficar 
+    null e vai rebentar não deixando o user fazer update ao perfil
+    
+    */
+    let updatedPasswordToObejct;
+
+    if (newPassword !== '' && confirmNewPassword !== '' && newPassword === confirmNewPassword) {
+        updatedPasswordToObejct = confirmNewPassword;
+    } else if (newPassword === '' && confirmNewPassword === '') {
+        updatedPasswordToObejct = passwordValue;
+    } else {
+        alert("Passwords dont match")
+        return;
+    }
+
+    let updatedUser = updateUserInfo(updatedPasswordToObejct);
 
     let updateUserRequest =  `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/update/${usernameValue}`;
 
-    try {
-        const response = await fetch(updateUserRequest, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': '*/*',
-                username: usernameValue,
-                password: passwordValue
-            },
-            body: JSON.stringify(updatedUser)
-        });
 
-        if (response.ok) {
-            alert("Profile updated successfully")
-        } else if (response.status === 406) {
-            alert("Invalid username on path")
-        } else if (response.status === 401) {
-            alert("Invalid credentials")
+    //verifica se todos os campos não estão vazios, se estiverem nem faz o request e avisa o user
+    if (!isEveryFieldUnchanged()) {
+
+        try {
+            const response = await fetch(updateUserRequest, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': '*/*',
+                    username: usernameValue,
+                    password: passwordValue
+                },
+                body: JSON.stringify(updatedUser)
+            });
+
+            if (response.ok) {
+                alert("Profile updated successfully")
+                localStorage.setItem('password', updatedPasswordToObejct);
+
+            } else if (response.status === 406) {
+                alert("Invalid username on path")
+
+            } else if (response.status === 401) {
+                alert("Invalid credentials")
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert("Something went wrong");
         }
-    } catch (error) {
-        console.error('Error:', error);
-        alert("Something went wrong");
+    } else {
+        alert("No changes detected")
     }
 });
 
-function createUserData() {
+function updateUserInfo(updatedPassword) { 
 
     let isFormValid = document.getElementById('edit-profile-form').checkValidity();
 
     if (isFormValid) {
-        
-        //let password = document.getElementById('password-register').value.trim();
-        let email = document.getElementById('email-editProfile').value.trim();
-        let firstName = document.getElementById('firstName-editProfile').value.trim();
-        let lastName = document.getElementById('lastName-editProfile').value.trim();
-        let phone = document.getElementById('phone-editProfile').value.trim();
-        let photoURL = document.getElementById('photoURL-editProfile').value.trim();
+
+        let username = document.getElementById('username-title-editProfile').textContent.trim();
+        let email = getInputValue('email-editProfile');
+        let firstName = getInputValue('firstName-editProfile');
+        let lastName = getInputValue('lastName-editProfile');
+        let phone = getInputValue('phone-editProfile');
+        let photoURL = getInputValue('photoURL-editProfile');
 
         return {
-            
-            
+            username: username,
+            password: updatedPassword,
             email: email,
             firstName: firstName,
             lastName: lastName,
             phone: phone,
             photoURL: photoURL
         };
+
     } else {
-        document.getElementById('registrationForm').reportValidity();
+        document.getElementById('edit-profile-form').reportValidity();
         console.error('Form is not valid');
         return null;
     }
 }
+
+function clearInputValues() {
+    document.getElementById('newPassword-editProfile').value = '';
+    document.getElementById('newPasswordConfirm-editProfile').value = ''; 
+    document.getElementById('email-editProfile').value = '';
+    document.getElementById('firstName-editProfile').value = '';
+    document.getElementById('lastName-editProfile').value = '';
+    document.getElementById('phone-editProfile').value = '';
+    document.getElementById('photoURL-editProfile').value = '';
+}
+
+function getInputValue(elementId) {
+    let inputValue;
+    let valueElement = document.getElementById(elementId);
+    
+    if (valueElement.value === '') {
+        inputValue = valueElement.placeholder.trim();
+    } else {
+        inputValue = valueElement.value.trim();
+    }
+
+    return inputValue;
+}
+
+function isEveryFieldUnchanged() {
+
+    let allFieldsUnchanged = true;
+
+    let form = document.getElementById('edit-profile-form');
+    let fieldsArray = [...form.querySelectorAll('input')];
+
+    fieldsArray.forEach(function(field) {
+        if (field.value !== '') {
+            allFieldsUnchanged = false;
+        }
+    });
+    return allFieldsUnchanged;
+}
+
+
+
