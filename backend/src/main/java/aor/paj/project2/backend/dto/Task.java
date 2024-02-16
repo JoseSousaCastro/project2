@@ -24,8 +24,6 @@ public class Task {
     @XmlElement
     private LocalDate limitDate;
     @XmlElement
-    private Retrospective retrospective;
-    @XmlElement
     public static final int TODO = 100;
     @XmlElement
     public static final int DOING = 200;
@@ -131,17 +129,6 @@ public class Task {
 
     public void setEditionDate() {
         this.editionDate = LocalDate.now();
-    }
-
-
-    public void addRetrospective(Retrospective retrospective) {
-        if (stateId == DONE) {
-            this.retrospective = retrospective;
-        }
-    }
-
-    public Retrospective getRetrospective() {
-        return retrospective;
     }
 
     @Override
