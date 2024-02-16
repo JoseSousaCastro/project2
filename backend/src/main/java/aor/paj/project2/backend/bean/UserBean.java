@@ -99,34 +99,27 @@ public class UserBean {
     }
 
     private boolean isEmailFormatValid(String email) {
-        boolean status;
-
-        try {
-            InternetAddress emailAddress = new InternetAddress(email);
-            emailAddress.validate();
-            status = true;
-
-        } catch (AddressException ex) {
-            status = false;
-        }
-        return status;
+        // Use a regular expression to perform email format validation
+        // This regex is a basic example and may need to be adjusted
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
     }
 
-    public boolean isEmailValid(String email) {
+    public boolean isEmailValid(String email, String username) {
+        // Check if the email format is valid
+        if (!isEmailFormatValid(email)) {
+            return false;
+        }
 
-        boolean status = true;
-
-        if (isEmailFormatValid(email)) {
-            for (User user : users) {
-                if (user.getEmail().equals(email)) {
-                    status = false;
-                }
+        // Check if the email is already in use by a different user
+        for (User user : users) {
+            if (user.getEmail().equals(email) && !user.getUsername().equals(username)) {
+                return false;
             }
-        } else {
-            status = false;
         }
-        return status;
+        return true;
     }
+
 
 
     public boolean isAnyFieldEmpty(User user) {

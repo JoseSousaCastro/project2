@@ -37,10 +37,19 @@ public class UserService {
         Response response;
 
         if (userBean.isAuthenticated(usernameHeader, password)) {
-            if (usernameHeader.equals(username)) {
+            if (!userBean.isEmailValid(user.getEmail(), usernameHeader)) {
+                response = Response.status(422).entity("Invalid email").build();
+
+            } else if (!userBean.isImageUrlValid(user.getPhotoURL())) {
+                response = Response.status(422).entity("Image URL invalid").build(); //400
+
+            } else if (!userBean.isPhoneNumberValid(user.getPhone())) {
+                response = Response.status(422).entity("Invalid phone number").build();
+
+            } else if (usernameHeader.equals(username)) {
                 boolean updatedUser = userBean.updateUser(user);
                 response = Response.status(Response.Status.OK).entity(updatedUser).build(); //status code 200
-                
+
             } else {
                 response = Response.status(Response.Status.NOT_ACCEPTABLE).entity("Invalid username on path").build();
             }
@@ -49,6 +58,7 @@ public class UserService {
         }
         return response;
     }
+
 
 
     @GET
@@ -131,7 +141,7 @@ public class UserService {
         Response response;
 
         boolean isUsernameAvailable = userBean.isUsernameAvailable(user.getUsername());
-        boolean isEmailValid = userBean.isEmailValid(user.getEmail());
+        boolean isEmailValid = userBean.isEmailValid(user.getEmail(), user.getUsername());
         boolean isFieldEmpty = userBean.isAnyFieldEmpty(user);
         boolean isPhoneNumberValid = userBean.isPhoneNumberValid(user.getPhone());
         boolean isImageValid = userBean.isImageUrlValid(user.getPhotoURL());
