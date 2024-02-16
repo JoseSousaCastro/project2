@@ -12,7 +12,6 @@ public class TaskBean {
     public boolean newTask(Task task) {
         task.generateId();
         task.setInitialStateId();
-        //task.setStartDate(task.getStartDate());
         return validateTask(task);
     }
 

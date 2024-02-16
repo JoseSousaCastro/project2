@@ -1,11 +1,8 @@
 package aor.paj.project2.backend.service;
 
-import aor.paj.project2.backend.bean.TaskBean;
 import aor.paj.project2.backend.bean.UserBean;
-//import aor.paj.project2.backend.bean.TaskBean;
 import aor.paj.project2.backend.dto.Task;
 import aor.paj.project2.backend.dto.User;
-import jakarta.ejb.Remove;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -114,10 +111,10 @@ public class UserService {
                 ArrayList<Task> userTasks = userBean.getUserAndHisTasks(username);
                 response = Response.status(Response.Status.OK).entity(userTasks).build();
             } else {
-                response = Response.status(Response.Status.BAD_REQUEST).entity("Invalid username on path").build();
+                response = Response.status(406).entity("Invalid username on path").build();
             }
         } else {
-            response = Response.status(Response.Status.OK).entity("Invalid credentials").build();
+            response = Response.status(401).entity("Invalid credentials").build();
         }
         return response;
     }
@@ -186,6 +183,7 @@ public class UserService {
     @POST
     @Path("/{username}/addTask")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response newTask(@HeaderParam("username") String usernameHeader, @HeaderParam("password") String password, @PathParam("username") String username, Task task) {
         Response response;
         if (userBean.isAuthenticated(usernameHeader, password)) {
@@ -200,7 +198,7 @@ public class UserService {
                 response = Response.status(Response.Status.BAD_REQUEST).entity("Invalid username on path").build();
             }
         } else {
-            response = Response.status(Response.Status.OK).entity("Invalid credentials").build();
+            response = Response.status(401).entity("Invalid credentials").build();
         }
 
         return response;
@@ -225,7 +223,7 @@ public class UserService {
                 response = Response.status(Response.Status.BAD_REQUEST).entity("Invalid username on path").build();
             }
         } else {
-            response = Response.status(Response.Status.OK).entity("Invalid credentials").build();
+            response = Response.status(401).entity("Invalid credentials").build();
         }
         return response;
     }
@@ -248,7 +246,7 @@ public class UserService {
                 response = Response.status(Response.Status.BAD_REQUEST).entity("Invalid username on path").build();
             }
         } else {
-            response = Response.status(Response.Status.OK).entity("Invalid credentials").build();
+            response = Response.status(401).entity("Invalid credentials").build();
         }
         return response;
     }
