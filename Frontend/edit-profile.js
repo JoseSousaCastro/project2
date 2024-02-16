@@ -163,13 +163,39 @@ document.getElementById("profile-save-button").addEventListener('click', async f
             if (response.ok) {
                 alert("Profile updated successfully")
                 localStorage.setItem('password', updatedPasswordToObejct);
+                location.reload();
 
-            } else if (response.status === 406) {
-                alert("Invalid username on path")
-
-            } else if (response.status === 401) {
-                alert("Invalid credentials")
+            } else {
+                switch (response.status) {
+                case 422:
+                    const errorData = await response.text();
+                
+                    switch (errorData) {
+                        case "Invalid email":
+                            alert("The email you used is not valid");
+                            break;
+                        case "Image URL invalid":
+                            alert("Image url provided not valid");
+                            break;
+                        case "Invalid phone number":
+                            alert("The phone number is not valid");
+                            break;
+                        default:
+                            console.error('Unknown error message:', errorData);
+                            alert("Something went wrong switch");
+                    }
+                    break;
+                case 406: 
+                    alert("Wrong username on path");
+                    break;
+                case 401: 
+                alert("Invalid credentials");
+                break;
+                default:
+                    alert("Something went wrong");
             }
+        }
+
         } catch (error) {
             console.error('Error:', error);
             alert("Something went wrong");
@@ -183,7 +209,7 @@ function updateUserInfo(updatedPassword) {
 
     let isFormValid = document.getElementById('edit-profile-form').checkValidity();
 
-    if (isFormValid) {
+    
 
         let username = document.getElementById('username-title-editProfile').textContent.trim();
         let email = getInputValue('email-editProfile');
@@ -202,11 +228,7 @@ function updateUserInfo(updatedPassword) {
             photoURL: photoURL
         };
 
-    } else {
-        document.getElementById('edit-profile-form').reportValidity();
-        console.error('Form is not valid');
-        return null;
-    }
+
 }
 
 function clearInputValues() {

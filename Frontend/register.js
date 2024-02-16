@@ -115,11 +115,9 @@ document.getElementById('registrationForm').addEventListener('submit', async fun
             window.location.href = 'index.html';
 
         } else {
-
             switch (response.status) {
                 case 422:
                     const errorData = await response.text();
-                
                     switch (errorData) {
                         case "There's an empty field, fill all values":
                             alert("Please fill all fields");
@@ -156,9 +154,9 @@ document.getElementById('registrationForm').addEventListener('submit', async fun
 
 
 function createUserData() {
-    let isFormValid = document.getElementById('registrationForm').checkValidity();
+    
 
-    if (isFormValid) {
+    
         let username = document.getElementById('username-register').value.trim();
         let password = document.getElementById('password-register').value.trim();
         let email = document.getElementById('email-register').value.trim();
@@ -176,11 +174,7 @@ function createUserData() {
             phone: phone,
             photoURL: photoURL
         };
-    } else {
-        document.getElementById('registrationForm').reportValidity();
-        console.error('Form is not valid');
-        return null;
-    }
+    
 }
 
 
