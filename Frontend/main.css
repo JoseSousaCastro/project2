@@ -1245,6 +1245,7 @@ footer {
 /* Definições edit-profile.html */
 
 .main-editProfile {
+  width: auto;
   background-image: url("multimedia/bg_01.png");
   background-size: cover;
   background-position: center;
