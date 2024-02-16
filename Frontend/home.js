@@ -108,7 +108,7 @@ highButton.addEventListener("click", () => setPriorityButtonSelected(highButton,
  
 
 async function newTask(usernameValue, passwordValue, task) {
-console.log('username: ' + usernameValue);
+console.log('In newTask - username: ' + usernameValue);
   let newTask = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/addTask`;
     
     try {
@@ -117,8 +117,8 @@ console.log('username: ' + usernameValue);
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': '*/*',
-                'username': usernameValue,
-                'password': passwordValue
+                username: usernameValue,
+                password: passwordValue
             },    
             body: JSON.stringify(task)
         });
@@ -173,11 +173,13 @@ console.log('username: ' + usernameValue);
 
 
 function createTask(title, description, priority, startDate, limitDate) { // Cria uma nova task com os dados inseridos pelo utilizador
+  let todoStateId = 'todo';
+  let newPriority = parsePriorityToInt(priority);
   const task = {
-  title :title,
+  title: title,
   description: description,
-  stateId: 'todo',
-  priority: priority,
+  stateId: parseStateIdToInt(todoStateId),
+  priority: newPriority,
   startDate: startDate,
   limitDate: limitDate
   }
@@ -316,6 +318,30 @@ function removeAllTaskElements() {
   tasks.forEach(task => task.remove());
 }
 
+function parseStateIdToInt (stateId) {
+  let newStateId = 0;
+  if(stateId === 'todo') {
+    newStateId = 100;
+  } else if(stateId === 'doing') {
+    newStateId = 200;
+  } else if(stateId === 'done') {
+    newStateId = 300;
+  }
+  return newStateId;
+}
+
+function parsePriorityToInt (priority) {
+  let newPriority = 0;
+  if(priority === 'low') {
+    newPriority = 100;
+  } else if(priority === 'medium') {
+    newPriority = 200;
+  } else if(priority === 'high') {
+    newPriority = 300;
+  }
+  return newPriority;
+}
+
 
 function deleteTask(id) {
   const tasksArray = JSON.parse(localStorage.getItem('tasks'));
@@ -332,7 +358,9 @@ function deleteTask(id) {
 }
 
 window.onclose = function () { // Guarda as tarefas na local storage quando a página é fechada
- 
+
+  localStorage.removeItem("username");
+  localStorage.removeItem("password");
 }
 
 document.getElementById("logout-button-header").addEventListener('click', function() {
@@ -360,7 +388,6 @@ async function getFirstName(usernameValue, passwordValue) {
         if (response.ok) {
 
           const data = await response.text();
-          console.log(data.firstName)
           document.getElementById("first-name-label").innerText = data;
 
         } else if (!response.ok) {
