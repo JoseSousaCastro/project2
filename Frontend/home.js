@@ -1,19 +1,33 @@
 
 window.onload = function() {
-
-
-
   const usernameValue = localStorage.getItem('username');
   const passwordValue = localStorage.getItem('password');
 
   console.log('window on load está a funcionar!')
   getFirstName(usernameValue, passwordValue);
   getPhotoUrl(usernameValue, passwordValue);
-  loadTasks();
-
-
+  //loadTasks();
 
   };
+
+  function getValuesFromLocalStorage() {
+    const usernameValue = localStorage.getItem('username');
+    const passwordValue = localStorage.getItem('password');
+    const userValues = [usernameValue, passwordValue];     
+    return userValues;
+  }
+
+  function cleanAllTaskFields() {
+    document.getElementById('warningMessage2').innerText = '';
+    // Limpar os input fields depois de adicionar a task
+    document.getElementById('taskName').value = '';
+    document.getElementById('taskDescription').value = '';
+    document.getElementById('task-startDate').value = '';
+    document.getElementById('task-limitDate').value = '';
+    removeSelectedPriorityButton();
+    taskPriority = null;
+  }
+
 const tasks = document.querySelectorAll('.task')
 const panels = document.querySelectorAll('.panel')
 
@@ -35,22 +49,21 @@ panels.forEach(panel => { // Adiciona os listeners de drag and drop a um painel
     const panelID = document.getElementById(panel.id) // Guarda o ID do painel onde a tarefa vai ser colocada
     if (afterElement == null) {
       panel.appendChild(task)
-      task.status = panel.id;
-      for (var i = 0; i < tasks.length; i++) { // Percorre o array de tarefas e altera o status da tarefa para o painel onde foi colocada
+      task.stateId = panel.id;
+      for (var i = 0; i < tasks.length; i++) { // Percorre o array de tarefas e altera o stateId da tarefa para o painel onde foi colocada
         if (tasks[i].id == task.id) {
-          tasks[i].status = panelID; // Atualiza o status da tarefa
+          tasks[i].stateId = panelID; // Atualiza o stateId da tarefa
         }
       }
-      saveTasks();
+    
     } else {
       panel.insertBefore(task, afterElement)
-      task.status = panel.id;
+      task.stateId = panel.id;
       for (var i = 0; i < tasks.length; i++) {
         if (tasks[i].id == task.id) {
-          tasks[i].status = panelID;
+          tasks[i].stateId = panelID;
         }
       }
-      saveTasks(); // Guarda as alterações na local storage
     }
   })
 })
@@ -80,7 +93,7 @@ lowButton.addEventListener("click", () => setPriorityButtonSelected(lowButton, "
 mediumButton.addEventListener("click", () => setPriorityButtonSelected(mediumButton, "medium"));
 highButton.addEventListener("click", () => setPriorityButtonSelected(highButton, "high"));
 
-function getDragAfterElement(panel, y) {
+/* function getDragAfterElement(panel, y) {
     const draggableElements = [...panel.querySelectorAll('.task:not(.dragging)')] // Dentro da lista de painéis, seleciona todos os elementos com a classe task que nao tenham a classe dragging  
     return draggableElements.reduce((closest, child) => { // Retorna o elemento mais próximo do que esáa a ser arrastado e que está a ser comparado
         const box = child.getBoundingClientRect() // Retorna o tamanho do elemento e a sua posição relativamente ao viewport
@@ -90,50 +103,116 @@ function getDragAfterElement(panel, y) {
         } else { //
             return closest // Retorna o elemento mais próximo até agora
         }
-    }, { offset: Number.NEGATIVE_INFINITY }).element} 
+    }, { offset: Number.NEGATIVE_INFINITY }).element}  */
 
-  // Event listener do botão add task para criar uma nova task e colocá-la no painel To Do (default para qualquer task criada)
-document.getElementById('addTask').addEventListener('click', function() {
-  var Description = taskDescription.value.trim();
-  var Name = taskName.value.trim();
-  var priority = taskPriority;
-  if (Name === '' || Description === '' || priority === null) {
-    document.getElementById('warningMessage2').innerText = 'Fill in all fields and define a priority';
-  } else {
-    document.getElementById('warningMessage2').innerText = '';
-  }
-  if (Name.trim() !== '' && Description.trim() !== '' && priority !== null){
-      const task = createTask(Name, Description, priority);
-      const taskElement =createTaskElement(task);
-     document.getElementById('todo').appendChild(taskElement);
+ 
 
-      // Adicionar os listeners drag and drop à task criada de forma dinâmica
-      attachDragAndDropListeners(taskElement);
+async function newTask(usernameValue, passwordValue, task) {
+console.log('username: ' + usernameValue);
+  let newTask = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/addTask`;
+    
+    try {
+        const response = await fetch(newTask, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': '*/*',
+                'username': usernameValue,
+                'password': passwordValue
+            },    
+            body: JSON.stringify(task)
+        });
 
-      // Limpar os input fields depois de adicionar a task
-      document.getElementById('taskName').value = '';
-      document.getElementById('taskDescription').value = '';
-      removeSelectedPriorityButton();
-      taskPriority = null;
+          if (response.ok) {
+            alert("Task created successfully");
+          } else if (response.status === 401) {
+            alert("Invalid credentials")
+          } else if (response.status === 404) {
+            alert("Impossible to create task. Verify all fields")
+          }
+      
+    } catch (error) {
+        console.error('Error:', error);
+        alert("Task not created. Something went wrong");
+    }
+  };
 
-  }
-  saveTasks();
-});
 
-function createTask(name, description, priority) { // Cria uma tarefa com o nome, a descrição e a priority passados como argumentos 
+  async function getAllUsersTasks(usernameValue, passwordValue) {
+
+    let getTasks = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/tasks`;
+      
+      try {
+          const response = await fetch(getTasks, {
+              method: 'GET',
+              headers: {
+                  'Content-Type': 'application/JSON',
+                  'Accept': '*/*',
+                  username: usernameValue,
+                  password: passwordValue
+              },    
+          });
+  
+            if (response.ok) {
+              const tasks = await response.json(); 
+              return tasks;
+            } else if (response.status === 401) {
+              alert("Invalid credentials")
+            } else if (response.status === 406) {
+              alert("Unauthorized access")
+            }
+        
+      } catch (error) {
+          console.error('Error:', error);
+          alert("Task not created. Something went wrong");
+      }
+    };
+
+
+
+
+
+function createTask(title, description, priority, startDate, limitDate) { // Cria uma nova task com os dados inseridos pelo utilizador
   const task = {
-  title :name,
+  title :title,
   description: description,
-  identificacao: 'task-' + Date.now(),
-  status: 'todo',
-  priority: priority
+  stateId: 'todo',
+  priority: priority,
+  startDate: startDate,
+  limitDate: limitDate
   }
   return task;
 }
 
+ // Event listener do botão add task para criar uma nova task e colocá-la no painel To Do (default para qualquer task criada)
+ document.getElementById('addTask').addEventListener('click', function() {
+console.log('addTask button clicked')
+
+  let description = document.getElementById('taskDescription').value.trim();
+  let title = document.getElementById('taskName').value.trim();
+  let priority = taskPriority;
+  let startDate = document.getElementById('task-startDate').value;
+  let limitDate = document.getElementById('task-limitDate').value;
+            
+  if (title === '' || description === '' || priority === null || startDate === '' || limitDate === '' || startDate > limitDate || document.getElementsByClassName('selected').length === 0) {
+    console.log('entrou no if para verificar se os campos estão preenchidos');
+    document.getElementById('warningMessage2').innerText = 'Fill in all fields and define a priority';
+  } else {
+    let task = createTask(title, description, priority, startDate, limitDate);
+    console.log('username no localStorage = ' + getValuesFromLocalStorage()[0]);
+    const usernameValue = getValuesFromLocalStorage()[0];
+    const passwordValue = getValuesFromLocalStorage()[1];
+    newTask(usernameValue, passwordValue, task).then (() => {
+      removeAllTaskElements();
+      loadTasks();
+      cleanAllTaskFields();
+    });
+  }
+});
+
 function createTaskElement(task) {
     const taskElement = document.createElement('div');
-    taskElement.id = task.identificacao;
+    taskElement.id = task.id;
     taskElement.priority = task.priority;
     taskElement.classList.add('task'); 
     if (task.priority === 'low') {
@@ -146,7 +225,7 @@ function createTaskElement(task) {
     taskElement.draggable = true;
     taskElement.description = task.description;
     taskElement.title = task.title;
-    taskElement.status = task.status;
+    taskElement.stateId = task.stateId;
 
     const postIt = document.createElement('div');
     postIt.className = 'post-it';
@@ -184,7 +263,7 @@ function createTaskElement(task) {
         sessionStorage.setItem("taskDescription", taskElement.description);
         sessionStorage.setItem("taskTitle", taskElement.title);
         sessionStorage.setItem("taskid", taskElement.id);
-        sessionStorage.setItem("taskStatus", taskElement.status);
+        sessionStorage.setItem("taskstateId", taskElement.stateId);
         sessionStorage.setItem("taskPriority", taskElement.priority);
         window.location.href = 'task.html';
     });
@@ -192,73 +271,68 @@ function createTaskElement(task) {
     return taskElement;
 }
 
-// Guarda as tasks na local storage
-function saveTasks() {
-  const tasks = document.querySelectorAll('.task');
-  const taskArrays = {
-    todo: [],
-    doing: [],
-    done: []
-  };
-  
-  tasks.forEach(task => {
+
+  /* tasks.forEach(task => {
     const taskData = {
-      identificacao: task.id,
+      id: task.id,
       title: task.title,
       description: task.description,
-      status: task.status,
-      priority: task.priority
+      stateId: task.stateId,
+      priority: task.priority,
+      startDate: task.startDate,
+      editionDate: task.editionDate,
+      limitDate: task.limitDate,
     };
 
-    // Determina o status de cada task e coloca-a no array correspondente
-    taskArrays[task.status].push(taskData);
+    // Determina o stateId de cada task e coloca-a no array correspondente
+    taskArrays[task.stateId].push(taskData);
   });
 
   // Combina todos os arrays de tasks num único array
   const tasksArray = [taskArrays.todo, taskArrays.doing, taskArrays.done];
 
   // Guarda o array global de tasks na local storage
-  localStorage.setItem('tasks', JSON.stringify(tasksArray));
-}
+  localStorage.setItem('tasks', JSON.stringify(tasksArray)); */
+
 // Carrega as tarefas guardadas na local storage
 function loadTasks() {
-  const tasksArray = JSON.parse(localStorage.getItem('tasks'));
-
-  if (tasksArray) { // Verifica se o tasksArray não é null
-    // Define um array para guardar todos os arrays de tasks
-    const allTasks = tasksArray.reduce((acc, curr) => acc.concat(curr), []);// Concatena todos os arrays de tarefas num único array
-      // A função reduce() executa uma função reducer para cada elemento do array, o que resulta num único valor de retorno. A função reducer é alimentada por quatro parâmetros:
-      // Acumulador (acc) (valor inicial igual ao primeiro valor do array, ou valor do parâmetro initialValue);
-      // Valor Atual (cur) (o valor do elemento atual);
-      // Index Atual (idx) (o índice atual do elemento que está a ser processado no array);
-      // Array (src) (o array original para o qual a função reduce() foi chamada).
-      // O valor retornado da função reducer é atribuída ao acumulador. O acumulador, com o seu valor atualizado, passa para cada iteração subsequente pelo array, que por fim, se tornará o valor resultante, único, final.
-    allTasks.forEach(task => {
+  
+  getAllUsersTasks(getValuesFromLocalStorage()[0], getValuesFromLocalStorage()[1]).then(tasksArray => {
+    tasksArray.forEach(task => {
       const taskElement = createTaskElement(task);
-      const panel = document.getElementById(task.status);
+      const panel = document.getElementById(task.stateId);
       panel.appendChild(taskElement);
       attachDragAndDropListeners(taskElement);
     });
-  }
+  }).catch(error => {
+    console.error('Error:', error);
+    alert("Something went wrong while loading tasks");
+  });
 }
+
+
+function removeAllTaskElements() {
+  const tasks = document.querySelectorAll('.task');
+  tasks.forEach(task => task.remove());
+}
+
 
 function deleteTask(id) {
   const tasksArray = JSON.parse(localStorage.getItem('tasks'));
 
   // Iteração sobre todos os arrays de tasks para encontrar e remover a task
   tasksArray.forEach(taskArray => {
-    const index = taskArray.findIndex(task => task.identificacao === id); // Retorna o index da tarefa com o ID passado como argumento
+    const index = taskArray.findIndex(task => task.stateId === id); // Retorna o index da tarefa com o ID passado como argumento
     if (index !== -1) { // Se o index for diferente de -1
       taskArray.splice(index, 1); // Remove a tarefa do array
       const taskElement = document.getElementById(id); // Guarda o elemento da tarefa
       taskElement.remove(); // Remove o elemento da tarefa
     }
-    saveTasks();
   });
 }
 
 window.onclose = function () { // Guarda as tarefas na local storage quando a página é fechada
-  saveTasks();
+ 
 }
 
 document.getElementById("logout-button-header").addEventListener('click', function() {
@@ -320,9 +394,9 @@ async function getPhotoUrl(usernameValue, passwordValue) {
           const data = await response.text();
           document.getElementById("profile-pic").src = data;
 
-        } else if (response.status === 401) {
+        } else if (response.stateId === 401) {
             alert("Invalid credentials")
-        } else if (response.status === 404) {
+        } else if (response.stateId === 404) {
           alert("teste 404")
         }
 

@@ -166,7 +166,7 @@ public class UserBean {
         boolean status = true;
 
         if (url == null) {
-            status = false; // Handle null URL gracefully
+            status = false;
         }
 
         try {
