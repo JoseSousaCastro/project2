@@ -9,12 +9,21 @@ window.onload = function() {
 
   getRetroList(usernameValue, passwordValue);
 
-  const addRetroButton = document.getElementById("addRetroBTN");
-  addRetroButton.addEventListener("click", addRetrospective);
   
 };
 
+function getValuesFromLocalStorage() {
+  const usernameValue = localStorage.getItem('username');
+  const passwordValue = localStorage.getItem('password');
+  const userValues = [usernameValue, passwordValue];     
+  return userValues;
+}
 
+function cleanRetroFields() {
+  document.getElementById('warningMessage2').innerText = '';
+  document.getElementById('retroTitle').value = '';
+  document.getElementById('retroDate').value = '';
+}
 
   async function getFirstName(usernameValue, passwordValue) {
   
@@ -114,25 +123,12 @@ window.onload = function() {
       }
 }
 
-async function addRetrospective() {
-  console.log("addRetrospective")
-  const usernameValue = localStorage.getItem('username')
-  const passwordValue = localStorage.getItem('password')
+async function addRetrospective(usernameValue, passwordValue, retrospective) {
+  console.log("addRetrospective" + "user" + usernameValue + "pass" + passwordValue + "retrospective" + retrospective)
+  const endpointAddRetro = "http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/retrospective/add";
 
-  const retroDate = document.getElementById("retroDate").value;
-  const retroTitle = document.getElementById("retroTitle").value;
-
-  if (retroDate === "" || retroTitle === "") {
-    alert("Please fill in both date and title");
-    return;
-  }
-  else {
-    const retroCreate = {
-      date: retroDate,
-      title: retroTitle
-    };
     try {
-      const response = await fetch("http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/retrospective/add", {
+      const response = await fetch(endpointAddRetro, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/JSON',
@@ -140,12 +136,12 @@ async function addRetrospective() {
               username: usernameValue,
               password: passwordValue
           },
-          body: JSON.stringify(retroCreate)
+          body: JSON.stringify(retrospective)
       });
 
       if (response.ok) {
           const newRetro = await response.json();
-          createRetroTable(newRetro);
+          createRetroTableBody(newRetro);
       } else if (response.status === 401) {
           alert("Invalid credentials");
       } else if (response.status === 404) {
@@ -156,14 +152,46 @@ async function addRetrospective() {
       alert("Something went wrong");
   }
   }
+
+
+function createRetro (title, date) {
+  let retro = {
+    title: title,
+    date: date
+  }
+  return retro;
 }
 
+document.getElementById("addRetroBTN").addEventListener("click", function() {
+  let date = document.getElementById('retroDate').value;
+  let title = document.getElementById('retroTitle').value.trim();
 
+if (date === '' || title === '') {
+  console.log('entrou no if para verificar se os campos estão preenchidos');
+
+  document.getElementById('warningMessage2').innerText = 'Please fill in all fields';
+} else {
+  let retro = createRetro(title, date);
+  const usernameValue = getValuesFromLocalStorage()[0];
+  const passwordValue = getValuesFromLocalStorage()[1];
+addRetrospective(usernameValue, passwordValue, retro).then(() => {
+  removeAllRetroElements();
+  getRetroList(usernameValue, passwordValue);
+  cleanRetroFields();
+})
+}
+});
+
+function removeAllRetroElements() {
+  const retros = document.querySelectorAll('.retros-row');
+  retros.forEach(retro => retro.remove());
+}
 
 function createRetroTableBody(retro) {
   let tbody = document.querySelector(".retros-table-body");
 
   let row = document.createElement("tr");
+  row.classList.add("retros-row");
 
   let dateCell = document.createElement("td");
   dateCell.textContent = retro.date;
