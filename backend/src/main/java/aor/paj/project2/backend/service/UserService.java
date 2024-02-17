@@ -92,22 +92,14 @@ public class UserService {
         }
         return response;
     }
-
-    @GET
-    @Path("/username/{username}/availability")
+    @POST
+    @Path("/logout")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response verifyUsernameAvailability(@PathParam("username") String username) {
+    public Response logout() {
 
-        Response response;
+        userBean.writeIntoJsonFile();
 
-        boolean isUsernameAvailable = userBean.isUsernameAvailable(username);
-
-        if (isUsernameAvailable) {
-            response = Response.status(200).entity("Username available").build();
-        } else {
-            response = Response.status(404).entity("Username already in use").build();
-        }
-        return response;
+        return Response.status(200).entity("Logout successful").build();
     }
 
     @GET

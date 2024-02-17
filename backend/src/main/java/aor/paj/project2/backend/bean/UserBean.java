@@ -218,7 +218,7 @@ public class UserBean {
         return removed;
     }
 
-    private void writeIntoJsonFile() {
+    public void writeIntoJsonFile() {
         Jsonb jsonb = JsonbBuilder.create(new
                 JsonbConfig().withFormatting(true));
         try {
