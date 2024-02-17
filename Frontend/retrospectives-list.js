@@ -155,4 +155,31 @@ function createRetroTable(retro) {
   retroListContainer.appendChild(table);
 }
 
+//LOGOUT 
+document.getElementById("logout-button-header").addEventListener('click', async function() {
+
+  let logoutRequest = "http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/logout";
+    
+    try {   
+        const response = await fetch(logoutRequest, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/JSON',
+                'Accept': '*/*',
+            }, 
+        });
+        if (response.ok) {
+            
+          localStorage.removeItem("username");
+          localStorage.removeItem("password");
+
+          window.location.href="index.html";
+
+        } 
+    } catch (error) {
+        console.error('Error:', error);
+        alert("Something went wrong");
+    }
+})
+
 
