@@ -8,8 +8,13 @@ window.onload = function() {
   getPhotoUrl(usernameValue, passwordValue);
 
   getRetroList(usernameValue, passwordValue);
+
+  const addRetroButton = document.getElementById("addRetroBTN");
+  addRetroButton.addEventListener("click", addRetrospective);
   
 };
+
+
 
   async function getFirstName(usernameValue, passwordValue) {
   
@@ -75,7 +80,7 @@ window.onload = function() {
   }
 
   async function getRetroList(usernameValue, passwordValue) {
-
+  console.log("getRetroList")
     let retroListRequest = "http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/retrospective/all";
       
       try {
@@ -95,7 +100,8 @@ window.onload = function() {
             console.log(data)
 
             data.forEach(retro => {
-              createRetroTable(retro);
+              createRetroTableBody(retro);
+              console.log(retro);
             });
           } else if (response.status === 401) {
             alert("Invalid credentials");
@@ -108,51 +114,69 @@ window.onload = function() {
       }
 }
 
-function createRetroTable(retro) {
-  const table = document.createElement("table");
-  table.classList.add("retros-table");
-  const thead = document.createElement("thead");
-  thead.classList.add("retros-table-header");
+async function addRetrospective() {
+  console.log("addRetrospective")
+  const usernameValue = localStorage.getItem('username')
+  const passwordValue = localStorage.getItem('password')
 
-  const headerRow = document.createElement("tr");
-  const dateHeader = document.createElement("th");
-  dateHeader.classList.add("table-header");
-  dateHeader.textContent = "Date";
-  const titleHeader = document.createElement("th");
-  titleHeader.classList.add("table-header");
-  titleHeader.textContent = "Title";
-  const membersHeader = document.createElement("th");
-  membersHeader.classList.add("table-header");
-  membersHeader.textContent = "Members";
+  const retroDate = document.getElementById("retroDate").value;
+  const retroTitle = document.getElementById("retroTitle").value;
 
-  headerRow.appendChild(dateHeader);
-  headerRow.appendChild(titleHeader);
-  headerRow.appendChild(membersHeader);
+  if (retroDate === "" || retroTitle === "") {
+    alert("Please fill in both date and title");
+    return;
+  }
+  else {
+    const retroCreate = {
+      date: retroDate,
+      title: retroTitle
+    };
+    try {
+      const response = await fetch("http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/retrospective/add", {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/JSON',
+              'Accept': '*/*',
+              username: usernameValue,
+              password: passwordValue
+          },
+          body: JSON.stringify(retroCreate)
+      });
 
-  thead.appendChild(headerRow);
-  table.appendChild(thead);
+      if (response.ok) {
+          const newRetro = await response.json();
+          createRetroTable(newRetro);
+      } else if (response.status === 401) {
+          alert("Invalid credentials");
+      } else if (response.status === 404) {
+          alert("Error 404");
+      }
+  } catch (error) {
+      console.error('Error:', error);
+      alert("Something went wrong");
+  }
+  }
+}
 
-  const tbody = document.createElement("tbody");
-  tbody.classList.add("retros-table-body");
 
-  const row = document.createElement("tr");
 
-  const dateCell = document.createElement("td");
+function createRetroTableBody(retro) {
+  let tbody = document.querySelector(".retros-table-body");
+
+  let row = document.createElement("tr");
+
+  let dateCell = document.createElement("td");
   dateCell.textContent = retro.date;
-  const titleCell = document.createElement("td");
+  let titleCell = document.createElement("td");
   titleCell.textContent = retro.title;
-  const membersCell = document.createElement("td");
-  membersCell.textContent = retro.retrospectiveUsers.map(user => user.username).join(", ");
+  let membersCell = document.createElement("td");
+  membersCell.textContent = retro.retrospectiveUsers ? retro.retrospectiveUsers.map(user => (user && user.username) ? user.username : '').join(", ") : '';
 
   row.appendChild(dateCell);
   row.appendChild(titleCell);
   row.appendChild(membersCell);
 
   tbody.appendChild(row);
-  table.appendChild(tbody);
-
-  let retroListContainer = document.getElementById("retro-list");
-  retroListContainer.appendChild(table);
 }
 
 //LOGOUT 
@@ -181,5 +205,3 @@ document.getElementById("logout-button-header").addEventListener('click', async 
         alert("Something went wrong");
     }
 })
-
-

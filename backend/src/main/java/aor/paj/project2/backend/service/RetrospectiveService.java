@@ -29,6 +29,7 @@ public class RetrospectiveService {
             response = Response.status(401).entity("Invalid credentials").build();
         } else {
             List<Retrospective> retrospectives = retrospectiveBean.getRetrospectives();
+            System.out.println(username+ " " + password + " " + retrospectives.size());
             response = Response.status(200).entity(retrospectives).build();
         }
         return response;
