@@ -75,7 +75,7 @@ window.onload = function() {
   }
 
   async function getRetroList(usernameValue, passwordValue) {
-
+  console.log("getRetroList")
     let retroListRequest = "http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/retrospective/all";
       
       try {
@@ -96,6 +96,7 @@ window.onload = function() {
 
             data.forEach(retro => {
               createRetroTable(retro);
+              console.log(retro);
             });
           } else if (response.status === 401) {
             alert("Invalid credentials");
@@ -109,39 +110,15 @@ window.onload = function() {
 }
 
 function createRetroTable(retro) {
-  const table = document.createElement("table");
-  table.classList.add("retros-table");
-  const thead = document.createElement("thead");
-  thead.classList.add("retros-table-header");
+  let tbody = document.querySelector(".retros-table-body");
 
-  const headerRow = document.createElement("tr");
-  const dateHeader = document.createElement("th");
-  dateHeader.classList.add("table-header");
-  dateHeader.textContent = "Date";
-  const titleHeader = document.createElement("th");
-  titleHeader.classList.add("table-header");
-  titleHeader.textContent = "Title";
-  const membersHeader = document.createElement("th");
-  membersHeader.classList.add("table-header");
-  membersHeader.textContent = "Members";
+  let row = document.createElement("tr");
 
-  headerRow.appendChild(dateHeader);
-  headerRow.appendChild(titleHeader);
-  headerRow.appendChild(membersHeader);
-
-  thead.appendChild(headerRow);
-  table.appendChild(thead);
-
-  const tbody = document.createElement("tbody");
-  tbody.classList.add("retros-table-body");
-
-  const row = document.createElement("tr");
-
-  const dateCell = document.createElement("td");
+  let dateCell = document.createElement("td");
   dateCell.textContent = retro.date;
-  const titleCell = document.createElement("td");
+  let titleCell = document.createElement("td");
   titleCell.textContent = retro.title;
-  const membersCell = document.createElement("td");
+  let membersCell = document.createElement("td");
   membersCell.textContent = retro.retrospectiveUsers.map(user => user.username).join(", ");
 
   row.appendChild(dateCell);
@@ -149,10 +126,4 @@ function createRetroTable(retro) {
   row.appendChild(membersCell);
 
   tbody.appendChild(row);
-  table.appendChild(tbody);
-
-  let retroListContainer = document.getElementById("retro-list");
-  retroListContainer.appendChild(table);
 }
-
-
