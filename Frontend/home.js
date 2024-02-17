@@ -6,7 +6,7 @@ window.onload = function() {
   console.log('window on load está a funcionar!')
   getFirstName(usernameValue, passwordValue);
   getPhotoUrl(usernameValue, passwordValue);
-  //loadTasks();
+  loadTasks();
 
   };
 
@@ -108,7 +108,7 @@ highButton.addEventListener("click", () => setPriorityButtonSelected(highButton,
  
 
 async function newTask(usernameValue, passwordValue, task) {
-console.log('username: ' + usernameValue);
+console.log('In newTask - username: ' + usernameValue);
   let newTask = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/addTask`;
     
     try {
@@ -117,8 +117,8 @@ console.log('username: ' + usernameValue);
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': '*/*',
-                'username': usernameValue,
-                'password': passwordValue
+                username: usernameValue,
+                password: passwordValue
             },    
             body: JSON.stringify(task)
         });
@@ -173,11 +173,13 @@ console.log('username: ' + usernameValue);
 
 
 function createTask(title, description, priority, startDate, limitDate) { // Cria uma nova task com os dados inseridos pelo utilizador
+  let todoStateId = 'todo';
+  let newPriority = parsePriorityToInt(priority);
   const task = {
-  title :title,
+  title: title,
   description: description,
-  stateId: 'todo',
-  priority: priority,
+  stateId: parseStateIdToInt(todoStateId),
+  priority: newPriority,
   startDate: startDate,
   limitDate: limitDate
   }
@@ -213,6 +215,7 @@ console.log('addTask button clicked')
 function createTaskElement(task) {
     const taskElement = document.createElement('div');
     taskElement.id = task.id;
+    task.priority = parsePriorityToString(task.priority);
     taskElement.priority = task.priority;
     taskElement.classList.add('task'); 
     if (task.priority === 'low') {
@@ -300,6 +303,7 @@ function loadTasks() {
   getAllUsersTasks(getValuesFromLocalStorage()[0], getValuesFromLocalStorage()[1]).then(tasksArray => {
     tasksArray.forEach(task => {
       const taskElement = createTaskElement(task);
+      task.stateId = parseStateIdToString(task.stateId);
       const panel = document.getElementById(task.stateId);
       panel.appendChild(taskElement);
       attachDragAndDropListeners(taskElement);
@@ -314,6 +318,54 @@ function loadTasks() {
 function removeAllTaskElements() {
   const tasks = document.querySelectorAll('.task');
   tasks.forEach(task => task.remove());
+}
+
+function parseStateIdToString (stateId) {
+  let newStateId = '';
+  if(stateId === 100) {
+    newStateId = 'todo';
+  } else if(stateId === 200) {
+    newStateId = 'doing';
+  } else if(stateId === 300) {
+    newStateId = 'done';
+  }
+  return newStateId;
+}
+
+function parseStateIdToInt (stateId) {
+  let newStateId = 0;
+  if(stateId === 'todo') {
+    newStateId = 100;
+  } else if(stateId === 'doing') {
+    newStateId = 200;
+  } else if(stateId === 'done') {
+    newStateId = 300;
+  }
+  return newStateId;
+}
+
+function parsePriorityToString (priority) {
+  let newPriority = '';
+  if(priority === 100) {
+    newPriority = 'low';
+  } else if(priority === 200) {
+    newPriority = 'medium';
+  } else if(priority === 300) {
+    newPriority = 'high';
+  }
+  return newPriority;
+}
+
+function parsePriorityToInt (priority) {
+  let newPriority = 0;
+  if(priority === 'low') {
+    newPriority = 100;
+  } else if(priority === 'medium') {
+    newPriority = 200;
+  } else if(priority === 'high') {
+    newPriority = 300;
+  }
+  return newPriority;
 }
 
 
@@ -332,13 +384,36 @@ function deleteTask(id) {
 }
 
 window.onclose = function () { // Guarda as tarefas na local storage quando a página é fechada
- 
-}
 
-document.getElementById("logout-button-header").addEventListener('click', function() {
   localStorage.removeItem("username");
   localStorage.removeItem("password");
-  window.location.href="index.html";
+}
+
+//LOGOUT 
+document.getElementById("logout-button-header").addEventListener('click', async function() {
+
+  let logoutRequest = "http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/logout";
+    
+    try {   
+        const response = await fetch(logoutRequest, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/JSON',
+                'Accept': '*/*',
+            }, 
+        });
+        if (response.ok) {
+            
+          localStorage.removeItem("username");
+          localStorage.removeItem("password");
+
+          window.location.href="index.html";
+
+        } 
+    } catch (error) {
+        console.error('Error:', error);
+        alert("Something went wrong");
+    }
 })
 
 
@@ -360,7 +435,6 @@ async function getFirstName(usernameValue, passwordValue) {
         if (response.ok) {
 
           const data = await response.text();
-          console.log(data.firstName)
           document.getElementById("first-name-label").innerText = data;
 
         } else if (!response.ok) {
