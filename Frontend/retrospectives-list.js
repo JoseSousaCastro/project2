@@ -196,7 +196,13 @@ function createRetroTableBody(retro) {
   let dateCell = document.createElement("td");
   dateCell.textContent = retro.date;
   let titleCell = document.createElement("td");
-  titleCell.textContent = retro.title;
+  let titleLink = document.createElement("a");
+  titleLink.href = `retrospective-details.html?id=${retro.id}`;
+  titleLink.textContent = retro.title;
+  titleLink.classList.add("retro-link");
+  titleLink.setAttribute("data-retro-id", retro.id);
+  titleCell.appendChild(titleLink);
+
   let membersCell = document.createElement("td");
   membersCell.textContent = retro.retrospectiveUsers ? retro.retrospectiveUsers.map(user => (user && user.username) ? user.username : '').join(", ") : '';
 

@@ -1066,7 +1066,15 @@ footer {
 }
 
 /* Definições do retro-each.html */
-#retro-title {
+aside h3 {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: var(--green3);
+  text-transform: uppercase;
+  font-size: 20px;
+}
+#retro-title-aside {
   margin-top: 60px;
   margin-bottom: 20px;
   text-align: center;
