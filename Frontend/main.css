@@ -392,7 +392,7 @@ aside h3 {
 #taskDescription,
 #taskDescription-retro,
 #name-addMember,
-#retroName {
+#retroTitle {
   padding-left: 10px;
   width: 170px;
   background-color: var(--white);
@@ -403,13 +403,13 @@ aside h3 {
 }
 #taskName,
 #name-addMember,
-#retroName {
+#retroTitle {
   height: 20px;
 }
-#retroName {
+#retroTitle {
   margin-bottom: 20px;
 }
-#retroName::placeholder {
+#retroTitle::placeholder {
   text-align: center;
 }
 #taskDescription,
@@ -1099,7 +1099,7 @@ footer {
 #retro-date-each {
   margin-top: 10px;
 }
-#retroName,
+#retroTitle,
 #retroDate {
   height: 25px;
 }

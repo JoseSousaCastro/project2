@@ -8,8 +8,13 @@ window.onload = function() {
   getPhotoUrl(usernameValue, passwordValue);
 
   getRetroList(usernameValue, passwordValue);
+
+  const addRetroButton = document.getElementById("addRetroBTN");
+  addRetroButton.addEventListener("click", addRetrospective);
   
 };
+
+
 
   async function getFirstName(usernameValue, passwordValue) {
   
@@ -109,6 +114,52 @@ window.onload = function() {
       }
 }
 
+async function addRetrospective() {
+  console.log("addRetrospective")
+  const usernameValue = localStorage.getItem('username')
+  const passwordValue = localStorage.getItem('password')
+
+  const retroDate = document.getElementById("retroDate").value;
+  const retroTitle = document.getElementById("retroTitle").value;
+
+  if (retroDate === "" || retroTitle === "") {
+    alert("Please fill in both date and title");
+    return;
+  }
+  else {
+    const retroCreate = {
+      date: retroDate,
+      title: retroTitle
+    };
+    try {
+      const response = await fetch("http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/retrospective/add", {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/JSON',
+              'Accept': '*/*',
+              username: usernameValue,
+              password: passwordValue
+          },
+          body: JSON.stringify(retroCreate)
+      });
+
+      if (response.ok) {
+          const newRetro = await response.json();
+          createRetroTable(newRetro);
+      } else if (response.status === 401) {
+          alert("Invalid credentials");
+      } else if (response.status === 404) {
+          alert("Error 404");
+      }
+  } catch (error) {
+      console.error('Error:', error);
+      alert("Something went wrong");
+  }
+  }
+}
+
+
+
 function createRetroTableBody(retro) {
   let tbody = document.querySelector(".retros-table-body");
 
@@ -119,7 +170,7 @@ function createRetroTableBody(retro) {
   let titleCell = document.createElement("td");
   titleCell.textContent = retro.title;
   let membersCell = document.createElement("td");
-  membersCell.textContent = retro.retrospectiveUsers.map(user => user.username).join(", ");
+  membersCell.textContent = retro.retrospectiveUsers ? retro.retrospectiveUsers.map(user => (user && user.username) ? user.username : '').join(", ") : '';
 
   row.appendChild(dateCell);
   row.appendChild(titleCell);
