@@ -6,6 +6,8 @@ window.onload = function() {
   console.log('window on load está a funcionar!')
   getFirstName(usernameValue, passwordValue);
   getPhotoUrl(usernameValue, passwordValue);
+
+  
   loadTasks();
 
   };
@@ -27,6 +29,8 @@ window.onload = function() {
     removeSelectedPriorityButton();
     taskPriority = null;
   }
+
+
 
 const tasks = document.querySelectorAll('.task')
 const panels = document.querySelectorAll('.panel')
@@ -213,66 +217,86 @@ console.log('addTask button clicked')
 });
 
 function createTaskElement(task) {
-    const taskElement = document.createElement('div');
-    taskElement.id = task.id;
-    task.priority = parsePriorityToString(task.priority);
-    taskElement.priority = task.priority;
-    taskElement.classList.add('task'); 
-    if (task.priority === 'low') {
-        taskElement.classList.add('low');
-    } else if (task.priority === 'medium') {
-        taskElement.classList.add('medium');
-    } else if (task.priority === 'high') {
-        taskElement.classList.add('high');
-    }
-    taskElement.draggable = true;
-    taskElement.description = task.description;
-    taskElement.title = task.title;
-    taskElement.stateId = task.stateId;
+  const taskElement = document.createElement('div');
+  taskElement.id = task.id;
+  task.priority = parsePriorityToString(task.priority);
+  taskElement.priority = task.priority;
+  taskElement.classList.add('task'); 
+  if (task.priority === 'low') {
+    taskElement.classList.add('low');
+  } else if (task.priority === 'medium') {
+    taskElement.classList.add('medium');
+  } else if (task.priority === 'high') {
+    taskElement.classList.add('high');
+  }
+  taskElement.draggable = true;
+  taskElement.description = task.description;
+  taskElement.title = task.title;
+  taskElement.stateId = task.stateId;
 
-    const postIt = document.createElement('div');
-    postIt.className = 'post-it';
+  const postIt = document.createElement('div');
+  postIt.className = 'post-it';
 
-    const taskTitle = document.createElement('h3');
-    taskTitle.textContent = task.title;
-    const descriprioncontainer = document.createElement('div');
-    descriprioncontainer.className = 'post-it-text';
-    const displayDescription = document.createElement('p');
-    displayDescription.textContent = task.description;
+  const taskTitle = document.createElement('h3');
+  taskTitle.textContent = task.title;
+  const descriptionContainer = document.createElement('div');
+  descriptionContainer.className = 'post-it-text';
+  const displayDescription = document.createElement('p');
+  displayDescription.textContent = task.description;
 
-    const deleteButton = document.createElement('img');
-    deleteButton.src = 'multimedia/dark-cross-01.png';
-    deleteButton.className = 'apagarButton';
-    deleteButton.addEventListener('click', function () {
-        const  deletemodal = document.getElementById('delete-modal');
-         deletemodal.style.display = "grid"; 
-        const deletebtn = document.getElementById('delete-button');
-        deletebtn.addEventListener('click', () => {
-            deleteTask(taskElement.id);
-            taskElement.remove();
-            deletemodal.style.display = "none";
-        });
-        const cancelbtn = document.getElementById('cancel-delete-button');
-        cancelbtn.addEventListener('click', () => {
-            deletemodal.style.display = "none";
-        });
-    });
-    descriprioncontainer.appendChild(displayDescription);
-    postIt.appendChild(taskTitle);
-    postIt.appendChild(deleteButton);
-    taskElement.appendChild(postIt);
-    postIt.appendChild(descriprioncontainer);
-    taskElement.addEventListener('dblclick', function () {
-        sessionStorage.setItem("taskDescription", taskElement.description);
-        sessionStorage.setItem("taskTitle", taskElement.title);
-        sessionStorage.setItem("taskid", taskElement.id);
-        sessionStorage.setItem("taskstateId", taskElement.stateId);
-        sessionStorage.setItem("taskPriority", taskElement.priority);
-        window.location.href = 'task.html';
-    });
+  const deleteButton = document.createElement('img');
+  deleteButton.src = 'multimedia/dark-cross-01.png';
+  deleteButton.className = 'apagarButton';
+  deleteButton.dataset.taskId = task.id;
 
-    return taskElement;
+
+  descriptionContainer.appendChild(displayDescription);
+  postIt.appendChild(taskTitle);
+  postIt.appendChild(deleteButton);
+  postIt.appendChild(descriptionContainer); // Move this line up
+  taskElement.appendChild(postIt);
+
+  taskElement.addEventListener('dblclick', function () {
+    sessionStorage.setItem("taskDescription", taskElement.description);
+    sessionStorage.setItem("taskTitle", taskElement.title);
+    sessionStorage.setItem("taskid", taskElement.id);
+    sessionStorage.setItem("taskstateId", taskElement.stateId);
+    sessionStorage.setItem("taskPriority", taskElement.priority);
+    window.location.href = 'task.html';
+  });
+
+  return taskElement;
 }
+
+document.addEventListener('click', function (event) {
+  if (event.target.matches('.apagarButton')) {
+    const taskElement = event.target.closest('.task');
+    const taskId = event.target.dataset.taskId;
+    const usernameValue = localStorage.getItem('username');
+    const passwordValue = localStorage.getItem('password');
+
+    const deletemodal = document.getElementById('delete-modal');
+    deletemodal.style.display = "grid";
+
+    function deleteButtonClickHandler() {
+      deleteTask(taskId, usernameValue, passwordValue);
+      taskElement.remove();
+      deletemodal.style.display = "none";
+      deletebtn.removeEventListener('click', deleteButtonClickHandler); // Remove the listener
+    }
+
+    const deletebtn = document.getElementById('delete-button');
+    deletebtn.addEventListener('click', deleteButtonClickHandler);
+
+    const cancelbtn = document.getElementById('cancel-delete-button');
+    cancelbtn.addEventListener('click', () => {
+      deletemodal.style.display = "none";
+    });
+  }
+});
+
+
+
 
 
   /* tasks.forEach(task => {
@@ -368,20 +392,67 @@ function parsePriorityToInt (priority) {
   return newPriority;
 }
 
+async function deleteTask(id, usernameValue, passwordValue) {
+   
 
-function deleteTask(id) {
-  const tasksArray = JSON.parse(localStorage.getItem('tasks'));
+  let deleteTaskUrl = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/${id}`;
 
-  // Iteração sobre todos os arrays de tasks para encontrar e remover a task
-  tasksArray.forEach(taskArray => {
-    const index = taskArray.findIndex(task => task.stateId === id); // Retorna o index da tarefa com o ID passado como argumento
-    if (index !== -1) { // Se o index for diferente de -1
-      taskArray.splice(index, 1); // Remove a tarefa do array
-      const taskElement = document.getElementById(id); // Guarda o elemento da tarefa
-      taskElement.remove(); // Remove o elemento da tarefa
+  try {
+    const response = await fetch(deleteTaskUrl, {
+      method: 'DELETE', 
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': '*/*',
+        username: usernameValue,
+        password: passwordValue
+      },
+    });
+
+    if (response.ok) {
+      
+      console.log('Task deleted successfully');
+    } else {
+      console.error('Error deleting task:', response.statusText);
     }
-  });
+
+  } catch (error) {
+    console.error('Error deleting task:', error);
+  }
 }
+
+/*
+async function getAllUsersTasks(usernameValue, passwordValue) {
+  // Assuming the server endpoint for deleting a task is something like this:
+  let getAllTasksUrl = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/tasks`;
+
+  try {
+    const response = await fetch(getAllTasksUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': '* / *',
+        username: usernameValue,
+        password: passwordValue
+      },
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      console.log('tasks retrieved successfully');
+      return data;
+    } else {
+      // Handle the error response from the server
+      console.error('Error retrieving tasks:', response.statusText);
+      return null;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert("Something went wrong ");
+    return null;
+  }
+}
+*/
+
 
 window.onclose = function () { // Guarda as tarefas na local storage quando a página é fechada
 
