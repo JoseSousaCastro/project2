@@ -95,7 +95,7 @@ window.onload = function() {
             console.log(data)
 
             data.forEach(retro => {
-              createRetroTable(retro);
+              createRetroTableBody(retro);
               console.log(retro);
             });
           } else if (response.status === 401) {
@@ -109,7 +109,7 @@ window.onload = function() {
       }
 }
 
-function createRetroTable(retro) {
+function createRetroTableBody(retro) {
   let tbody = document.querySelector(".retros-table-body");
 
   let row = document.createElement("tr");

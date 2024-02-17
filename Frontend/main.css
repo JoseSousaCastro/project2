@@ -406,6 +406,9 @@ aside h3 {
 #retroName {
   height: 20px;
 }
+#retroName {
+  margin-bottom: 20px;
+}
 #retroName::placeholder {
   text-align: center;
 }
@@ -1071,7 +1074,6 @@ footer {
   text-transform: uppercase;
   font-size: 17px;
 }
-#retroDate,
 #retro-date-each {
   margin-top: 20px;
   text-align: center;
@@ -1085,13 +1087,14 @@ footer {
   font-weight: bold;
 }
 #retroDate {
-  margin-block: 20px;
+  margin-bottom: 20px;
   width: 180px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   font-weight: lighter;
   color: color-mix(in srgb, var(--green3), var(--white) 40%);
   font-size: 14px;
+  text-align: center;
 }
 #retro-date-each {
   margin-top: 10px;
