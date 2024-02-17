@@ -6,7 +6,7 @@ window.onload = function() {
   console.log('window on load está a funcionar!')
   getFirstName(usernameValue, passwordValue);
   getPhotoUrl(usernameValue, passwordValue);
-  //loadTasks();
+  loadTasks();
 
   };
 
@@ -215,6 +215,7 @@ console.log('addTask button clicked')
 function createTaskElement(task) {
     const taskElement = document.createElement('div');
     taskElement.id = task.id;
+    task.priority = parsePriorityToString(task.priority);
     taskElement.priority = task.priority;
     taskElement.classList.add('task'); 
     if (task.priority === 'low') {
@@ -302,6 +303,7 @@ function loadTasks() {
   getAllUsersTasks(getValuesFromLocalStorage()[0], getValuesFromLocalStorage()[1]).then(tasksArray => {
     tasksArray.forEach(task => {
       const taskElement = createTaskElement(task);
+      task.stateId = parseStateIdToString(task.stateId);
       const panel = document.getElementById(task.stateId);
       panel.appendChild(taskElement);
       attachDragAndDropListeners(taskElement);
@@ -318,6 +320,18 @@ function removeAllTaskElements() {
   tasks.forEach(task => task.remove());
 }
 
+function parseStateIdToString (stateId) {
+  let newStateId = '';
+  if(stateId === 100) {
+    newStateId = 'todo';
+  } else if(stateId === 200) {
+    newStateId = 'doing';
+  } else if(stateId === 300) {
+    newStateId = 'done';
+  }
+  return newStateId;
+}
+
 function parseStateIdToInt (stateId) {
   let newStateId = 0;
   if(stateId === 'todo') {
@@ -328,6 +342,18 @@ function parseStateIdToInt (stateId) {
     newStateId = 300;
   }
   return newStateId;
+}
+
+function parsePriorityToString (priority) {
+  let newPriority = '';
+  if(priority === 100) {
+    newPriority = 'low';
+  } else if(priority === 200) {
+    newPriority = 'medium';
+  } else if(priority === 300) {
+    newPriority = 'high';
+  }
+  return newPriority;
 }
 
 function parsePriorityToInt (priority) {
