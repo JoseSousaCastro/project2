@@ -1,6 +1,6 @@
 editar task
-add comments
-	falta funcao add comment to retro, add comment do each board (usando o mesmo formato post-it da task)
+
+	falta funcao add comment usando o mesmo formato post-it da task
 
 testes
 tasks cli

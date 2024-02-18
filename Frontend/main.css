@@ -561,7 +561,7 @@ main {
   flex: 1;
 }
 .main-home,
-.pci-title {
+.sci-title {
   text-align: center;
   color: var(--green3);
   text-transform: uppercase;

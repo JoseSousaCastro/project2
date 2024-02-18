@@ -19,6 +19,8 @@ window.onload = function() {
     console.error('ID da retrospectiva não encontrado na URL.');
   }
 
+  loadComments();
+
   fillUsersDropdown(usernameValue, passwordValue);
   
 };
@@ -65,7 +67,6 @@ async function fillUsersDropdown(usernameValue, passwordValue) {
     if (response.ok) {
       const usersData = await response.json();
 
-      // Adicionar opções do usuário ao dropdown
       usersData.forEach((user) => {
         const option = document.createElement('option');
         option.value = user.username; // ou outra propriedade que identifique exclusivamente o usuário
@@ -84,6 +85,37 @@ async function fillUsersDropdown(usernameValue, passwordValue) {
   }
 }
 
+async function getRetrospectiveComments(retrospectiveId) {
+  const usernameValue = localStorage.getItem('username');
+  const passwordValue = localStorage.getItem('password');
+
+  const retrospectiveCommentsEndpoint = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/retrospective/${retrospectiveId}/allComments`;
+  
+  try {
+    const response = await fetch(retrospectiveCommentsEndpoint, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': '*/*',
+        'username': usernameValue,
+        'password': passwordValue
+      },
+    });
+
+    if (response.ok) {
+      const comments = await response.json();
+      console.log('comments:', comments);
+      return comments;
+    } else if (response.status === 401) {
+      alert('Invalid credentials');
+    } else if (response.status === 404) {
+      alert('Retrospective not found');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Something went wrong');
+  }
+}
 
 async function getRetrospectiveDetails(usernameValue, passwordValue, retrospectiveId) {
   const retrospectiveEndpoint = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/retrospective/${retrospectiveId}`;
@@ -123,7 +155,7 @@ async function getRetrospectiveDetails(usernameValue, passwordValue, retrospecti
 }
 
 async function getFirstName(usernameValue, passwordValue) {
-  
+
   let firstNameRequest = "http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/getFirstName";
     
     try {
@@ -140,7 +172,6 @@ async function getFirstName(usernameValue, passwordValue) {
         if (response.ok) {
 
           const data = await response.text();
-          console.log(data.firstName)
           document.getElementById("first-name-label").innerText = data;
 
         } else if (!response.ok) {
@@ -148,7 +179,8 @@ async function getFirstName(usernameValue, passwordValue) {
         }
 
     } catch (error) {
-        alert("Something went wrong2");
+        console.error('Error:', error);
+        alert("Something went wrong");
     }
 }
   
@@ -208,6 +240,173 @@ function parseCommentIdToInt (commentStatus) {
   return newStatus;
 }
 
+function parseCommentIdToString (commentStatus) {
+  let newStatus = '';
+  if(commentStatus === 100) {
+    newStatus = 'strengths';
+  } else if(commentStatus === 200) {
+    newStatus = 'challenges';
+  } else if(commentStatus === 300) {
+    newStatus = 'improvements';
+  }
+  return newStatus;
+}
+
+function createCommentElement(comment) {
+  const commentElement = document.createElement('div');
+  commentElement.id = comment.id;
+  comment.commentStatus = parseCommentIdToString(comment.commentStatus);
+  commentElement.commentStatus = comment.commentStatus;
+  commentElement.classList.add('comment');
+  if (comment.commentStatus === 'strengths') {
+    commentElement.classList.add('strengths');
+  } else if (comment.commentStatus === 'challenges') {
+    commentElement.classList.add('challenges');
+  } else if (comment.commentStatus === 'improvements') {
+    commentElement.classList.add('improvements');
+  }
+  commentElement.description = comment.description;
+  commentElement.user = comment.user.username;
+
+  const postIt = document.createElement('div');
+  postIt.className = 'post-it';
+
+  const elementUsername = document.createElement('h3');
+  elementUsername.textContent = comment.user.username;
+  const descriptionContainer = document.createElement('div');
+  descriptionContainer.className = 'post-it-text';
+  const elementDescription = document.createElement('p');
+  elementDescription.textContent = comment.description;
+
+  descriptionContainer.appendChild(elementDescription);
+  postIt.appendChild(elementUsername);
+  postIt.appendChild(descriptionContainer);
+  commentElement.appendChild(postIt);
+
+  return commentElement;
+}
+
+function loadComments() {
+  getRetrospectiveComments(getRetrospectiveIdFromURL()).then((commentsArray) => {
+    commentsArray.forEach((comment) => {
+      const commentElement = createCommentElement(comment);
+      comment.commentStatus = parseCommentIdToString(comment.commentStatus);
+      const panel = document.getElementById(comment.commentStatus);
+      panel.appendChild(commentElement);
+    });
+  });
+}
+
+
+document.getElementById('addCommentBTN').addEventListener('click', async function(event) {
+  event.preventDefault();
+
+  const usernameValue = localStorage.getItem('username');
+  const passwordValue = localStorage.getItem('password');
+  console.log("usernameValue: ", usernameValue);
+
+  const commentDescription = document.getElementById('commentDescription-retro').value;
+  const commentCategory = document.getElementById('dropdown-categories').value;
+  const commentUserValue = document.getElementById('dropdown-users').value;
+  const commentUser = getUserByUsername(commentUserValue);
+  console.log('commentUser:', commentUser);
+
+  if (commentDescription === '' || commentCategory === '' || commentUser === '') {
+    document.getElementById('warningMessage2').innerText ='Please fill in all fields';
+  } else {
+    document.getElementById('warningMessage2').innerText ='';
+    const comment = createComment(commentDescription, commentUser, commentCategory);
+    console.log('comment:', comment);
+    const retrospectiveId = getRetrospectiveIdFromURL();
+    console.log('retrospectiveId:', retrospectiveId);
+    const retrospectiveCommentsEndpoint = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/retrospective/${retrospectiveId}/addComment`;
+
+    try {
+      const response = await fetch(retrospectiveCommentsEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': '*/*',
+          'username': usernameValue,
+          'password': passwordValue
+        },
+        body: JSON.stringify(comment)
+      });
+
+      if (response.ok) {
+        console.log('Comment added successfully');
+        removeAllCommentsElements();
+        loadComments();
+        cleanAllCommentFields();
+        //createCommentElement(comment);
+        //addCommentToPanel(commentCategory, commentDescription, commentUser);
+      } else if (response.status === 401) {
+        alert('Invalid credentials');
+      } else if (response.status === 404) {
+        alert('Retrospective not found');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Something went wrong');
+    }
+  }
+}
+);
+
+function addCommentToPanel(commentCategory, commentDescription, commentUser) {
+  const panelStrengths = document.getElementById('strengths');
+  const panelChallenges = document.getElementById('challenges');
+  const panelImprovements = document.getElementById('improvements');
+
+  if (commentCategory === 'strengths') {
+    panelStrengths.innerHTML += `<div>${commentDescription} - ${commentUser}</div>`;
+  } else if (commentCategory === 'challenges') {
+    panelChallenges.innerHTML += `<div>${commentDescription} - ${commentUser}</div>`;
+  } else if (commentCategory === 'improvements') {
+    panelImprovements.innerHTML += `<div>${commentDescription} - ${commentUser}</div>`;
+  }
+}
+
+async function getUserByUsername(username) {
+  const usernameValue = localStorage.getItem('username');
+  const passwordValue = localStorage.getItem('password');
+
+  const endpoint = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${username}`;
+  try {
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/JSON',
+        'Accept': '*/*',
+        'username': usernameValue,
+        'password': passwordValue
+      },
+    });
+    if (response.ok) {
+      const user = await response.json();
+      return user;
+    } else {
+      throw new Error('Failed to get user by username');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Something went wrong');
+  }
+}
+
+function removeAllCommentsElements() {
+  const comments = document.querySelectorAll('.comment');
+  comments.forEach(comment => {
+    comment.remove();
+  });
+}
+
+function cleanAllCommentFields() {
+  document.getElementById('warningMessage2').innerText ='';
+  document.getElementById('commentDescription-retro').value = '';
+  document.getElementById('dropdown-categories').value = '';
+  document.getElementById('dropdown-users').value = '';
+}
 
 
 
