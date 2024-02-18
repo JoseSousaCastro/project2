@@ -17,7 +17,9 @@ window.onload = function() {
     getRetrospectiveDetails(usernameValue, passwordValue, retrospectiveId);
   } else {
     console.error('ID da retrospectiva não encontrado na URL.');
-  } 
+  }
+
+  fillUsersDropdown(usernameValue, passwordValue);
   
 };
 
@@ -26,6 +28,55 @@ function getValuesFromLocalStorage() {
   const passwordValue = localStorage.getItem('password');
   const userValues = [usernameValue, passwordValue];     
   return userValues;
+}
+
+
+async function fillUsersDropdown(usernameValue, passwordValue) {
+  const dropdownUsers = document.getElementById('dropdown-users');
+
+  // Adicionar a opção padrão
+  const defaultOption = document.createElement('option');
+  defaultOption.value = '';
+  defaultOption.disabled = true;
+  defaultOption.selected = true;
+  defaultOption.hidden = true;
+  defaultOption.textContent = '--Choose a user--';
+  dropdownUsers.appendChild(defaultOption);
+
+  // Obter usuários do backend
+  const usersEndpoint = 'http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/all';
+
+  try {
+    const response = await fetch(usersEndpoint, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': '*/*',
+        'username': usernameValue,
+        'password': passwordValue
+      },
+    });
+
+    if (response.ok) {
+      const usersData = await response.json();
+
+      // Adicionar opções do usuário ao dropdown
+      usersData.forEach((user) => {
+        const option = document.createElement('option');
+        option.value = user.username; // ou outra propriedade que identifique exclusivamente o usuário
+        option.textContent = user.username; // ou outra propriedade que você deseja exibir
+        dropdownUsers.appendChild(option);
+
+      });
+    } else if (response.status === 401) {
+      alert('Invalid credentials');
+    } else if (response.status === 404) {
+      alert('Users not found');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Something went wrong');
+  }
 }
 
 
@@ -130,8 +181,27 @@ async function getFirstName(usernameValue, passwordValue) {
   }
 
 
+function createComment(description, user, commentStatus) {
+const comment = {
+  description: description,
+  user: user,
+  commentStatus: parseCommentIdToInt(commentStatus)
+};
+return comment;
+}
 
 
+function parseCommentIdToInt (commentStatus) {
+  let newStatus = 0;
+  if(commentStatus === 'strengths') {
+    newStatus = 100;
+  } else if(commentStatus === 'challenges') {
+    newStatus = 200;
+  } else if(commentStatus === 'improvements') {
+    newStatus = 300;
+  }
+  return newStatus;
+}
 
 
 

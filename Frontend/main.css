@@ -939,30 +939,31 @@ match ao arredondamento do painel (home.html) */
 .task-buttons .taskH4 {
   text-align: center;
   margin-top: 20px;
-  margin-bottom: 20px;
-  padding-top: 30px;
+  margin-bottom: 15px;
+  padding-top: 20px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-size: 20px;
+  font-size: 18px;
   color: var(--green3);
 }
+
 /* Definições dos botões de status e priority */
 .task-status .status-buttons,
 .task-priority .priority-buttons {
   justify-content: center;
   display: flex;
-  gap: 40px;
+  gap: 35px;
 }
 .status-button,
 .priority-button {
   --button-shadow-color: #c3c3c3;
-  width: 100px;
-  height: 45px;
-  padding: 10px;
+  width: 90px;
+  height: 35px;
+  padding: 8px;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0px 4px 8px var(--button-shadow-color);
@@ -1029,16 +1030,19 @@ match ao arredondamento do painel (home.html) */
 .priority-button.selected {
   background-color: color-mix(in srgb, var(--grey), white 30%) !important;
 }
-.updateDate {
+.startDateDiv,
+.updateDateDiv,
+.endDateDiv {
   margin-top: 20px;
-  margin-bottom: 20px;
-  padding-top: 30px;
   letter-spacing: 0.5px;
   font-style: italic;
   font-size: 15px;
   font-weight: bold;
   color: var(--green3);
   text-align: center;
+}
+.startDateDiv {
+  margin-top: 40px;
 }
 
 /* Definições do footer */

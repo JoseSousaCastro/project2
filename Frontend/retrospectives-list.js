@@ -123,35 +123,39 @@ function cleanRetroFields() {
       }
 }
 
-async function addRetrospective(usernameValue, passwordValue, retrospective) {
-  console.log("addRetrospective" + "user" + usernameValue + "pass" + passwordValue + "retrospective" + retrospective)
-  const endpointAddRetro = "http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/retrospective/add";
-
-    try {
-      const response = await fetch(endpointAddRetro, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/JSON',
-              'Accept': '*/*',
-              username: usernameValue,
-              password: passwordValue
-          },
-          body: JSON.stringify(retrospective)
-      });
-
-      if (response.ok) {
-          const newRetro = await response.json();
-          createRetroTableBody(newRetro);
-      } else if (response.status === 401) {
-          alert("Invalid credentials");
-      } else if (response.status === 404) {
-          alert("Error 404");
-      }
+async function addRetrospectiveToBackend(title, date) {
+  const retro = createRetro(title, date);
+  const usernameValue = getValuesFromLocalStorage()[0];
+  const passwordValue = getValuesFromLocalStorage()[1];
+  try {
+    const response = await fetch("http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/retrospective/add", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': '*/*',
+        'username': usernameValue,
+        'password': passwordValue
+      },
+      body: JSON.stringify(retro)
+    });
+    if (response.ok) {
+      removeAllRetroElements();
+      getRetroList(usernameValue, passwordValue);
+      cleanRetroFields();
+    } else if (response.status === 401) {
+      alert("Invalid credentials");
+    } else if (response.status === 404) {
+      alert("Error 404");
+    }
   } catch (error) {
-      console.error('Error:', error);
-      alert("Something went wrong");
+    console.error('Error:', error);
+    alert("Something went wrong");
   }
-  }
+    
+}
+
+
+      
 
 
 function createRetro (title, date) {
@@ -172,12 +176,9 @@ if (date === '' || title === '') {
   document.getElementById('warningMessage2').innerText = 'Please fill in all fields';
 } else {
   let retro = createRetro(title, date);
-  const usernameValue = getValuesFromLocalStorage()[0];
-  const passwordValue = getValuesFromLocalStorage()[1];
-addRetrospective(usernameValue, passwordValue, retro).then(() => {
-  removeAllRetroElements();
-  getRetroList(usernameValue, passwordValue);
-  cleanRetroFields();
+
+  addRetrospectiveToBackend(retro.title, retro.date).then(() => {
+
 })
 }
 });
