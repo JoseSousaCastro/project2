@@ -5,11 +5,14 @@ window.onload = function() {
   const usernameValue = localStorage.getItem('username');
   const passwordValue = localStorage.getItem('password');
 
+  if (usernameValue === null || passwordValue === null) {
+    window.location.href = "index.html";
+  } else {
   console.log('window on load está a funcionar!')
   getFirstName(usernameValue, passwordValue);
   getPhotoUrl(usernameValue, passwordValue);
-  
   loadTasks();
+  }
 
   };
 
