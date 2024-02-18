@@ -22,6 +22,7 @@ window.onload = function () {
 
 const usernameValue = localStorage.getItem("username");
 const passwordValue = localStorage.getItem("password");
+const taskId = sessionStorage.getItem("taskId");
 
 // Definir os botões de status
 const todoButton = document.getElementById("todo-button"); // Atribuir o elemento respetivo à variável todoButton
@@ -34,33 +35,38 @@ const mediumButton = document.getElementById("medium-button");
 const highButton = document.getElementById("high-button");
 
 async function updateTask() {
-    //let firstNameRequest = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/${id}`;
   
-    const taskId = sessionStorage.getItem("taskId");
-    const usernameValue = localStorage.getItem("username");
-    const passwordValue = localStorage.getItem("password");
-    let startDate = new Date();
-    let limitDate = new Date();
+  /*let startDate = new Date();
+  let limitDate = new Date();
 
-    // Set the start date to today's date
-    startDate = startDate.toISOString().split('T')[0];
 
-    // Set the limit date to 7 days from today
-    limitDate.setDate(limitDate.getDate() + 7);
-    limitDate = limitDate.toISOString().split('T')[0];
-            const task = {
-                id: taskId,
-                title: document.getElementById("titulo-task").value,
-                description: document.getElementById("descricao-task").value,
-                priority: 200,
-                stateId: 100,
-                /* startDate: startDate,
-                limitDate: limitDate,
-                editionDate: new Date().toISOString().slice(0, 10) */
-            };
-            
-    try {
-      const response = await fetch(`http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/${taskId}`, {
+  // Set the start date to today's date
+  startDate = startDate.toISOString().split("T")[0];
+
+  // Set the limit date to 7 days from today
+  limitDate.setDate(limitDate.getDate() + 7);
+  limitDate = limitDate.toISOString().split("T")[0];
+*/
+  const priority = returnPriorityFromSelectedButton();
+  const stateId = returnStateIdFromSelectedButton();
+
+  const task = {
+    id: taskId,
+    title: document.getElementById("titulo-task").value,
+    description: document.getElementById("descricao-task").value,
+    priority: priority,
+    stateId: stateId,
+    startDate: document.getElementById("startDate-editTask").value,
+    limitDate: document.getElementById("endDate-editTask").value
+    /* startDate: startDate,
+                limitDate: limitDate, */
+                //editionDate: new Date().toISOString().slice(0, 10) 
+  };
+  let firstNameRequest = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/${taskId}`;
+  try {
+    const response = await fetch(
+      firstNameRequest,
+      {
         method: "PUT",
         headers: {
           "Content-Type": "application/JSON",
@@ -68,22 +74,25 @@ async function updateTask() {
           username: usernameValue,
           password: passwordValue,
         },
-        body: JSON.stringify(task)
-      });
-  
-      if (response.ok) {
-        
-        console.log("Task updated successfully");
-      } else if (response.status === 401) {
-        alert("Invalid credentials")
-      } else if (response.status === 404) {
-        alert("Impossible to create task. Verify all fields")
+        body: JSON.stringify(task),
       }
-    } catch (error) {
-      alert("Something went wrong");
-    }
-}
+    );
 
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    } else if (response.status === 401) {
+      alert("Invalid credentials");
+    } else if (response.status === 404) {
+      alert("Impossible to create task. Verify all fields");
+    } else {
+      console.log("Task updated successfully");
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+    alert("Something went wrong");
+    throw error; // Propagar o erro para ser tratado no catch do bloco que chamou a função
+  }
+}
 
 async function getFirstName(usernameValue, passwordValue) {
   let firstNameRequest =
@@ -167,87 +176,78 @@ async function getAllUsersTasks(usernameValue, passwordValue) {
 }
 
 async function showTask(taskId) {
-
   const task = await findTaskById(taskId);
   if (task) {
-
     document.getElementById("titulo-task").textContent = task.title; // Colocar o título no input title
     document.getElementById("descricao-task").textContent = task.description; // Colocar a descrição na text area
     document.getElementById("tasktitle").innerHTML = task.title; // Colocar o título no título da página
+    document.getElementById("startDate-editTask").value = task.startDate;
+    document.getElementById("endDate-editTask").value = task.limitDate;
 
-    // Definir o botão ToDo como default
     let taskStateId = task.stateId;
-    taskStateId = parseStateIdToInt(taskStateId);
+  
     if (taskStateId == 100) {
       todoButton.classList.add("selected");
+      setStatusButtonSelected(todoButton);
     } else if (taskStateId == 200) {
       doingButton.classList.add("selected");
+      setStatusButtonSelected(doingButton);
     } else if (taskStateId == 300) {
       doneButton.classList.add("selected");
+      setStatusButtonSelected(doneButton);
     }
 
-    // Definir o botão Low como default
     let taskPriority = task.priority;
-    taskPriority = parsePriorityToInt(taskPriority);
+
     if (taskPriority == 100) {
       lowButton.classList.add("selected");
+      setPriorityButtonSelected(lowButton);
     } else if (taskPriority == 200) {
       mediumButton.classList.add("selected");
+      setPriorityButtonSelected(mediumButton);
     } else if (taskPriority == 300) {
       highButton.classList.add("selected");
+      setPriorityButtonSelected(highButton);
     }
-
-
-    setPriorityButtonSelected(lowButton, "low");
-    setStatusButtonSelected(todoButton, "todo");
-
-    // Event listeners para os botões status
-    todoButton.addEventListener("click", () =>
-      setStatusButtonSelected(todoButton, "todo")
-    );
-    doingButton.addEventListener("click", () =>
-      setStatusButtonSelected(doingButton, "doing")
-    );
-    doneButton.addEventListener("click", () =>
-      setStatusButtonSelected(doneButton, "done")
-    );
-
-    // Event listeners para os botões priority
-    lowButton.addEventListener("click", () =>
-      setPriorityButtonSelected(lowButton, "low")
-    );
-    mediumButton.addEventListener("click", () =>
-      setPriorityButtonSelected(mediumButton, "medium")
-    );
-    highButton.addEventListener("click", () =>
-      setPriorityButtonSelected(highButton, "high")
-    );
-
-    const cancelbutton = document.getElementById("cancel-button");
-    cancelbutton.addEventListener("click", () => {
-      // Abrir o modal de cancel
-      const cancelModal = document.getElementById("cancel-modal");
-      cancelModal.style.display = "block";
-
-      const cancelButton = document.getElementById("continue-editing-button");
-      cancelButton.addEventListener("click", () => {
-        window.location.href = "task.html";
-      });
-
-      // Event listener para o botão de confirmação
-      const confirmButton = document.getElementById("confirm-cancel-button");
-      confirmButton.addEventListener("click", () => {
-        sessionStorage.clear();
-        window.location.href = "home.html";
-      });
-
-      cancelModal.style.display = "grid";
-    });
   } else {
     alert("Task not found");
+    sessionStorage.clear();
     window.location.href = "home.html";
   }
 }
+
+
+// Event listeners para os botões status
+todoButton.addEventListener("click", () => setStatusButtonSelected(todoButton));
+doingButton.addEventListener("click", () => setStatusButtonSelected(doingButton));
+doneButton.addEventListener("click", () => setStatusButtonSelected(doneButton));
+
+// Event listeners para os botões priority
+lowButton.addEventListener("click", () => setPriorityButtonSelected(lowButton));
+mediumButton.addEventListener("click", () => setPriorityButtonSelected(mediumButton));
+highButton.addEventListener("click", () => setPriorityButtonSelected(highButton));
+
+const cancelbutton = document.getElementById("cancel-button");
+
+cancelbutton.addEventListener("click", () => {
+  // Abrir o modal de cancel
+  const cancelModal = document.getElementById("cancel-modal");
+  cancelModal.style.display = "block";
+
+  const cancelButton = document.getElementById("continue-editing-button");
+  cancelButton.addEventListener("click", () => {
+    window.location.href = "task.html";
+  });
+
+  // Event listener para o botão de confirmação
+  const confirmButton = document.getElementById("confirm-cancel-button");
+  confirmButton.addEventListener("click", () => {
+    sessionStorage.clear();
+    window.location.href = "home.html";
+  });
+
+  cancelModal.style.display = "grid";
+});
 
 // Função para definir o estado no grupo de botões status
 function setStatusButtonSelected(button) {
@@ -263,15 +263,14 @@ function setPriorityButtonSelected(button) {
   button.classList.add("selected");
 }
 
-
 async function findTaskById(taskId) {
   try {
-        const tasksArray = await getAllUsersTasks(usernameValue, passwordValue);
-        const task = tasksArray.find((task_1) => task_1.id === taskId);
-        return task;
-    } catch (error) {
-        alert("Something went wrong while loading tasks");
-    }
+    const tasksArray = await getAllUsersTasks(usernameValue, passwordValue);
+    const task = tasksArray.find((task_1) => task_1.id === taskId);
+    return task;
+  } catch (error) {
+    alert("Something went wrong while loading tasks");
+  }
 }
 
 function parseStateIdToInt(stateId) {
@@ -306,44 +305,42 @@ function parsePriorityToInt(priority) {
   return newPriority;
 }
 
+function returnPriorityFromSelectedButton() {
+  const buttons = [lowButton, mediumButton, highButton];
+  let selectedButton = null;
+  buttons.forEach((btn) => {
+    if (btn.classList.contains("selected")) {
+      selectedButton = btn;
+    }
+  });
+  const priorityInt = parsePriorityToInt(selectedButton.innerText.toLowerCase());
+  return priorityInt;
+} 
+
+function returnStateIdFromSelectedButton() {
+  const buttons = [todoButton, doingButton, doneButton];
+  let selectedButton = null;
+  buttons.forEach((btn) => {
+    if (btn.classList.contains("selected")) {
+      selectedButton = btn;
+    }
+  });
+  const stateIdInt = parseStateIdToInt(selectedButton.innerText.toLowerCase());
+  return stateIdInt;
+}
+
 // Event listener para o botão save
 const savebutton = document.getElementById("save-button");
 savebutton.addEventListener("click", async () => {
-    const taskId = sessionStorage.getItem("taskId");
-    console.log('taskId = ', taskId);   
-    try {
-    /*     let startDate = new Date();
-let limitDate = new Date();
 
-// Set the start date to today's date
-startDate = startDate.toISOString().split('T')[0];
-
-// Set the limit date to 7 days from today
-limitDate.setDate(limitDate.getDate() + 7);
-limitDate = limitDate.toISOString().split('T')[0];
-            const task = {
-                id: taskId,
-                title: document.getElementById("titulo-task").value,
-                description: document.getElementById("descricao-task").value,
-                priority: 200,
-                stateId: 100,
-                startDate: startDate,
-                limitDate: limitDate,
-                //editionDate: new Date().toISOString().slice(0, 10)
-            };          
-            console.log('task = ', task);
-            console.log(usernameValue, passwordValue);
-            /* if (task.title === '' || task.description === '' || task.priority === null || task.startDate === '' || task.limitDate === '' || task.startDate > task.limitDate) {
-                alert("Invalid data. Please check all fields and try again");
-            } else { */ 
-                await updateTask();
-                alert	("Task updated successfully");
-                sessionStorage.clear();
-                window.location.href = "home.html";
-            //}
-    }catch (error) {
-        console.error('Error:', error);
-        alert("Something went wrong");
-    }
+  try {
+      await updateTask();
+      alert("Task updated successfully");
+      sessionStorage.clear();
+      window.location.href = "home.html";
+   
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Something went wrong while updating the task");
+  }
 });
-

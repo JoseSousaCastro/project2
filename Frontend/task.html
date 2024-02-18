@@ -25,7 +25,7 @@
         </nav>
         <div class="nav-menu-right">
             <img src="multimedia/JSC_close up.png" id="profile-pic">
-            <a href="edit-profile.html">Profile</a>
+            <a href="edit-profile.html" id="first-name-label">Profile</a>
             <button class="logout-button" id="logout-button-header">
                 <img src="multimedia/logout.png" alt="Logout Icon">
                 Logout
@@ -64,14 +64,14 @@
                         <button class="priority-button high" id="high-button">High</button>
                     </div>
                 </div>
-                <div class="startDateDiv">
-                <label id="startDate-editTask">Start date: 13/02/2024</label> <!-- This label will be updated on JavaScript with the start date -->
-                </div>
                 <div class="updateDateDiv">
-                <label id="latestUpdate">Last update: 14/02/2024</label> <!-- This label will be updated on JavaScript with the latest update date -->
+                    <label id="latestUpdate">Last update: </label> <!-- This label will be updated on JavaScript with the latest update date -->
+                </div>
+                <div class="startDateDiv">
+                    <label for="startDate-editTask">Start date: <input type="date" id="startDate-editTask"></label> <!-- This label will be updated on JavaScript with the start date -->
                 </div>
                 <div class="endDateDiv">
-                <label id="endDate-editTask">End date: 15/02/2024</label> <!-- This label will be updated on JavaScript with the end date -->
+                    <label for="endDate-editTask">End date: <input type="date" id="endDate-editTask"></label> <!-- This label will be updated on JavaScript with the end date -->
                 </div>
             </div>
         </div>

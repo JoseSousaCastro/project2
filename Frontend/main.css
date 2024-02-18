@@ -391,6 +391,7 @@ aside h3 {
 #taskName,
 #taskDescription,
 #taskDescription-retro,
+#commentDescription-retro,
 #name-addMember,
 #retroTitle {
   padding-left: 10px;
@@ -413,7 +414,8 @@ aside h3 {
   text-align: center;
 }
 #taskDescription,
-#taskDescription-retro {
+#taskDescription-retro,
+#commentDescription-retro {
   resize: none;
   padding-top: 10px;
   height: 200px;
@@ -421,11 +423,13 @@ aside h3 {
 }
 /* Quando a task description não está selecionada mantém a border */
 #taskDescription:not(:focus),
-#taskDescription-retro:not(:focus) {
+#taskDescription-retro:not(:focus),
+#commentDescription-retro:not(:focus) {
   border: var(--green3) 2px solid;
 }
 #taskDescription::placeholder,
-#taskDescription-retro::placeholder {
+#taskDescription-retro::placeholder,
+#commentDescription-retro::placeholder {
   font-size: 12px;
   position: absolute;
   top: 10px;
@@ -557,7 +561,7 @@ main {
   flex: 1;
 }
 .main-home,
-.pci-title {
+.sci-title {
   text-align: center;
   color: var(--green3);
   text-transform: uppercase;
@@ -1154,14 +1158,16 @@ aside h3 {
   margin-top: 15px;
 }
 #taskDescription,
-#taskDescription-retro {
+#taskDescription-retro,
+#commentDescription-retro {
   margin-top: 20px;
   padding: 10px;
   width: 180px;
   height: 150px;
   font-size: 12.5px;
 }
-#taskDescription-retro {
+#taskDescription-retro,
+#commentDescription-retro {
   margin-top: 15px;
 }
 #dropdown-categories,

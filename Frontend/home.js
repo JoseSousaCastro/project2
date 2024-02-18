@@ -1,5 +1,7 @@
 
 window.onload = function() {
+
+  sessionStorage.clear();
   const usernameValue = localStorage.getItem('username');
   const passwordValue = localStorage.getItem('password');
 
@@ -19,7 +21,6 @@ window.onload = function() {
     }
   }
 };
-
 
 
   function getValuesFromLocalStorage() {
@@ -319,11 +320,7 @@ function createTaskElement(task) {
   taskElement.appendChild(postIt);
 
   taskElement.addEventListener('dblclick', function () {
-    sessionStorage.setItem("taskDescription", taskElement.description);
-    sessionStorage.setItem("taskTitle", taskElement.title);
-    sessionStorage.setItem("taskid", taskElement.id);
-    sessionStorage.setItem("taskstateId", taskElement.stateId);
-    sessionStorage.setItem("taskPriority", taskElement.priority);
+    sessionStorage.setItem("taskId", taskElement.id);
     window.location.href = 'task.html';
   });
 
