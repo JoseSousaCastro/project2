@@ -243,11 +243,6 @@ document.getElementById("profile-save-button").addEventListener('click', async f
 });
 
 
-document.getElementById("profile-cancel-button").addEventListener('click', () => {
-    window.location.href = 'home.html';
-});
-
-
 function updateUserInfo(updatedPassword) { 
 
 
