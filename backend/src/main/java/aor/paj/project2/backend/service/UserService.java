@@ -10,6 +10,7 @@ import jakarta.ws.rs.core.Response;
 
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Path("/users")
@@ -112,7 +113,9 @@ public class UserService {
         if (userBean.isAuthenticated(usernameHeader, password)) {
             if (usernameHeader.equals(username)) {
                 ArrayList<Task> userTasks = userBean.getUserAndHisTasks(username);
+                userTasks.sort(Comparator.comparing(Task::getPriority,Comparator.reverseOrder()).thenComparing(Comparator.comparing(Task::getStartDate).thenComparing(Task::getLimitDate)));
                 response = Response.status(Response.Status.OK).entity(userTasks).build();
+
             } else {
                 response = Response.status(406).entity("Invalid username on path").build();
             }
