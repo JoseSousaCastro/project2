@@ -25,8 +25,8 @@ public class TaskBean {
                     a.setDescription(task.getDescription());
                     a.setPriority(task.getPriority());
                     a.editStateId(task.getStateId());
-                    a.setStartDate(a.getStartDate());
-                    a.setLimitDate(a.getLimitDate());
+                    a.setStartDate(task.getStartDate());
+                    a.setLimitDate(task.getLimitDate());
                     //a.setEditionDate();
                     edited = validateTask(a);
                 }
