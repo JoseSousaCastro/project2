@@ -160,20 +160,7 @@ lowButton.addEventListener("click", () => setPriorityButtonSelected(lowButton, "
 mediumButton.addEventListener("click", () => setPriorityButtonSelected(mediumButton, "medium"));
 highButton.addEventListener("click", () => setPriorityButtonSelected(highButton, "high"));
 
-/* function getDragAfterElement(panel, y) {
-    const draggableElements = [...panel.querySelectorAll('.task:not(.dragging)')] // Dentro da lista de painéis, seleciona todos os elementos com a classe task que nao tenham a classe dragging  
-    return draggableElements.reduce((closest, child) => { // Retorna o elemento mais próximo do que esáa a ser arrastado e que está a ser comparado
-        const box = child.getBoundingClientRect() // Retorna o tamanho do elemento e a sua posição relativamente ao viewport
-        const offset = y - box.top - box.height / 2 // Calcula a distância entre o elemento que está a ser arrastado e o que está a ser comparado
-        if (offset < 0 && offset > closest.offset) { // Se a distância for menor que 0 e maior que a distância do elemento mais próximo até agora
-            return { offset: offset, element: child }
-        } else { //
-            return closest // Retorna o elemento mais próximo até agora
-        }
-    }, { offset: Number.NEGATIVE_INFINITY }).element}  */
-
  
-
 async function newTask(usernameValue, passwordValue, task) {
 console.log('In newTask - username: ' + usernameValue);
   let newTask = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/addTask`;
@@ -234,9 +221,6 @@ console.log('In newTask - username: ' + usernameValue);
           alert("Task not created. Something went wrong");
       }
     };
-
-
-
 
 
 function createTask(title, description, priority, startDate, limitDate) { // Cria uma nova task com os dados inseridos pelo utilizador
@@ -355,31 +339,6 @@ document.addEventListener('click', function (event) {
 });
 
 
-
-
-
-  /* tasks.forEach(task => {
-    const taskData = {
-      id: task.id,
-      title: task.title,
-      description: task.description,
-      stateId: task.stateId,
-      priority: task.priority,
-      startDate: task.startDate,
-      editionDate: task.editionDate,
-      limitDate: task.limitDate,
-    };
-
-    // Determina o stateId de cada task e coloca-a no array correspondente
-    taskArrays[task.stateId].push(taskData);
-  });
-
-  // Combina todos os arrays de tasks num único array
-  const tasksArray = [taskArrays.todo, taskArrays.doing, taskArrays.done];
-
-  // Guarda o array global de tasks na local storage
-  localStorage.setItem('tasks', JSON.stringify(tasksArray)); */
-
 // Carrega as tarefas guardadas na local storage
 function loadTasks() {
   getAllUsersTasks(getValuesFromLocalStorage()[0], getValuesFromLocalStorage()[1]).then(tasksArray => {
@@ -486,39 +445,6 @@ async function deleteTask(id, usernameValue, passwordValue) {
     console.error('Error deleting task:', error);
   }
 }
-
-/*
-async function getAllUsersTasks(usernameValue, passwordValue) {
-  // Assuming the server endpoint for deleting a task is something like this:
-  let getAllTasksUrl = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/tasks`;
-
-  try {
-    const response = await fetch(getAllTasksUrl, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': '* / *',
-        username: usernameValue,
-        password: passwordValue
-      },
-    });
-
-    const data = await response.json();
-    if (response.ok) {
-      console.log('tasks retrieved successfully');
-      return data;
-    } else {
-      // Handle the error response from the server
-      console.error('Error retrieving tasks:', response.statusText);
-      return null;
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    alert("Something went wrong ");
-    return null;
-  }
-}
-*/
 
 
 window.onclose = function () { // Guarda as tarefas na local storage quando a página é fechada

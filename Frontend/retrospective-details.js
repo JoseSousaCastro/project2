@@ -317,7 +317,7 @@ document.getElementById('addCommentBTN').addEventListener('click', async functio
   const commentDescription = document.getElementById('commentDescription-retro').value;
   const commentCategory = document.getElementById('dropdown-categories').value;
   const commentUserValue = document.getElementById('dropdown-users').value;
-  const commentUser = getUserByUsername(commentUserValue);
+  const commentUser =  await getUserByUsername(commentUserValue);
   console.log('commentUser:', commentUser);
 
   if (commentDescription === '' || commentCategory === '' || commentUser === '') {
@@ -345,10 +345,11 @@ document.getElementById('addCommentBTN').addEventListener('click', async functio
       if (response.ok) {
         console.log('Comment added successfully');
         removeAllCommentsElements();
-        loadComments();
+        addCommentToPanel(commentCategory, commentDescription, commentUser);
+        //loadComments();
         cleanAllCommentFields();
         //createCommentElement(comment);
-        //addCommentToPanel(commentCategory, commentDescription, commentUser);
+        
       } else if (response.status === 401) {
         alert('Invalid credentials');
       } else if (response.status === 404) {
@@ -368,11 +369,11 @@ function addCommentToPanel(commentCategory, commentDescription, commentUser) {
   const panelImprovements = document.getElementById('improvements');
 
   if (commentCategory === 'strengths') {
-    panelStrengths.innerHTML += `<div>${commentDescription} - ${commentUser}</div>`;
+    panelStrengths.innerHTML += `<div>${commentDescription} - ${commentUser.username}</div>`;
   } else if (commentCategory === 'challenges') {
-    panelChallenges.innerHTML += `<div>${commentDescription} - ${commentUser}</div>`;
+    panelChallenges.innerHTML += `<div>${commentDescription} - ${commentUser.username}</div>`;
   } else if (commentCategory === 'improvements') {
-    panelImprovements.innerHTML += `<div>${commentDescription} - ${commentUser}</div>`;
+    panelImprovements.innerHTML += `<div>${commentDescription} - ${commentUser.username}</div>`;
   }
 }
 
@@ -385,7 +386,7 @@ async function getUserByUsername(username) {
     const response = await fetch(endpoint, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/JSON',
+        'Content-Type': 'application/json',
         'Accept': '*/*',
         'username': usernameValue,
         'password': passwordValue
