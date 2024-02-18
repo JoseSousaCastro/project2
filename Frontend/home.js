@@ -5,16 +5,23 @@ window.onload = function() {
   const usernameValue = localStorage.getItem('username');
   const passwordValue = localStorage.getItem('password');
 
+  
   if (usernameValue === null || passwordValue === null) {
     window.location.href = "index.html";
   } else {
-  console.log('window on load está a funcionar!')
-  getFirstName(usernameValue, passwordValue);
-  getPhotoUrl(usernameValue, passwordValue);
-  loadTasks();
+    try {
+        getFirstName(usernameValue, passwordValue);
+        getPhotoUrl(usernameValue, passwordValue);
+        loadTasks();
+    } catch (error) {
+        
+        console.error("An error occurred:", error);
+        window.location.href = "index.html";
+        
+    }
   }
+};
 
-  };
 
   function getValuesFromLocalStorage() {
     const usernameValue = localStorage.getItem('username');

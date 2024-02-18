@@ -6,10 +6,18 @@ window.onload = function () {
   if (usernameValue === null || passwordValue === null) {
     window.location.href = "index.html";
   } else {
-    getFirstName(usernameValue, passwordValue);
-    getPhotoUrl(usernameValue, passwordValue);
-    showTask(taskId);
-  }
+    try {
+      getFirstName(usernameValue, passwordValue);
+      getPhotoUrl(usernameValue, passwordValue);
+      showTask(taskId);
+    } catch (error) {
+        
+        console.error("An error occurred:", error);
+        window.location.href = "index.html";
+        
+    }
+}
+
 };
 
 const usernameValue = localStorage.getItem("username");

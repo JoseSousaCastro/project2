@@ -3,14 +3,24 @@ window.onload = function() {
     let usernameValue = localStorage.getItem('username');
     let passwordValue = localStorage.getItem('password');
   
-    console.log('window on load está a funcionar!')
-    getFirstName(usernameValue, passwordValue);
-    getPhotoUrl(usernameValue, passwordValue);
-    loadUserData(usernameValue, passwordValue);
+    if (usernameValue === null || passwordValue === null) {
+        window.location.href = "index.html";
+      } else {
+        try {
+            getFirstName(usernameValue, passwordValue);
+            getPhotoUrl(usernameValue, passwordValue);
+            loadUserData(usernameValue, passwordValue);
 
-    clearInputValues();
-  
-};
+            clearInputValues();
+        } catch (error) {
+            
+            console.error("An error occurred:", error);
+            window.location.href = "index.html";
+            
+        }
+      }
+    };
+    
 
 //LOGOUT 
 document.getElementById("logout-button-header").addEventListener('click', async function() {
@@ -232,11 +242,14 @@ document.getElementById("profile-save-button").addEventListener('click', async f
     }
 });
 
+
+document.getElementById("profile-cancel-button").addEventListener('click', () => {
+    window.location.href = 'home.html';
+});
+
+
 function updateUserInfo(updatedPassword) { 
 
-    let isFormValid = document.getElementById('edit-profile-form').checkValidity();
-
-    
 
         let username = document.getElementById('username-title-editProfile').textContent.trim();
         let email = getInputValue('email-editProfile');
