@@ -30,6 +30,11 @@ function getValuesFromLocalStorage() {
   return userValues;
 }
 
+function getRetrospectiveIdFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('id');
+}
+
 
 async function fillUsersDropdown(usernameValue, passwordValue) {
   const dropdownUsers = document.getElementById('dropdown-users');
