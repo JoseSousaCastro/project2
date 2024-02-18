@@ -155,7 +155,7 @@ async function getRetrospectiveDetails(usernameValue, passwordValue, retrospecti
 }
 
 async function getFirstName(usernameValue, passwordValue) {
-  
+
   let firstNameRequest = "http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/getFirstName";
     
     try {
@@ -172,7 +172,6 @@ async function getFirstName(usernameValue, passwordValue) {
         if (response.ok) {
 
           const data = await response.text();
-          console.log(data.firstName)
           document.getElementById("first-name-label").innerText = data;
 
         } else if (!response.ok) {
@@ -180,7 +179,8 @@ async function getFirstName(usernameValue, passwordValue) {
         }
 
     } catch (error) {
-        alert("Something went wrong2");
+        console.error('Error:', error);
+        alert("Something went wrong");
     }
 }
   
