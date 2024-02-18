@@ -48,8 +48,8 @@ function attachDragAndDropListeners(task) { // Adiciona os listeners de drag and
 panels.forEach(panel => { 
   panel.addEventListener('dragover', e => {
     e.preventDefault()
-    const afterElement = getDragAfterElement(panel, e.clientY)
-    const task = document.querySelector('.dragging')
+    const afterElement = getDragAfterElement(panel, e.clientY);
+    const task = document.querySelector('.dragging');
     
     const panelID = panel.id; 
 
@@ -62,8 +62,17 @@ panels.forEach(panel => {
     }
 
     updateTaskStatus(localStorage.getItem('username'), localStorage.getItem('password'), task.id, panelID);
+    
+    
   })
 })
+
+async function loadTasksAndRemoveAll() {
+  await loadTasks(); // Wait for tasks to be loaded
+  removeAllTaskElements(); // Remove all task elements after tasks are loaded
+}
+
+
 
 
 async function updateTaskStatus(username, password, taskId, newStatus) {
@@ -98,6 +107,7 @@ async function updateTaskStatus(username, password, taskId, newStatus) {
     });
     if (response.ok) {
       console.log('Task status updated successfully');
+      
     } else {
       console.error('Error updating task status:', response.statusText);
     }
@@ -328,7 +338,7 @@ document.addEventListener('click', function (event) {
       deleteTask(taskId, usernameValue, passwordValue);
       taskElement.remove();
       deletemodal.style.display = "none";
-      deletebtn.removeEventListener('click', deleteButtonClickHandler); // Remove the listener
+      deletebtn.removeEventListener('click', deleteButtonClickHandler); 
     }
 
     const deletebtn = document.getElementById('delete-button');
@@ -369,12 +379,19 @@ document.addEventListener('click', function (event) {
 
 // Carrega as tarefas guardadas na local storage
 function loadTasks() {
-  
   getAllUsersTasks(getValuesFromLocalStorage()[0], getValuesFromLocalStorage()[1]).then(tasksArray => {
     tasksArray.forEach(task => {
       const taskElement = createTaskElement(task);
+      if (!taskElement) {
+        console.error('Task element not created for task:', task);
+        return;
+      }
       task.stateId = parseStateIdToString(task.stateId);
       const panel = document.getElementById(task.stateId);
+      if (!panel) {
+        console.error('Panel not found for stateId:', task.stateId);
+        return;
+      }
       panel.appendChild(taskElement);
       attachDragAndDropListeners(taskElement);
     });
@@ -386,6 +403,7 @@ function loadTasks() {
 
 
 function removeAllTaskElements() {
+  console.log("estou a ser chamada");
   const tasks = document.querySelectorAll('.task');
   tasks.forEach(task => task.remove());
 }
