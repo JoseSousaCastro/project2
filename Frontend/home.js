@@ -1,14 +1,17 @@
 
 window.onload = function() {
+  
   const usernameValue = localStorage.getItem('username');
   const passwordValue = localStorage.getItem('password');
 
-  console.log('window on load está a funcionar!')
-  getFirstName(usernameValue, passwordValue);
-  getPhotoUrl(usernameValue, passwordValue);
-  loadTasks();
-
-  };
+  if (usernameValue === null || passwordValue === null) {
+    window.location.href = "index.html";
+  } else {
+    getFirstName(usernameValue, passwordValue);
+    getPhotoUrl(usernameValue, passwordValue);
+    loadTasks();
+  }
+};
 
   function getValuesFromLocalStorage() {
     const usernameValue = localStorage.getItem('username');
@@ -19,7 +22,6 @@ window.onload = function() {
 
   function cleanAllTaskFields() {
     document.getElementById('warningMessage2').innerText = '';
-    // Limpar os input fields depois de adicionar a task
     document.getElementById('taskName').value = '';
     document.getElementById('taskDescription').value = '';
     document.getElementById('task-startDate').value = '';
@@ -164,9 +166,39 @@ console.log('In newTask - username: ' + usernameValue);
         
       } catch (error) {
           console.error('Error:', error);
-          alert("Task not created. Something went wrong");
+          alert("Something went wrong");
       }
     };
+
+    async function updateTask(usernameValue, passwordValue, id, task) {
+      
+        let updateTask = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/${id}`;
+          
+          try {
+              const response = await fetch(updateTask, {
+                  method: 'PUT',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'Accept': '*/*',
+                      username: usernameValue,
+                      password: passwordValue
+                  },    
+                  body: JSON.stringify(task)
+              });
+      
+                if (response.ok) {
+                  alert("Task updated successfully");
+                } else if (response.status === 401) {
+                  alert("Invalid credentials")
+                } else if (response.status === 404) {
+                  alert("Impossible to create task. Verify all fields")
+                }
+            
+          } catch (error) {
+              console.error('Error:', error);
+              alert("Task not created. Something went wrong");
+          }
+        };
 
 
 
@@ -262,18 +294,21 @@ function createTaskElement(task) {
     postIt.appendChild(deleteButton);
     taskElement.appendChild(postIt);
     postIt.appendChild(descriprioncontainer);
+
     taskElement.addEventListener('dblclick', function () {
-        sessionStorage.setItem("taskDescription", taskElement.description);
-        sessionStorage.setItem("taskTitle", taskElement.title);
-        sessionStorage.setItem("taskid", taskElement.id);
-        sessionStorage.setItem("taskstateId", taskElement.stateId);
-        sessionStorage.setItem("taskPriority", taskElement.priority);
-        window.location.href = 'task.html';
+      sessionStorage.setItem('taskId', task.id);        
+      window.location.href = 'task.html';
     });
 
     return taskElement;
 }
 
+
+/* sessionStorage.setItem("taskDescription", taskElement.description);
+        sessionStorage.setItem("taskTitle", taskElement.title);
+        sessionStorage.setItem("taskid", taskElement.id);
+        sessionStorage.setItem("taskstateId", taskElement.stateId);
+        sessionStorage.setItem("taskPriority", taskElement.priority); */
 
   /* tasks.forEach(task => {
     const taskData = {
