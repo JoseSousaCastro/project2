@@ -327,7 +327,6 @@ savebutton.addEventListener("click", async () => {
       sessionStorage.clear();
       window.location.href = "home.html";
    
-    //}
   } catch (error) {
     console.error("Error:", error);
     alert("Something went wrong while updating the task");
