@@ -204,9 +204,6 @@ async function showTask(taskId) {
   }
 }
 
-/* setPriorityButtonSelected(lowButton, "low");
-    setStatusButtonSelected(todoButton, "todo"); */
-
 // Event listeners para os botões status
 todoButton.addEventListener("click", () => setStatusButtonSelected(todoButton));
 doingButton.addEventListener("click", () => setStatusButtonSelected(doingButton));
@@ -322,39 +319,13 @@ function returnStateIdFromSelectedButton() {
 // Event listener para o botão save
 const savebutton = document.getElementById("save-button");
 savebutton.addEventListener("click", async () => {
-  /* const taskId = sessionStorage.getItem("taskId");
-  console.log("taskId = ", taskId); */
+
   try {
-    /*     let startDate = new Date();
-let limitDate = new Date();
-
-// Set the start date to today's date
-startDate = startDate.toISOString().split('T')[0];
-
-// Set the limit date to 7 days from today
-limitDate.setDate(limitDate.getDate() + 7);
-limitDate = limitDate.toISOString().split('T')[0];
-            const task = {
-                id: taskId,
-                title: document.getElementById("titulo-task").value,
-                description: document.getElementById("descricao-task").value,
-                priority: 200,
-                stateId: 100,
-                startDate: startDate,
-                limitDate: limitDate,
-                //editionDate: new Date().toISOString().slice(0, 10)
-            };          
-            console.log('task = ', task);
-            console.log(usernameValue, passwordValue);
-            /* if (task.title === '' || task.description === '' || task.priority === null || task.startDate === '' || task.limitDate === '' || task.startDate > task.limitDate) {
-                alert("Invalid data. Please check all fields and try again");
-            } else { */
     await updateTask();
-      alert("Task updated successfully");
-      sessionStorage.clear();
-      window.location.href = "home.html";
+    alert("Task updated successfully");
+    sessionStorage.clear();
+    window.location.href = "home.html";
    
-    //}
   } catch (error) {
     console.error("Error:", error);
     alert("Something went wrong while updating the task");
