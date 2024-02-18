@@ -123,6 +123,7 @@ function cleanRetroFields() {
       }
 }
 
+
 async function addRetrospectiveToBackend(title, date) {
   const retro = createRetro(title, date);
   const usernameValue = getValuesFromLocalStorage()[0];
@@ -153,9 +154,6 @@ async function addRetrospectiveToBackend(title, date) {
   }
     
 }
-
-
-      
 
 
 function createRetro (title, date) {
