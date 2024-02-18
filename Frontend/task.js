@@ -1,70 +1,15 @@
-//Fazer selecionar o botão certo consoante o status da task para a priority e status
-// fazer logica para editar a task
-
-
 window.onload = function () {
-      
-    const usernameValue = localStorage.getItem('username');
-    const passwordValue = localStorage.getItem('password');
-      
-    if (usernameValue === null || passwordValue === null) {
-        window.location.href = "index.html";
-    } else {
-        getFirstName(usernameValue, passwordValue);
-        getPhotoUrl(usernameValue, passwordValue);
-        const taskId = sessionStorage.getItem('taskId');
-
-        getAllUsersTasks(usernameValue, passwordValue).then(tasksArray => {
-            tasksArray.forEach(task => {
-              if (task.id === taskId) {
-                document.getElementById('titulo-task').textContent = task.title; // Colocar o título no input title
-                document.getElementById('descricao-task').textContent = task.description; // Colocar a descrição na text area
-                document.getElementById('tasktitle').innerHTML = task.title; // Colocar o título no título da página
-              }
-            });
-        }).catch(error => {
-            console.error('Error:', error);
-            alert("Something went wrong while loading tasks");
-        });
-        
-    }       
-        
-
-}
-
-    const usernameValue = localStorage.getItem('username');
-    const passwordValue = localStorage.getItem('password');
-
-async function getAllUsersTasks(usernameValue, passwordValue) {
-
-    let getTasks = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/tasks`;
-      
-      try {
-          const response = await fetch(getTasks, {
-              method: 'GET',
-              headers: {
-                  'Content-Type': 'application/JSON',
-                  'Accept': '*/*',
-                  username: usernameValue,
-                  password: passwordValue
-              },    
-          });
-  
-            if (response.ok) {
-              const tasks = await response.json(); 
-              return tasks;
-            } else if (response.status === 401) {
-              alert("Invalid credentials")
-            } else if (response.status === 406) {
-              alert("Unauthorized access")
-            }
-        
-      } catch (error) {
-          console.error('Error:', error);
-          alert("Something went wrong");
-      }
-    };
-
+    var username = sessionStorage.getItem("login"); // Obter o user da session storage
+    var descricao = sessionStorage.getItem("taskDescription"); // Obter a descrição da session storage
+    var titulo = sessionStorage.getItem("taskTitle"); // Obter o título da session storage
+    if (username) {
+        document.getElementById("login").textContent = username; // Colocar o user no header
+        document.getElementById('titulo-task').textContent = titulo; // Colocar o título no input title
+        document.getElementById('descricao-task').textContent = descricao; // Colocar a descrição na text area
+        document.getElementById('tasktitle').innerHTML = titulo; // Colocar o título no título da página
+        document.getElementById("task-bc").textContent = titulo; // Colocar o título no breadcrumb
+    }
+};
 
 
 // Definir os botões de status
@@ -79,7 +24,7 @@ const mediumButton = document.getElementById("medium-button");
 const highButton = document.getElementById("high-button");
 
 // Definir o botão To Do como default
-let taskStatus = sessionStorage.getItem("taskStatus");
+var taskStatus = sessionStorage.getItem("taskStatus");
 if(taskStatus == "todo"){
 todoButton.classList.add("selected");
 } else if( taskStatus== "doing"){
