@@ -97,6 +97,7 @@ public class RetrospectiveService {
     @POST
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response addRetrospective(@HeaderParam("username") String username, @HeaderParam("password") String
             password, Retrospective temporaryRetrospective) {
         Response response;

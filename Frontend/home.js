@@ -45,32 +45,78 @@ function attachDragAndDropListeners(task) { // Adiciona os listeners de drag and
   });
 }
 
-panels.forEach(panel => { // Adiciona os listeners de drag and drop a um painel
+panels.forEach(panel => { 
   panel.addEventListener('dragover', e => {
     e.preventDefault()
     const afterElement = getDragAfterElement(panel, e.clientY)
     const task = document.querySelector('.dragging')
-    const panelID = document.getElementById(panel.id) // Guarda o ID do painel onde a tarefa vai ser colocada
-    if (afterElement == null) {
-      panel.appendChild(task)
-      task.stateId = panel.id;
-      for (var i = 0; i < tasks.length; i++) { // Percorre o array de tarefas e altera o stateId da tarefa para o painel onde foi colocada
-        if (tasks[i].id == task.id) {
-          tasks[i].stateId = panelID; // Atualiza o stateId da tarefa
-        }
-      }
     
+    const panelID = panel.id; 
+
+    if (afterElement == null) {
+      panel.appendChild(task);
+      task.stateId = panelID;
     } else {
-      panel.insertBefore(task, afterElement)
-      task.stateId = panel.id;
-      for (var i = 0; i < tasks.length; i++) {
-        if (tasks[i].id == task.id) {
-          tasks[i].stateId = panelID;
-        }
-      }
+      panel.insertBefore(task, afterElement);
+      task.stateId = panelID;
     }
+
+    updateTaskStatus(localStorage.getItem('username'), localStorage.getItem('password'), task.id, panelID);
   })
 })
+
+
+async function updateTaskStatus(username, password, taskId, newStatus) {
+
+  let numericStatus;
+  switch (newStatus) {
+    case "todo":
+      numericStatus = 100;
+      break;
+    case "doing":
+      numericStatus = 200;
+      break;
+    case "done":
+      numericStatus = 300;
+      break;
+    default:
+      console.error('Invalid status:', newStatus);
+      return numericStatus;
+  }
+
+  const updateTaskUrl = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${username}/tasks/${taskId}/status`;
+  try {
+    const response = await fetch(updateTaskUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': '*/*',
+        username: username,
+        password: password
+      },
+      body: JSON.stringify(numericStatus)
+    });
+    if (response.ok) {
+      console.log('Task status updated successfully');
+    } else {
+      console.error('Error updating task status:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error updating task status:', error);
+  }
+}
+
+function getDragAfterElement(panel, y) {
+  const draggableElements = [...panel.querySelectorAll('.task:not(.dragging)')] // Dentro da lista de painéis, seleciona todos os elementos com a classe task que nao tenham a classe dragging  
+  return draggableElements.reduce((closest, child) => { // Retorna o elemento mais próximo do que esáa a ser arrastado e que está a ser comparado
+      const box = child.getBoundingClientRect() // Retorna o tamanho do elemento e a sua posição relativamente ao viewport
+      const offset = y - box.top - box.height / 2 // Calcula a distância entre o elemento que está a ser arrastado e o que está a ser comparado
+      if (offset < 0 && offset > closest.offset) { // Se a distância for menor que 0 e maior que a distância do elemento mais próximo até agora
+          return { offset: offset, element: child }
+      } else { //
+          return closest // Retorna o elemento mais próximo até agora
+      }
+  }, { offset: Number.NEGATIVE_INFINITY }).element}
 
 // Definir os botões de priority
 const lowButton = document.getElementById("low-button-home");
@@ -253,7 +299,7 @@ function createTaskElement(task) {
   descriptionContainer.appendChild(displayDescription);
   postIt.appendChild(taskTitle);
   postIt.appendChild(deleteButton);
-  postIt.appendChild(descriptionContainer); // Move this line up
+  postIt.appendChild(descriptionContainer); 
   taskElement.appendChild(postIt);
 
   taskElement.addEventListener('dblclick', function () {
