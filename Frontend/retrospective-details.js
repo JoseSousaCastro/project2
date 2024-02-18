@@ -208,6 +208,99 @@ function parseCommentIdToInt (commentStatus) {
   return newStatus;
 }
 
+document.getElementById('addCommentBTN').addEventListener('click', async function(event) {
+  event.preventDefault();
+
+  const usernameValue = localStorage.getItem('username');
+  const passwordValue = localStorage.getItem('password');
+  console.log("usernameValue: ", usernameValue);
+
+  const commentDescription = document.getElementById('commentDescription-retro').value;
+  const commentCategory = document.getElementById('dropdown-categories').value;
+  const commentUserValue = document.getElementById('dropdown-users').value;
+  const commentUser = getUserByUsername(commentUserValue);
+  console.log('commentUser:', commentUser);
+
+  if (commentDescription === '' || commentCategory === '' || commentUser === '') {
+    document.getElementById('warningMessage2').innerText ='Please fill in all fields';
+  } else {
+    document.getElementById('warningMessage2').innerText ='';
+    const comment = createComment(commentDescription, commentUser, commentCategory);
+    console.log('comment:', comment);
+    const retrospectiveId = getRetrospectiveIdFromURL();
+    console.log('retrospectiveId:', retrospectiveId);
+    const retrospectiveCommentsEndpoint = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/retrospective/${retrospectiveId}/addComment`;
+
+    try {
+      const response = await fetch(retrospectiveCommentsEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': '*/*',
+          'username': usernameValue,
+          'password': passwordValue
+        },
+        body: JSON.stringify(comment)
+      });
+
+      if (response.ok) {
+        alert('Comment added successfully');
+        addCommentToPanel(commentCategory, commentDescription, commentUser);
+      } else if (response.status === 401) {
+        alert('Invalid credentials');
+      } else if (response.status === 404) {
+        alert('Retrospective not found');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Something went wrong');
+    }
+  }
+}
+);
+
+function addCommentToPanel(commentCategory, commentDescription, commentUser) {
+  const panelStrengths = document.getElementById('strengths');
+  const panelChallenges = document.getElementById('challenges');
+  const panelImprovements = document.getElementById('improvements');
+
+  if (commentCategory === 'strengths') {
+    panelStrengths.innerHTML += `<div>${commentDescription} - ${commentUser}</div>`;
+  } else if (commentCategory === 'challenges') {
+    panelChallenges.innerHTML += `<div>${commentDescription} - ${commentUser}</div>`;
+  } else if (commentCategory === 'improvements') {
+    panelImprovements.innerHTML += `<div>${commentDescription} - ${commentUser}</div>`;
+  }
+}
+
+async function getUserByUsername(username) {
+  const usernameValue = localStorage.getItem('username');
+  const passwordValue = localStorage.getItem('password');
+
+  const endpoint = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${username}`;
+  try {
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/JSON',
+        'Accept': '*/*',
+        'username': usernameValue,
+        'password': passwordValue
+      },
+    });
+    if (response.ok) {
+      const user = await response.json();
+      return user;
+    } else {
+      throw new Error('Failed to get user by username');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Something went wrong');
+  }
+}
+
+
 
 
 
