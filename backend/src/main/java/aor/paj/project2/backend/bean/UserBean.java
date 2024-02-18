@@ -218,6 +218,29 @@ public class UserBean {
         return removed;
     }
 
+    public boolean updateTaskStatus(String username, String taskId, int newStatus) {
+
+        if (newStatus != 100 && newStatus != 200 && newStatus != 300) {
+            return false;
+        }
+
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                ArrayList<Task> userTasks = user.getUserTasks();
+                for (Task task : userTasks) {
+                    if (task.getId().equals(taskId)) {
+                        task.setStateId(newStatus);
+                        writeIntoJsonFile();
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+
+
     public void writeIntoJsonFile() {
         Jsonb jsonb = JsonbBuilder.create(new
                 JsonbConfig().withFormatting(true));

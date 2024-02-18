@@ -125,6 +125,7 @@ function cleanRetroFields() {
 
 async function addRetrospective(usernameValue, passwordValue, retrospective) {
   console.log("addRetrospective" + "user" + usernameValue + "pass" + passwordValue + "retrospective" + retrospective)
+
   const endpointAddRetro = "http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/retrospective/add";
 
     try {
@@ -137,6 +138,7 @@ async function addRetrospective(usernameValue, passwordValue, retrospective) {
               password: passwordValue
           },
           body: JSON.stringify(retrospective)
+          
       });
 
       if (response.ok) {
@@ -151,7 +153,7 @@ async function addRetrospective(usernameValue, passwordValue, retrospective) {
       console.error('Error:', error);
       alert("Something went wrong");
   }
-  }
+}
 
 
 function createRetro (title, date) {

@@ -231,6 +231,34 @@ public class UserService {
         return response;
     }
 
+    @PUT
+    @Path("/{username}/tasks/{taskId}/status")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateTaskStatus(@HeaderParam("username") String usernameHeader,
+                                     @HeaderParam("password") String password,
+                                     @PathParam("username") String username,
+                                     @PathParam("taskId") String taskId,
+                                     int newStatus) {
+        
+        Response response;
+        if (userBean.isAuthenticated(usernameHeader, password)) {
+            if (usernameHeader.equals(username)) {
+                boolean updated = userBean.updateTaskStatus(username, taskId, newStatus);
+                if (updated) {
+                    response = Response.status(200).entity("Task status updated successfully").build();
+                } else {
+                    response = Response.status(404).entity("Impossible to update task status. Task not found or invalid status").build();
+                }
+            } else {
+                response = Response.status(Response.Status.BAD_REQUEST).entity("Invalid username on path").build();
+            }
+        } else {
+            response = Response.status(401).entity("Invalid credentials").build();
+        }
+        return response;
+    }
+
+
     @DELETE
     @Path("/{username}/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
