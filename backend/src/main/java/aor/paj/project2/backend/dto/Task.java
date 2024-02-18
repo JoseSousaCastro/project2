@@ -20,8 +20,6 @@ public class Task {
     @XmlElement
     private LocalDate startDate;
     @XmlElement
-    private LocalDate editionDate;
-    @XmlElement
     private LocalDate limitDate;
     @XmlElement
     public static final int TODO = 100;
@@ -123,25 +121,4 @@ public class Task {
         this.limitDate = limitDate;
     }
 
-    public LocalDate getEditionDate() {
-        return editionDate;
-    }
-
-    public void setEditionDate() {
-        this.editionDate = LocalDate.now();
-    }
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", stateId=" + stateId +
-                ", priority=" + priority +
-                ", creationDate=" + startDate +
-                ", editionDate=" + editionDate +
-                ", limitDate=" + limitDate +
-                '}';
-    }
 }
