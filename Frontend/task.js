@@ -28,7 +28,7 @@ const highButton = document.getElementById("high-button");
 
 async function updateTask() {
   
-  let startDate = new Date();
+  /*let startDate = new Date();
   let limitDate = new Date();
 
 
@@ -38,7 +38,7 @@ async function updateTask() {
   // Set the limit date to 7 days from today
   limitDate.setDate(limitDate.getDate() + 7);
   limitDate = limitDate.toISOString().split("T")[0];
-
+*/
   const priority = returnPriorityFromSelectedButton();
   const stateId = returnStateIdFromSelectedButton();
 
@@ -48,6 +48,8 @@ async function updateTask() {
     description: document.getElementById("descricao-task").value,
     priority: priority,
     stateId: stateId,
+    startDate: document.getElementById("startDate-editTask").value,
+    limitDate: document.getElementById("endDate-editTask").value
     /* startDate: startDate,
                 limitDate: limitDate, */
                 //editionDate: new Date().toISOString().slice(0, 10) 
@@ -171,6 +173,8 @@ async function showTask(taskId) {
     document.getElementById("titulo-task").textContent = task.title; // Colocar o título no input title
     document.getElementById("descricao-task").textContent = task.description; // Colocar a descrição na text area
     document.getElementById("tasktitle").innerHTML = task.title; // Colocar o título no título da página
+    document.getElementById("startDate-editTask").value = task.startDate;
+    document.getElementById("endDate-editTask").value = task.limitDate;
 
     let taskStateId = task.stateId;
   
