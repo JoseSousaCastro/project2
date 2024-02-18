@@ -71,10 +71,6 @@ panels.forEach(panel => {
   })
 })
 
-async function loadTasksAndRemoveAll() {
-  await loadTasks(); // Wait for tasks to be loaded
-  removeAllTaskElements(); // Remove all task elements after tasks are loaded
-}
 
 
 
