@@ -27,10 +27,10 @@ const mediumButton = document.getElementById("medium-button");
 const highButton = document.getElementById("high-button");
 
 async function updateTask() {
-  //let firstNameRequest = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/${id}`;
-console.log("entrei na função updateTask()");
+  
   let startDate = new Date();
   let limitDate = new Date();
+
 
   // Set the start date to today's date
   startDate = startDate.toISOString().split("T")[0];
@@ -38,21 +38,24 @@ console.log("entrei na função updateTask()");
   // Set the limit date to 7 days from today
   limitDate.setDate(limitDate.getDate() + 7);
   limitDate = limitDate.toISOString().split("T")[0];
+
+  const priority = returnPriorityFromSelectedButton();
+  const stateId = returnStateIdFromSelectedButton();
+
   const task = {
     id: taskId,
     title: document.getElementById("titulo-task").value,
     description: document.getElementById("descricao-task").value,
-    priority: 200,
-    stateId: 100,
+    priority: priority,
+    stateId: stateId,
     /* startDate: startDate,
-                limitDate: limitDate,
-                editionDate: new Date().toISOString().slice(0, 10) */
+                limitDate: limitDate, */
+                //editionDate: new Date().toISOString().slice(0, 10) 
   };
-
+  let firstNameRequest = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/${taskId}`;
   try {
-    console.log("entrei no try");
     const response = await fetch(
-      `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/${taskId}`,
+      firstNameRequest,
       {
         method: "PUT",
         headers: {
@@ -64,7 +67,6 @@ console.log("entrei na função updateTask()");
         body: JSON.stringify(task),
       }
     );
-    console.log("response = ", response);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -207,19 +209,13 @@ async function showTask(taskId) {
 
 // Event listeners para os botões status
 todoButton.addEventListener("click", () => setStatusButtonSelected(todoButton));
-doingButton.addEventListener("click", () =>
-  setStatusButtonSelected(doingButton)
-);
+doingButton.addEventListener("click", () => setStatusButtonSelected(doingButton));
 doneButton.addEventListener("click", () => setStatusButtonSelected(doneButton));
 
 // Event listeners para os botões priority
 lowButton.addEventListener("click", () => setPriorityButtonSelected(lowButton));
-mediumButton.addEventListener("click", () =>
-  setPriorityButtonSelected(mediumButton)
-);
-highButton.addEventListener("click", () =>
-  setPriorityButtonSelected(highButton)
-);
+mediumButton.addEventListener("click", () => setPriorityButtonSelected(mediumButton));
+highButton.addEventListener("click", () => setPriorityButtonSelected(highButton));
 
 const cancelbutton = document.getElementById("cancel-button");
 
@@ -297,6 +293,30 @@ function parsePriorityToInt(priority) {
     newPriority = HIGH;
   }
   return newPriority;
+}
+
+function returnPriorityFromSelectedButton() {
+  const buttons = [lowButton, mediumButton, highButton];
+  let selectedButton = null;
+  buttons.forEach((btn) => {
+    if (btn.classList.contains("selected")) {
+      selectedButton = btn;
+    }
+  });
+  const priorityInt = parsePriorityToInt(selectedButton.innerText.toLowerCase());
+  return priorityInt;
+} 
+
+function returnStateIdFromSelectedButton() {
+  const buttons = [todoButton, doingButton, doneButton];
+  let selectedButton = null;
+  buttons.forEach((btn) => {
+    if (btn.classList.contains("selected")) {
+      selectedButton = btn;
+    }
+  });
+  const stateIdInt = parseStateIdToInt(selectedButton.innerText.toLowerCase());
+  return stateIdInt;
 }
 
 // Event listener para o botão save
