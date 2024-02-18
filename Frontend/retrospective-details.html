@@ -1,6 +1,5 @@
 <!--
     linha 12 - alterar o título para o nome da retro
-    linha 94 - depois de criar o fichero js, alterar para o nome desse ficheiro
 -->
 
 
@@ -25,7 +24,7 @@
         <div class="nav-menu-right">
             <img src="multimedia/JSC_close up.png" id="profile-pic">
             <a href="edit-profile.html">Profile</a>
-            <button class="logout-button" onclick="location.href='index.html'">
+            <button class="logout-button" id="logout-button-header">
                 <img src="multimedia/logout.png" alt="Logout Icon">
                 Logout
             </button>
@@ -34,7 +33,7 @@
     <div class="container"> <!--Container para o aside e o main-->
     <aside>
         <div class="retro-each">
-            <h3 id="retro-title">getRetroName</h3>
+            <h3 id="retro-title-aside">getRetroName</h3>
             <p id="retro-date-each">getDate</p>
             <hr id="horizontalLine">
                 <div class="retro-comment">
@@ -49,10 +48,6 @@
                             <option value="improvements">Improvements</option>
                         </select>
                         <select name="users-list" id="dropdown-users" required>
-                            <option value="" disabled selected hidden>--Choose a user--</option>
-                            <option value="user1">User 1</option>
-                            <option value="user2">User 2</option>
-                            <option value="user3">User 3</option>
                         </select>
                         <input type="submit" value="Add comment" id="addCommentBTN">
                     </form>
@@ -94,6 +89,6 @@
             <div class="label-left">&copy; Pedro Domingos</div>
         </div>
     </footer>
-    <script src="retrospective.js" defer></script>
+    <script src="retrospective-details.js" defer></script>
 </body>
 </html>
