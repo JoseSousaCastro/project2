@@ -178,31 +178,4 @@ function createUserData() {
 }
 
 
-//como implementar?
-function createUserObject() {
-    return [
-        username = document.getElementById('username-register').value.trim(),
-        password = document.getElementById('password-register').value.trim(),
-        email = document.getElementById('email-register').value.trim(),
-        firstName = document.getElementById('firstName-register').value.trim(),
-        lastName = document.getElementById('lastName-register').value.trim(),
-        phone = document.getElementById('phone-register').value.trim(),
-        photoURL = document.getElementById('photoURL-register').value.trim()
-    ]
-}
-//redundante? 
-function verifyIfAnyFieldIsEmpty(fields) {
-
-
-    let emptyField = false;
-    
-    for (let field of fields) {
-        let fieldValue = document.getElementById(field).value.trim();
-
-        if (fieldValue === '') {
-            emptyField = true;
-        }
-    }
-    return emptyField; 
-}
 
