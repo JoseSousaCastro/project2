@@ -1,9 +1,4 @@
 
-// register.js
-window.onload = function () {
-
-}
-    
 
 document.getElementById('registrationForm').addEventListener('submit', async function (event) {
     event.preventDefault();
@@ -154,8 +149,6 @@ document.getElementById('registrationForm').addEventListener('submit', async fun
 
 
 function createUserData() {
-    
-
     
         let username = document.getElementById('username-register').value.trim();
         let password = document.getElementById('password-register').value.trim();
