@@ -206,18 +206,6 @@ function parseCommentIdToInt (commentStatus) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
   //LOGOUT 
 document.getElementById("logout-button-header").addEventListener('click', async function() {
 
