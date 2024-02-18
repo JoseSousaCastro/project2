@@ -48,9 +48,9 @@ async function updateTask() {
     description: document.getElementById("descricao-task").value,
     priority: priority,
     stateId: stateId,
-    startDate: document.getElementById("startDate-editTask").value,
+    /*startDate: document.getElementById("startDate-editTask").value,
     limitDate: document.getElementById("endDate-editTask").value
-    /* startDate: startDate,
+     startDate: startDate,
                 limitDate: limitDate, */
                 //editionDate: new Date().toISOString().slice(0, 10) 
   };
@@ -271,7 +271,7 @@ function parseStateIdToInt(stateId) {
   const DONE = 300;
 
   let newStateId = 0;
-  if (stateId === "todo") {
+  if (stateId === "todo" || stateId === "to do") {
     newStateId = TODO;
   } else if (stateId === "doing") {
     newStateId = DOING;
