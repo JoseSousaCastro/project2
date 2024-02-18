@@ -392,7 +392,7 @@ aside h3 {
 #taskDescription,
 #taskDescription-retro,
 #name-addMember,
-#retroName {
+#retroTitle {
   padding-left: 10px;
   width: 170px;
   background-color: var(--white);
@@ -403,10 +403,13 @@ aside h3 {
 }
 #taskName,
 #name-addMember,
-#retroName {
+#retroTitle {
   height: 20px;
 }
-#retroName::placeholder {
+#retroTitle {
+  margin-bottom: 20px;
+}
+#retroTitle::placeholder {
   text-align: center;
 }
 #taskDescription,
@@ -936,30 +939,31 @@ match ao arredondamento do painel (home.html) */
 .task-buttons .taskH4 {
   text-align: center;
   margin-top: 20px;
-  margin-bottom: 20px;
-  padding-top: 30px;
+  margin-bottom: 15px;
+  padding-top: 20px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-size: 20px;
+  font-size: 18px;
   color: var(--green3);
 }
+
 /* Definições dos botões de status e priority */
 .task-status .status-buttons,
 .task-priority .priority-buttons {
   justify-content: center;
   display: flex;
-  gap: 40px;
+  gap: 35px;
 }
 .status-button,
 .priority-button {
   --button-shadow-color: #c3c3c3;
-  width: 100px;
-  height: 45px;
-  padding: 10px;
+  width: 90px;
+  height: 35px;
+  padding: 8px;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0px 4px 8px var(--button-shadow-color);
@@ -1026,16 +1030,19 @@ match ao arredondamento do painel (home.html) */
 .priority-button.selected {
   background-color: color-mix(in srgb, var(--grey), white 30%) !important;
 }
-.updateDate {
+.startDateDiv,
+.updateDateDiv,
+.endDateDiv {
   margin-top: 20px;
-  margin-bottom: 20px;
-  padding-top: 30px;
   letter-spacing: 0.5px;
   font-style: italic;
   font-size: 15px;
   font-weight: bold;
   color: var(--green3);
   text-align: center;
+}
+.startDateDiv {
+  margin-top: 40px;
 }
 
 /* Definições do footer */
@@ -1063,7 +1070,15 @@ footer {
 }
 
 /* Definições do retro-each.html */
-#retro-title {
+aside h3 {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: var(--green3);
+  text-transform: uppercase;
+  font-size: 20px;
+}
+#retro-title-aside {
   margin-top: 60px;
   margin-bottom: 20px;
   text-align: center;
@@ -1071,7 +1086,6 @@ footer {
   text-transform: uppercase;
   font-size: 17px;
 }
-#retroDate,
 #retro-date-each {
   margin-top: 20px;
   text-align: center;
@@ -1085,18 +1099,19 @@ footer {
   font-weight: bold;
 }
 #retroDate {
-  margin-block: 20px;
+  margin-bottom: 20px;
   width: 180px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   font-weight: lighter;
   color: color-mix(in srgb, var(--green3), var(--white) 40%);
   font-size: 14px;
+  text-align: center;
 }
 #retro-date-each {
   margin-top: 10px;
 }
-#retroName,
+#retroTitle,
 #retroDate {
   height: 25px;
 }
@@ -1245,6 +1260,7 @@ footer {
 /* Definições edit-profile.html */
 
 .main-editProfile {
+  width: auto;
   background-image: url("multimedia/bg_01.png");
   background-size: cover;
   background-position: center;
