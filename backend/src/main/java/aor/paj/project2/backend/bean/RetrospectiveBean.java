@@ -49,14 +49,13 @@ public class RetrospectiveBean {
 
     public boolean addCommentToRetrospective(String id, Comment comment) {
         boolean added = true;
-        if (comment.getDescription().isBlank() && comment.getUser() == null && !validateCommentStatus(comment)) {
+        if (comment.getDescription().isBlank() && comment.getUsername() == null && !validateCommentStatus(comment)) {
             added = false;
         } else {
             for (Retrospective a : retrospectives) {
                 if (a.getId().equals(id)) {
                     comment.generateId();
                     a.addComment(comment);
-                    a.addUser(comment.getUser());
                     writeIntoJsonFile();
                 }
             }

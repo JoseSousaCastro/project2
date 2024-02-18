@@ -10,7 +10,7 @@ public class Comment {
     @XmlElement
     private String description;
     @XmlElement
-    private User user;
+    private String username;
     @XmlElement
     private int commentStatus;
     @XmlElement
@@ -45,12 +45,12 @@ public class Comment {
         this.description = description;
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(String username) {
+        this.username = username;
     }
 
     public int getCommentStatus() {
