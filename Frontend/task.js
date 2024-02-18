@@ -1,137 +1,341 @@
 window.onload = function () {
-    var username = sessionStorage.getItem("login"); // Obter o user da session storage
-    var descricao = sessionStorage.getItem("taskDescription"); // Obter a descrição da session storage
-    var titulo = sessionStorage.getItem("taskTitle"); // Obter o título da session storage
-    if (username) {
-        document.getElementById("login").textContent = username; // Colocar o user no header
-        document.getElementById('titulo-task').textContent = titulo; // Colocar o título no input title
-        document.getElementById('descricao-task').textContent = descricao; // Colocar a descrição na text area
-        document.getElementById('tasktitle').innerHTML = titulo; // Colocar o título no título da página
-        document.getElementById("task-bc").textContent = titulo; // Colocar o título no breadcrumb
-    }
+  const usernameValue = localStorage.getItem("username");
+  const passwordValue = localStorage.getItem("password");
+  const taskId = sessionStorage.getItem("taskId");
+
+  if (usernameValue === null || passwordValue === null) {
+    window.location.href = "index.html";
+  } else {
+    getFirstName(usernameValue, passwordValue);
+    getPhotoUrl(usernameValue, passwordValue);
+    showTask(taskId);
+  }
 };
 
+const usernameValue = localStorage.getItem("username");
+const passwordValue = localStorage.getItem("password");
 
 // Definir os botões de status
 const todoButton = document.getElementById("todo-button"); // Atribuir o elemento respetivo à variável todoButton
 const doingButton = document.getElementById("doing-button"); // Atribuir o elemento respetivo à variável doingButton
 const doneButton = document.getElementById("done-button"); // Atribuir o elemento respetivo à variável doneButton
 
-
 // Definir os botões de priority
 const lowButton = document.getElementById("low-button");
 const mediumButton = document.getElementById("medium-button");
 const highButton = document.getElementById("high-button");
 
-// Definir o botão To Do como default
-var taskStatus = sessionStorage.getItem("taskStatus");
-if(taskStatus == "todo"){
-todoButton.classList.add("selected");
-} else if( taskStatus== "doing"){
-doingButton.classList.add("selected");
-} else if(taskStatus == "done"){
-doneButton.classList.add("selected");
+async function updateTask() {
+    //let firstNameRequest = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/${id}`;
+  
+    const taskId = sessionStorage.getItem("taskId");
+    const usernameValue = localStorage.getItem("username");
+    const passwordValue = localStorage.getItem("password");
+    let startDate = new Date();
+    let limitDate = new Date();
+
+    // Set the start date to today's date
+    startDate = startDate.toISOString().split('T')[0];
+
+    // Set the limit date to 7 days from today
+    limitDate.setDate(limitDate.getDate() + 7);
+    limitDate = limitDate.toISOString().split('T')[0];
+            const task = {
+                id: taskId,
+                title: document.getElementById("titulo-task").value,
+                description: document.getElementById("descricao-task").value,
+                priority: 200,
+                stateId: 100,
+                /* startDate: startDate,
+                limitDate: limitDate,
+                editionDate: new Date().toISOString().slice(0, 10) */
+            };
+            
+    try {
+      const response = await fetch(`http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/${taskId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/JSON",
+          Accept: "*/*",
+          username: usernameValue,
+          password: passwordValue,
+        },
+        body: JSON.stringify(task)
+      });
+  
+      if (response.ok) {
+        
+        console.log("Task updated successfully");
+      } else if (response.status === 401) {
+        alert("Invalid credentials")
+      } else if (response.status === 404) {
+        alert("Impossible to create task. Verify all fields")
+      }
+    } catch (error) {
+      alert("Something went wrong");
+    }
 }
 
-// Definir o botão Low como default
-var taskPriority = sessionStorage.getItem("taskPriority");
-if(taskPriority == "low"){
-    lowButton.classList.add("selected");
-} else if( taskPriority== "medium"){
-    mediumButton.classList.add("selected");
-} else if(taskPriority == "high"){
-    highButton.classList.add("selected");
+
+async function getFirstName(usernameValue, passwordValue) {
+  let firstNameRequest =
+    "http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/getFirstName";
+
+  try {
+    const response = await fetch(firstNameRequest, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/JSON",
+        Accept: "*/*",
+        username: usernameValue,
+        password: passwordValue,
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.text();
+      document.getElementById("first-name-label").innerText = data;
+    } else if (!response.ok) {
+      alert("Invalid credentials");
+    }
+  } catch (error) {
+    alert("Something went wrong");
+  }
 }
+
+async function getPhotoUrl(usernameValue, passwordValue) {
+  let photoUrlRequest =
+    "http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/getPhotoUrl";
+
+  try {
+    const response = await fetch(photoUrlRequest, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/JSON",
+        Accept: "*/*",
+        username: usernameValue,
+        password: passwordValue,
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.text();
+      document.getElementById("profile-pic").src = data;
+    } else if (response.stateId === 401) {
+      alert("Invalid credentials");
+    } else if (response.stateId === 404) {
+      alert("teste 404");
+    }
+  } catch (error) {
+    alert("Something went wrong");
+  }
+}
+
+async function getAllUsersTasks(usernameValue, passwordValue) {
+  let getTasks = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/tasks`;
+
+  try {
+    const response = await fetch(getTasks, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/JSON",
+        Accept: "*/*",
+        username: usernameValue,
+        password: passwordValue,
+      },
+    });
+
+    if (response.ok) {
+      const tasks = await response.json();
+      return tasks;
+    } else if (response.status === 401) {
+      alert("Invalid credentials");
+    } else if (response.status === 406) {
+      alert("Unauthorized access");
+    }
+  } catch (error) {
+    alert("Something went wrong");
+  }
+}
+
+async function showTask(taskId) {
+
+  const task = await findTaskById(taskId);
+  if (task) {
+
+    document.getElementById("titulo-task").textContent = task.title; // Colocar o título no input title
+    document.getElementById("descricao-task").textContent = task.description; // Colocar a descrição na text area
+    document.getElementById("tasktitle").innerHTML = task.title; // Colocar o título no título da página
+
+    // Definir o botão ToDo como default
+    let taskStateId = task.stateId;
+    taskStateId = parseStateIdToInt(taskStateId);
+    if (taskStateId == 100) {
+      todoButton.classList.add("selected");
+    } else if (taskStateId == 200) {
+      doingButton.classList.add("selected");
+    } else if (taskStateId == 300) {
+      doneButton.classList.add("selected");
+    }
+
+    // Definir o botão Low como default
+    let taskPriority = task.priority;
+    taskPriority = parsePriorityToInt(taskPriority);
+    if (taskPriority == 100) {
+      lowButton.classList.add("selected");
+    } else if (taskPriority == 200) {
+      mediumButton.classList.add("selected");
+    } else if (taskPriority == 300) {
+      highButton.classList.add("selected");
+    }
+
+
+    setPriorityButtonSelected(lowButton, "low");
+    setStatusButtonSelected(todoButton, "todo");
+
+    // Event listeners para os botões status
+    todoButton.addEventListener("click", () =>
+      setStatusButtonSelected(todoButton, "todo")
+    );
+    doingButton.addEventListener("click", () =>
+      setStatusButtonSelected(doingButton, "doing")
+    );
+    doneButton.addEventListener("click", () =>
+      setStatusButtonSelected(doneButton, "done")
+    );
+
+    // Event listeners para os botões priority
+    lowButton.addEventListener("click", () =>
+      setPriorityButtonSelected(lowButton, "low")
+    );
+    mediumButton.addEventListener("click", () =>
+      setPriorityButtonSelected(mediumButton, "medium")
+    );
+    highButton.addEventListener("click", () =>
+      setPriorityButtonSelected(highButton, "high")
+    );
+
+    const cancelbutton = document.getElementById("cancel-button");
+    cancelbutton.addEventListener("click", () => {
+      // Abrir o modal de cancel
+      const cancelModal = document.getElementById("cancel-modal");
+      cancelModal.style.display = "block";
+
+      const cancelButton = document.getElementById("continue-editing-button");
+      cancelButton.addEventListener("click", () => {
+        window.location.href = "task.html";
+      });
+
+      // Event listener para o botão de confirmação
+      const confirmButton = document.getElementById("confirm-cancel-button");
+      confirmButton.addEventListener("click", () => {
+        sessionStorage.clear();
+        window.location.href = "home.html";
+      });
+
+      cancelModal.style.display = "grid";
+    });
+  } else {
+    alert("Task not found");
+    window.location.href = "home.html";
+  }
+}
+
 // Função para definir o estado no grupo de botões status
-function setStatusButtonSelected(button, status) {
-    const buttons = [todoButton, doingButton, doneButton];
-    buttons.forEach(btn => btn.classList.remove("selected"));
-    button.classList.add("selected");
-    sessionStorage.setItem("taskStatus", status);
+function setStatusButtonSelected(button) {
+  const buttons = [todoButton, doingButton, doneButton];
+  buttons.forEach((btn) => btn.classList.remove("selected"));
+  button.classList.add("selected");
 }
 
 // Função para definir o estado no grupo de botões priority
-function setPriorityButtonSelected(button, priority) {
-    const buttons = [lowButton, mediumButton, highButton];
-    buttons.forEach(btn => btn.classList.remove("selected"));
-    button.classList.add("selected");
-    sessionStorage.setItem("taskPriority", priority);
+function setPriorityButtonSelected(button) {
+  const buttons = [lowButton, mediumButton, highButton];
+  buttons.forEach((btn) => btn.classList.remove("selected"));
+  button.classList.add("selected");
 }
 
-// Event listeners para os botões status
-todoButton.addEventListener("click", () => setStatusButtonSelected(todoButton, "todo"));
-doingButton.addEventListener("click", () => setStatusButtonSelected(doingButton, "doing"));
-doneButton.addEventListener("click", () => setStatusButtonSelected(doneButton, "done"));
 
-// Event listeners para os botões priority
-lowButton.addEventListener("click", () => setPriorityButtonSelected(lowButton, "low"));
-mediumButton.addEventListener("click", () => setPriorityButtonSelected(mediumButton, "medium"));
-highButton.addEventListener("click", () => setPriorityButtonSelected(highButton, "high"));
+async function findTaskById(taskId) {
+  try {
+        const tasksArray = await getAllUsersTasks(usernameValue, passwordValue);
+        const task = tasksArray.find((task_1) => task_1.id === taskId);
+        return task;
+    } catch (error) {
+        alert("Something went wrong while loading tasks");
+    }
+}
 
-const cancelbutton = document.getElementById("cancel-button");
-cancelbutton.addEventListener("click", () => {
-    // Abrir o modal de cancel
-    const cancelModal = document.getElementById("cancel-modal");
-    cancelModal.style.display = "block";
+function parseStateIdToInt(stateId) {
+  const TODO = 100;
+  const DOING = 200;
+  const DONE = 300;
 
+  let newStateId = 0;
+  if (stateId === "todo") {
+    newStateId = TODO;
+  } else if (stateId === "doing") {
+    newStateId = DOING;
+  } else if (stateId === "done") {
+    newStateId = DONE;
+  }
+  return newStateId;
+}
 
-    const cancelButton = document.getElementById("continue-editing-button");
-    cancelButton.addEventListener("click", () => {
-        window.location.href = 'task.html';
-    });
+function parsePriorityToInt(priority) {
+  const LOW = 100;
+  const MEDIUM = 200;
+  const HIGH = 300;
 
-    // Event listener para o botão de confirmação
-    const confirmButton = document.getElementById("confirm-cancel-button");
-    confirmButton.addEventListener("click", () => {
-        sessionStorage.removeItem("taskDescription");
-        sessionStorage.removeItem("taskTitle");
-        sessionStorage.removeItem("taskid");
-        sessionStorage.removeItem("taskStatus");
-        sessionStorage.removeItem("taskPriority");
-        window.location.href = 'home.html';    
-    });
-    cancelModal.style.display = "grid";
-});
-
-// Função para update das tasks
-const updateTasks = (tasks, taskid, taskStatus, taskDescription, taskTitle, taskPriority) => {
-    tasks.forEach(category => {
-        category.forEach(task => {
-            if (task.identificacao === taskid) {
-                task.title = taskTitle;
-                task.description = taskDescription;
-                task.status = taskStatus;
-                task.priority = taskPriority;
-            }
-        });
-    });
-};
+  let newPriority = 0;
+  if (priority === "low") {
+    newPriority = LOW;
+  } else if (priority === "medium") {
+    newPriority = MEDIUM;
+  } else if (priority === "high") {
+    newPriority = HIGH;
+  }
+  return newPriority;
+}
 
 // Event listener para o botão save
 const savebutton = document.getElementById("save-button");
-savebutton.addEventListener("click", () => {
-    var tasks = JSON.parse(localStorage.getItem("tasks"));
-    var taskid = sessionStorage.getItem("taskid");
-    var taskStatus = sessionStorage.getItem("taskStatus");
-    var taskDescription = document.getElementById("descricao-task").value.trim();
-    var taskTitle = document.getElementById("titulo-task").value.trim();
-    var taskPriority = sessionStorage.getItem("taskPriority");
-    
-    if (taskDescription === "" || taskTitle === "") {
-        document.getElementById('warningMessage3').innerText = 'Your task must have a title and a description';
-            return;
-    } else {
-        // Limpa mensagem de erro
-        document.getElementById('warningMessage3').innerText = '';
-    }
-   
-    updateTasks(tasks, taskid, taskStatus, taskDescription, taskTitle, taskPriority);
+savebutton.addEventListener("click", async () => {
+    const taskId = sessionStorage.getItem("taskId");
+    console.log('taskId = ', taskId);   
+    try {
+    /*     let startDate = new Date();
+let limitDate = new Date();
 
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-    sessionStorage.removeItem("taskDescription");
-    sessionStorage.removeItem("taskTitle");
-    sessionStorage.removeItem("taskid");
-    sessionStorage.removeItem("taskStatus");
-    sessionStorage.removeItem("taskPriority");
-    window.location.href = 'home.html';
+// Set the start date to today's date
+startDate = startDate.toISOString().split('T')[0];
+
+// Set the limit date to 7 days from today
+limitDate.setDate(limitDate.getDate() + 7);
+limitDate = limitDate.toISOString().split('T')[0];
+            const task = {
+                id: taskId,
+                title: document.getElementById("titulo-task").value,
+                description: document.getElementById("descricao-task").value,
+                priority: 200,
+                stateId: 100,
+                startDate: startDate,
+                limitDate: limitDate,
+                //editionDate: new Date().toISOString().slice(0, 10)
+            };          
+            console.log('task = ', task);
+            console.log(usernameValue, passwordValue);
+            /* if (task.title === '' || task.description === '' || task.priority === null || task.startDate === '' || task.limitDate === '' || task.startDate > task.limitDate) {
+                alert("Invalid data. Please check all fields and try again");
+            } else { */ 
+                await updateTask();
+                alert	("Task updated successfully");
+                sessionStorage.clear();
+                window.location.href = "home.html";
+            //}
+    }catch (error) {
+        console.error('Error:', error);
+        alert("Something went wrong");
+    }
 });
+
