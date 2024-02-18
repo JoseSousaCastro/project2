@@ -35,18 +35,7 @@ const mediumButton = document.getElementById("medium-button");
 const highButton = document.getElementById("high-button");
 
 async function updateTask() {
-  
-  /*let startDate = new Date();
-  let limitDate = new Date();
 
-
-  // Set the start date to today's date
-  startDate = startDate.toISOString().split("T")[0];
-
-  // Set the limit date to 7 days from today
-  limitDate.setDate(limitDate.getDate() + 7);
-  limitDate = limitDate.toISOString().split("T")[0];
-*/
   const priority = returnPriorityFromSelectedButton();
   const stateId = returnStateIdFromSelectedButton();
 
@@ -56,11 +45,7 @@ async function updateTask() {
     description: document.getElementById("descricao-task").value,
     priority: priority,
     stateId: stateId,
-    /*startDate: document.getElementById("startDate-editTask").value,
-    limitDate: document.getElementById("endDate-editTask").value
-     startDate: startDate,
-                limitDate: limitDate, */
-                //editionDate: new Date().toISOString().slice(0, 10) 
+         
   };
   let firstNameRequest = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/users/${usernameValue}/${taskId}`;
   try {
