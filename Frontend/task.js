@@ -204,6 +204,7 @@ async function showTask(taskId) {
   }
 }
 
+
 // Event listeners para os botões status
 todoButton.addEventListener("click", () => setStatusButtonSelected(todoButton));
 doingButton.addEventListener("click", () => setStatusButtonSelected(doingButton));
@@ -321,10 +322,10 @@ const savebutton = document.getElementById("save-button");
 savebutton.addEventListener("click", async () => {
 
   try {
-    await updateTask();
-    alert("Task updated successfully");
-    sessionStorage.clear();
-    window.location.href = "home.html";
+      await updateTask();
+      alert("Task updated successfully");
+      sessionStorage.clear();
+      window.location.href = "home.html";
    
   } catch (error) {
     console.error("Error:", error);
