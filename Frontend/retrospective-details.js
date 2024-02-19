@@ -1,36 +1,30 @@
-window.onload = function() {
+window.onload = async function() {
    
   const usernameValue = localStorage.getItem('username')
   const passwordValue = localStorage.getItem('password')
-  
-  if (usernameValue === null || passwordValue === null) {
-    window.location.href = "index.html";
-} else {
-    try {
-      getFirstName(usernameValue, passwordValue);
-      getPhotoUrl(usernameValue, passwordValue);
-    
-      // Obter o ID da retrospectiva da URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const retrospectiveId = urlParams.get('id');
-      
-    
-      if (retrospectiveId) {
-        // Obter detalhes da retrospectiva e atualizar a página
-        getRetrospectiveDetails(usernameValue, passwordValue, retrospectiveId);
-      } else {
-        console.error('ID da retrospectiva não encontrado na URL.');
-      }
-    
-      fillUsersDropdown(usernameValue, passwordValue);
-      
-    } catch (error) {
-        
-        console.error("An error occurred:", error);
-        window.location.href = "index.html";
-        
-    }
-}
+
+
+  console.log('window on load está a funcionar!')
+  getFirstName(usernameValue, passwordValue);
+  getPhotoUrl(usernameValue, passwordValue);
+
+  // Obter o ID da retrospectiva da URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const retrospectiveId = urlParams.get('id');
+  console.log('ID da retrospectiva:', retrospectiveId);
+
+  if (retrospectiveId) {
+    // Obter detalhes da retrospectiva e atualizar a página
+    getRetrospectiveDetails(usernameValue, passwordValue, retrospectiveId);
+  } else {
+    console.error('ID da retrospectiva não encontrado na URL.');
+  }
+
+  const arrayComments = await getRetrospectiveComments(retrospectiveId);
+  addAllCommentsToPanel(arrayComments);
+
+
+  fillUsersDropdown(usernameValue, passwordValue);
   
 };
 
@@ -227,10 +221,9 @@ async function getFirstName(usernameValue, passwordValue) {
   }
 
 
-function createComment(description, user, commentStatus) {
+function createComment(description, commentStatus) {
 const comment = {
   description: description,
-  user: user,
   commentStatus: parseCommentIdToInt(commentStatus)
 };
 return comment;
@@ -261,50 +254,6 @@ function parseCommentIdToString (commentStatus) {
   return newStatus;
 }
 
-function createCommentElement(comment) {
-  const commentElement = document.createElement('div');
-  commentElement.id = comment.id;
-  comment.commentStatus = parseCommentIdToString(comment.commentStatus);
-  commentElement.commentStatus = comment.commentStatus;
-  commentElement.classList.add('comment');
-  if (comment.commentStatus === 'strengths') {
-    commentElement.classList.add('strengths');
-  } else if (comment.commentStatus === 'challenges') {
-    commentElement.classList.add('challenges');
-  } else if (comment.commentStatus === 'improvements') {
-    commentElement.classList.add('improvements');
-  }
-  commentElement.description = comment.description;
-  commentElement.user = comment.user.username;
-
-  const postIt = document.createElement('div');
-  postIt.className = 'post-it';
-
-  const elementUsername = document.createElement('h3');
-  elementUsername.textContent = comment.user.username;
-  const descriptionContainer = document.createElement('div');
-  descriptionContainer.className = 'post-it-text';
-  const elementDescription = document.createElement('p');
-  elementDescription.textContent = comment.description;
-
-  descriptionContainer.appendChild(elementDescription);
-  postIt.appendChild(elementUsername);
-  postIt.appendChild(descriptionContainer);
-  commentElement.appendChild(postIt);
-
-  return commentElement;
-}
-
-function loadComments() {
-  getRetrospectiveComments(getRetrospectiveIdFromURL()).then((commentsArray) => {
-    commentsArray.forEach((comment) => {
-      const commentElement = createCommentElement(comment);
-      comment.commentStatus = parseCommentIdToString(comment.commentStatus);
-      const panel = document.getElementById(comment.commentStatus);
-      panel.appendChild(commentElement);
-    });
-  });
-}
 
 
 document.getElementById('addCommentBTN').addEventListener('click', async function(event) {
@@ -312,22 +261,18 @@ document.getElementById('addCommentBTN').addEventListener('click', async functio
 
   const usernameValue = localStorage.getItem('username');
   const passwordValue = localStorage.getItem('password');
-  console.log("usernameValue: ", usernameValue);
 
   const commentDescription = document.getElementById('commentDescription-retro').value;
   const commentCategory = document.getElementById('dropdown-categories').value;
-  const commentUserValue = document.getElementById('dropdown-users').value;
-  const commentUser =  await getUserByUsername(commentUserValue);
-  console.log('commentUser:', commentUser);
 
-  if (commentDescription === '' || commentCategory === '' || commentUser === '') {
+
+
+  if (commentDescription === '' || commentCategory === '') {
     document.getElementById('warningMessage2').innerText ='Please fill in all fields';
   } else {
     document.getElementById('warningMessage2').innerText ='';
-    const comment = createComment(commentDescription, commentUser, commentCategory);
-    console.log('comment:', comment);
+    const comment = createComment(commentDescription, commentCategory);
     const retrospectiveId = getRetrospectiveIdFromURL();
-    console.log('retrospectiveId:', retrospectiveId);
     const retrospectiveCommentsEndpoint = `http://localhost:8080/jl_jc_pd_project2_war_exploded/rest/retrospective/${retrospectiveId}/addComment`;
 
     try {
@@ -345,8 +290,10 @@ document.getElementById('addCommentBTN').addEventListener('click', async functio
       if (response.ok) {
         console.log('Comment added successfully');
         removeAllCommentsElements();
-        addCommentToPanel(commentCategory, commentDescription, commentUser);
+
         //loadComments();
+        addCommentToPanel(commentCategory, commentDescription, usernameValue);
+
         cleanAllCommentFields();
         //createCommentElement(comment);
         
@@ -363,19 +310,36 @@ document.getElementById('addCommentBTN').addEventListener('click', async functio
 }
 );
 
-function addCommentToPanel(commentCategory, commentDescription, commentUser) {
+
+
+function addAllCommentsToPanel(commentsArray) {
+  commentsArray.forEach((comment) => {
+const commentCategory = comment.commentStatus;
+const commentDescription = comment.description;
+const commentUser = localStorage.getItem('username');
+addCommentToPanel(commentCategory, commentDescription, commentUser);
+  });
+}
+
+
+function addCommentToPanel(commentCategory, commentDescription) {
+  const commentUser = localStorage.getItem('username');
+
   const panelStrengths = document.getElementById('strengths');
   const panelChallenges = document.getElementById('challenges');
   const panelImprovements = document.getElementById('improvements');
 
   if (commentCategory === 'strengths') {
-    panelStrengths.innerHTML += `<div>${commentDescription} - ${commentUser.username}</div>`;
+
+    panelStrengths.innerHTML += `<div>${commentDescription} <i>by</i> <b>${commentUser}</b></div>`;
   } else if (commentCategory === 'challenges') {
-    panelChallenges.innerHTML += `<div>${commentDescription} - ${commentUser.username}</div>`;
+    panelChallenges.innerHTML += `<div>${commentDescription} <i>by</i> <b>${commentUser}</b></div>`;
   } else if (commentCategory === 'improvements') {
-    panelImprovements.innerHTML += `<div>${commentDescription} - ${commentUser.username}</div>`;
+    panelImprovements.innerHTML += `<div>${commentDescription} <i>by</i> <b>${commentUser}</b></div>`;
+
   }
 }
+
 
 async function getUserByUsername(username) {
   const usernameValue = localStorage.getItem('username');
@@ -394,6 +358,7 @@ async function getUserByUsername(username) {
     });
     if (response.ok) {
       const user = await response.json();
+      console.log('user:', user.getUsername());
       return user;
     } else {
       throw new Error('Failed to get user by username');
@@ -415,7 +380,6 @@ function cleanAllCommentFields() {
   document.getElementById('warningMessage2').innerText ='';
   document.getElementById('commentDescription-retro').value = '';
   document.getElementById('dropdown-categories').value = '';
-  document.getElementById('dropdown-users').value = '';
 }
 
 
