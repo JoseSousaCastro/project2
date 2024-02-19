@@ -1,9 +1,4 @@
 
-// register.js
-window.onload = function () {
-
-}
-    
 
 document.getElementById('registrationForm').addEventListener('submit', async function (event) {
     event.preventDefault();
@@ -155,8 +150,6 @@ document.getElementById('registrationForm').addEventListener('submit', async fun
 
 function createUserData() {
     
-
-    
         let username = document.getElementById('username-register').value.trim();
         let password = document.getElementById('password-register').value.trim();
         let email = document.getElementById('email-register').value.trim();
@@ -178,31 +171,4 @@ function createUserData() {
 }
 
 
-//como implementar?
-function createUserObject() {
-    return [
-        username = document.getElementById('username-register').value.trim(),
-        password = document.getElementById('password-register').value.trim(),
-        email = document.getElementById('email-register').value.trim(),
-        firstName = document.getElementById('firstName-register').value.trim(),
-        lastName = document.getElementById('lastName-register').value.trim(),
-        phone = document.getElementById('phone-register').value.trim(),
-        photoURL = document.getElementById('photoURL-register').value.trim()
-    ]
-}
-//redundante? 
-function verifyIfAnyFieldIsEmpty(fields) {
-
-
-    let emptyField = false;
-    
-    for (let field of fields) {
-        let fieldValue = document.getElementById(field).value.trim();
-
-        if (fieldValue === '') {
-            emptyField = true;
-        }
-    }
-    return emptyField; 
-}
 

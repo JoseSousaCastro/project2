@@ -38,7 +38,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
         });
 
         if (response.ok) {
-            alert("Login successfull!")
+            
             localStorage.setItem('username', loginValue);
             localStorage.setItem('password', passwordValue);
 

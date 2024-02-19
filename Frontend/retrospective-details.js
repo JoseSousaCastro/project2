@@ -3,6 +3,7 @@ window.onload = async function() {
   const usernameValue = localStorage.getItem('username')
   const passwordValue = localStorage.getItem('password')
 
+
   console.log('window on load está a funcionar!')
   getFirstName(usernameValue, passwordValue);
   getPhotoUrl(usernameValue, passwordValue);
@@ -264,6 +265,8 @@ document.getElementById('addCommentBTN').addEventListener('click', async functio
   const commentDescription = document.getElementById('commentDescription-retro').value;
   const commentCategory = document.getElementById('dropdown-categories').value;
 
+
+
   if (commentDescription === '' || commentCategory === '') {
     document.getElementById('warningMessage2').innerText ='Please fill in all fields';
   } else {
@@ -287,11 +290,13 @@ document.getElementById('addCommentBTN').addEventListener('click', async functio
       if (response.ok) {
         console.log('Comment added successfully');
         removeAllCommentsElements();
+
         //loadComments();
         addCommentToPanel(commentCategory, commentDescription, usernameValue);
+
         cleanAllCommentFields();
         //createCommentElement(comment);
-        //addCommentToPanel(commentCategory, commentDescription, commentUser);
+        
       } else if (response.status === 401) {
         alert('Invalid credentials');
       } else if (response.status === 404) {
@@ -325,11 +330,13 @@ function addCommentToPanel(commentCategory, commentDescription) {
   const panelImprovements = document.getElementById('improvements');
 
   if (commentCategory === 'strengths') {
+
     panelStrengths.innerHTML += `<div>${commentDescription} <i>by</i> <b>${commentUser}</b></div>`;
   } else if (commentCategory === 'challenges') {
     panelChallenges.innerHTML += `<div>${commentDescription} <i>by</i> <b>${commentUser}</b></div>`;
   } else if (commentCategory === 'improvements') {
     panelImprovements.innerHTML += `<div>${commentDescription} <i>by</i> <b>${commentUser}</b></div>`;
+
   }
 }
 
@@ -343,7 +350,7 @@ async function getUserByUsername(username) {
     const response = await fetch(endpoint, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/JSON',
+        'Content-Type': 'application/json',
         'Accept': '*/*',
         'username': usernameValue,
         'password': passwordValue
